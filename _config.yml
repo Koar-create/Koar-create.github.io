@@ -1,4 +1,12 @@
 title: "Yang's personal website"
-description: "!"
+description: ""
 author: "Z. Yang"
 theme: minima
+navigation:
+  - title: Home
+    url: /
+  - title: Research
+    url: /research
+  - title: Education
+    url: /education
+footer: "© 2024 Zhixian Yang | All rights reserved."
