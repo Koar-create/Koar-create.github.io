@@ -21,6 +21,9 @@ title: Home
     width: 100px;
     height: 100px;
   }
+  .sidebar p {
+    font-size: 0.9em;  /* 调小字体大小 */
+  }
   .content {
     width: 80%;
     padding: 10px;
@@ -45,17 +48,13 @@ title: Home
 
 <div class="container">
   <div class="sidebar">
-    <img src="https://via.placeholder.com/100" alt="Profile Picture">
+    <img src="/assets/images/Protrait.jpg" alt="Alt Text" width="300" height="300">
     <h2>Your Name</h2>
     <p>Email: yangzhx28@mail2.sysu.edu.cn</p>
     <p>Phone: +86 188-****-1717</p>
     <p>Address: Duxue Road No.1, Nansha District, Guangzhou</p>
   </div>
   <div class="content">
-    <div class="tabs">
-      <a href="/research">Research</a>
-      <a href="/education">Education</a>
-    </div>
     <div class="bio">
       <h2>Bio</h2>
       <p>
