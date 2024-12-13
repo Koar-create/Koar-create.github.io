@@ -22,6 +22,7 @@ title: Home
     left: 0;  /* 紧贴页面左侧 */
     height: 100vh;  /* 确保 sidebar 高度与页面一致 */
     background-color: #f9f9f9;  /* 可选：背景色以分隔内容 */
+    z-index: 10; /* 确保sidebar层级高于content区域 */
   }
   .sidebar img {
     border-radius: 50%;
@@ -35,6 +36,7 @@ title: Home
     margin-left: 20%;  /* 使右侧内容区域避开sidebar */
     width: 80%;
     padding: 10px;
+    margin-top: 50px; /* 确保内容区不被navbar遮挡 */
   }
   .tabs {
     display: flex;
@@ -51,6 +53,9 @@ title: Home
   .bio h2 {
     font-weight: bold;
     text-align: left;
+  }
+  .navbar {
+    z-index: 100; /* 确保navbar层级更高，避免sidebar遮挡 */
   }
 </style>
 
