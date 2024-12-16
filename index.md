@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 title: Home
 ---
 
@@ -61,7 +61,7 @@ title: Home
 
 <div class="container">
   <div class="sidebar">
-    <img src="/assets/images/Protrait.jpg" alt="Protrait" width="235" height="289">
+    <img src="/assets/images/Protrait.jpg" alt="Protrait">
     <h2>Zhixian Yang</h2>
     <p>Email: yangzhx28@mail2.sysu.edu.cn</p>
     <p>Phone: +86 188-****-1717</p>

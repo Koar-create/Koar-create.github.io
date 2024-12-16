@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+  {%- include head.html -%}
+
+  <body>
+    <!-- 添加导航栏 -->
+    <header>
+      <nav>
+        <ul>
+          {% for link in site.navigation %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </header>
+
+    <!-- 主内容 -->
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </main>
+
+    <!-- 添加页脚 -->
+    <footer>
+      <p>{{ site.footer }}</p>
+    </footer>
+
+  </body>
+
+</html>

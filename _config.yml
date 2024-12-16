@@ -2,6 +2,8 @@ title: "Yang's personal website"
 description: ""
 author: "Z. Yang"
 theme: minima
+url: "https://koar-kreate.github.io"
+baseurl: ""
 
 navigation:
   - title: Home
