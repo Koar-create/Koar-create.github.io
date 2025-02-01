@@ -12,12 +12,13 @@ title: Home
     height: 100vh;  /* 确保容器填满页面高度 */
   }
   .sidebar {
-    width: 20%;
-    padding: 0px;
+    width: 20vw; /* 改为视口宽度单位 */
+    padding: 20px;
     border-right: 5px solid #ccc;
     text-align: left;
     position: fixed;
-    left: 0;
+    /* top: 60px; */
+    left: 0px;
     height: 100vh;
     background-color: #f9f9f9;
   }
@@ -29,8 +30,10 @@ title: Home
   .sidebar p {
     font-size: 0.8em;  /* 调小字体大小 */
   }
-  .navbar {
-    z-index: 100; /* 确保navbar层级更高，避免sidebar遮挡 */
+  .content {
+    width: 40vw; /* 改为视口宽度单位 */
+    left: 30vw;
+    position: fixed;
   }
 </style>
 
