@@ -6,17 +6,16 @@ title: Home
 <style>
   body {
     font-family: "Times New Roman", serif;
-    margin: 0;  /* 移除默认边距 */
   }
   .container {
     display: flex;
     height: 100vh;  /* 确保容器填满页面高度 */
   }
   .sidebar {
-    width: 20%;
+    width: 25%;
     padding: 10px;
-    border-right: 1px solid #ccc;
-    text-align: center;
+    border-right: 5px solid #ccc;
+    text-align: left;
     position: fixed;  /* 使用固定定位，确保sidebar固定 */
     top: 0;  /* 从页面顶部开始 */
     left: 0;  /* 紧贴页面左侧 */
@@ -30,30 +29,21 @@ title: Home
     height: 100px;
   }
   .sidebar p {
-    font-size: 0.8em;  /* 调小字体大小 */
+    font-size: 0.9em;  /* 调小字体大小 */
   }
   .content {
-    margin-left: 20%;  /* 使右侧内容区域避开sidebar */
-    width: 80%;
+    margin-left: 25%;  /* 使右侧内容区域避开sidebar */
+    width: 100%;
     padding: 10px;
-    margin-top: 50px; /* 确保内容区不被navbar遮挡 */
+    margin-top: 30px; /* 确保内容区不被navbar遮挡 */
   }
-  .tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 10px;
-  }
-  .tabs a {
-    text-decoration: none;
-    font-weight: bold;
-  }
-  .bio {
+  /* .bio {
     margin-top: 12px;
   }
   .bio h2 {
     font-weight: bold;
     text-align: left;
-  }
+  } */
   .navbar {
     z-index: 100; /* 确保navbar层级更高，避免sidebar遮挡 */
   }
@@ -68,7 +58,7 @@ title: Home
   </div>
   <div class="content">
     <div class="bio">
-      <h2>Bio</h2>
+      <h1>Bio</h1>
       <p>
         I am a student who aspires to work in the atmospheric science industry. My areas of interest include weather and climate modeling, and how to improve the model's ability to reproduce extreme events.
       </p>
