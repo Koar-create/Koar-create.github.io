@@ -48,7 +48,7 @@ title: Home
     font-weight: bold;
   }
   .bio {
-    margin-top: 20px;
+    margin-top: 12px;
   }
   .bio h2 {
     font-weight: bold;
@@ -64,18 +64,13 @@ title: Home
     <img src="/assets/images/Protrait.jpg" alt="Protrait" width="235" height="289">
     <h2>Zhixian Yang</h2>
     <p>Email: yangzhx28@mail2.sysu.edu.cn</p>
-    <p>Phone: +86 188-****-1717</p>
     <p>Address: Duxue Road No.1, Nansha District, Guangzhou</p>
   </div>
   <div class="content">
     <div class="bio">
       <h2>Bio</h2>
       <p>
-        (dont take these bio for true, am just testing)<br>
-        I am a passionate researcher with a focus on developing sustainable solutions
-        for environmental challenges. My work spans computational modeling, data analysis, 
-        and field experiments. I enjoy collaborating with interdisciplinary teams to push 
-        the boundaries of science and innovation.
+        I am a student who aspires to work in the atmospheric science industry. My areas of interest include weather and climate modeling, and how to improve the model's ability to reproduce extreme events.
       </p>
     </div>
   </div>

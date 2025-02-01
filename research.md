@@ -17,18 +17,17 @@ title: Research
 <div class="content">
   <h1>Research</h1>
   <p>
-    My research focuses on understanding the interplay between natural systems and human activities. 
-    Below are some key highlights of my work:
+    My current work focuses on the numerical model WRF’s reproducibility and performance during a record-breaking precipitation event happened during September 7 to 8 in 2023 at the Greater Bay Area (GBA) region. About 260 experiments have been conducted, and most experiments underestimate the peak precipitation. Evaluation are based on station records offered by the China's Meteorological Administration during the event.
   </p>
-  <img src="https://via.placeholder.com/600x300" alt="Research Image 1">
+  <img src="/assets/images/pattern_ACC-RMSE-TS.png" alt="Research Image 1">
   <p>
-    One of my primary projects involved analyzing large-scale precipitation data to identify patterns 
-    that contribute to soil erosion. This work is critical for developing mitigation strategies 
-    in vulnerable regions.
+    All the experiments are classified into two categories: Captured and Uncaptured events, based on certain metric: Root Mean Squared Error (RMSE) of precipitation between simulation and observation. On the basis of classification, the composites of captured and uncaptured events are visualized and compared, so as to identify the key factor which leads to the underestimate of peak precipitation.
   </p>
-  <img src="https://via.placeholder.com/600x300" alt="Research Image 2">
+  <img src="/assets/images/PR3_transit.png" alt="Research Image 2">
   <p>
-    Another key area of my research is the application of computational fluid dynamics to model 
-    water flow and sediment transport in river basins.
+  </p>
+  <img src="/assets/images/sw3.png" alt="Research Image 3">
+  <p>
+    This work needs further experiment designing.
   </p>
 </div>
