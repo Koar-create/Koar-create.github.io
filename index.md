@@ -12,16 +12,14 @@ title: Home
     height: 100vh;  /* 确保容器填满页面高度 */
   }
   .sidebar {
-    width: 25%;
-    padding: 10px;
+    width: 20%;
+    padding: 0px;
     border-right: 5px solid #ccc;
     text-align: left;
-    position: fixed;  /* 使用固定定位，确保sidebar固定 */
-    top: 0;  /* 从页面顶部开始 */
-    left: 0;  /* 紧贴页面左侧 */
-    height: 100vh;  /* 确保 sidebar 高度与页面一致 */
-    background-color: #f9f9f9;  /* 可选：背景色以分隔内容 */
-    z-index: 10; /* 确保sidebar层级高于content区域 */
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    background-color: #f9f9f9;
   }
   .sidebar img {
     border-radius: 50%;
@@ -29,21 +27,8 @@ title: Home
     height: 100px;
   }
   .sidebar p {
-    font-size: 0.9em;  /* 调小字体大小 */
+    font-size: 0.8em;  /* 调小字体大小 */
   }
-  .content {
-    margin-left: 25%;  /* 使右侧内容区域避开sidebar */
-    width: 100%;
-    padding: 10px;
-    margin-top: 30px; /* 确保内容区不被navbar遮挡 */
-  }
-  /* .bio {
-    margin-top: 12px;
-  }
-  .bio h2 {
-    font-weight: bold;
-    text-align: left;
-  } */
   .navbar {
     z-index: 100; /* 确保navbar层级更高，避免sidebar遮挡 */
   }
