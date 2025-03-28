@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      {% for item in site.navigation %}
+        <a href="{{ item.url }}">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+  </header>
+  <main>
+    {{ content }}
+  </main>
+  <footer>
+    {{ site.footer }}
+  </footer>
+</body>
+</html>
