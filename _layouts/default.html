@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ page.title }} | {{ site.title }}</title>
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  {% seo %}
 </head>
 <body>
   <header>
     <nav>
       {% for item in site.navigation %}
-        <a href="{{ item.url }}">{{ item.title }}</a>
+        <a href="{{ item.url | relative_url }}" class="nav-link">{{ item.title }}</a>
       {% endfor %}
     </nav>
   </header>

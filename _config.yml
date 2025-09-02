@@ -1,6 +1,6 @@
-title: "Yang's personal website"
+title: "Zhixian Yang's personal website"
 description: "Personal website of Zhixian Yang, showcasing research and education."
-author: "Z. Yang"
+author: "Zhixian Yang"
 theme: minima
 
 navigation:
@@ -11,4 +11,8 @@ navigation:
   - title: Education
     url: /education
 
-footer: "© 2024 Zhixian Yang | All rights reserved."
+# 确保 CSS 文件被包含
+assets:
+  - /assets/css/style.css
+
+footer: "© 2025 Zhixian Yang | All rights reserved."
