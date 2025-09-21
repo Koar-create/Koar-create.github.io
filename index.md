@@ -8,7 +8,7 @@ title: Home
     <img src="/assets/images/Portrait.jpg" alt="Portrait">
     <p class="name">Zhixian Yang</p>
     <div class="social-icons">
-      <a href="mailto:zyang248@connect.hkust-gz.edu.cn" title="Email (Academic)">
+      <a href="mailto:zyang248@connect.hkust-gz.edu.cn?Subject=Hello" title="Email (Academic)">
         <i class="fas fa-envelope"></i>
       </a>
       <a href="https://www.linkedin.com/in/zhixian-yang-45ba71241/" title="LinkedIn" target="_blank">
