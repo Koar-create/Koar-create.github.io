@@ -104,6 +104,25 @@ header {
   margin: 0 auto;
 }
 
+.social-icons {
+  text-align: center; /* 让图标整体居中 */
+  margin: 25px 0; /* 上下留出一些间距 */
+}
+
+.social-icons a {
+  display: inline-block;
+  font-size: 24px; /* 设置图标的大小 */
+  color: #555; /* 设置图标的默认颜色 */
+  margin: 0 12px; /* 设置图标之间的水平间距 */
+  transition: color 0.3s ease, transform 0.3s ease; /* 添加平滑过渡效果 */
+}
+
+/* 鼠标悬停在图标上时的效果 */
+.social-icons a:hover {
+  color: #0077b5; /* 鼠标悬停时改变颜色，#0077b5 是领英的品牌色，您也可以换成其他颜色 */
+  transform: scale(1.2); /* 图标稍微变大 */
+}
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;

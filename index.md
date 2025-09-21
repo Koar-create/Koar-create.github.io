@@ -7,14 +7,19 @@ title: Home
   <div class="sidebar">
     <img src="/assets/images/Portrait.jpg" alt="Portrait">
     <p class="name">Zhixian Yang</p>
-    <p><strong>Email:</strong>
-      <br><a href="mailto:zyang248@connect.hkust-gz.edu.cn">zyang248@connect.hkust-gz.edu.cn</a> (Academic)
-      <br><a href="mailto:yimu01439@gmail.com">yimu01439@gmail.com</a> (personal)
-    </p>
+    <div class="social-icons">
+      <a href="mailto:zyang248@connect.hkust-gz.edu.cn" title="Email (Academic)">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/zhixian-yang-45ba71241/" title="LinkedIn" target="_blank">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://www.github.com/Koar-create/" title="Github" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
     <p><strong>Mailing Address:</strong>
     <br>No. 1 Duxue Road, Nansha District, Guangzhou City, Guangdong Province, P. R. China (P.C.: 511453)</p>
-    <p><strong>Github:</strong>
-    <br><a href="https://www.github.com/Koar-create/">https://www.github.com/Koar-create/</a></p>
   </div>
   <div class="content">
     <div>
