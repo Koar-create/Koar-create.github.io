@@ -1,7 +1,9 @@
-title: "Zhixian Yang's personal website"
-description: "Personal website of Zhixian Yang, showcasing research and education."
+title: "Zhixian Yang's Academic Homepage"
+description: "Zhixian Yang's personal website, showcasing his research focus."
 author: "Zhixian Yang"
 theme: minima
+
+google_site_verification: 8w6lfu4dDeDjStoCmhWVGrgMo685KX02pq8Y1LscXeY
 
 navigation:
   - title: Home
@@ -11,8 +13,9 @@ navigation:
   - title: Education
     url: /education
 
-# 确保 CSS 文件被包含
 assets:
   - /assets/css/style.css
+
+webmaster_verifications:
 
 footer: "© 2025 Zhixian Yang | All rights reserved."
