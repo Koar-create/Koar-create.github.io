@@ -17,6 +17,9 @@ title: Home
       <a href="https://www.github.com/Koar-create/" title="Github" target="_blank">
         <i class="fab fa-github"></i>
       </a>
+      <a href="https://orcid.org/0009-0002-8477-4304" title="ORCID" target="_blank">
+        <i class="fab fa-orcid"></i>
+      </a>
     </div>
     <p><strong>Mailing Address:</strong>
     <br>No. 1 Duxue Road, Nansha District, Guangzhou City, Guangdong Province, P. R. China (P.C.: 511453)</p>
@@ -25,11 +28,11 @@ title: Home
     <div>
       <h1>Bio</h1>
       <p>
-        I am a MPhil student studying at the HKUST-GZ (Hong Kong University of Science and Technology, Guangzhou). 
-        Check <a href="https://www.hkust-gz.edu.cn/academics/education-innovation/red-bird-mphil-program/">here</a> if you are interested in HKUST (Guangzhou)'s Red Bird MPhil program. 
+        I am a MPhil student studying at the HKUST Guangzhou (Hong Kong University of Science and Technology, Guangzhou). 
+        Check <a href="https://www.hkust-gz.edu.cn/academics/education-innovation/red-bird-mphil-program/">here</a> if you are interested in HKUST Guangzhou's Red Bird MPhil program. 
         My aspiration is to pursue a PhD position focusing on topics related to atmospheric modeling, computational fluid dynamics, or their applications in aerospace/unmanned aerial systems. 
         <br><br>My supervisor is 
-        <a href="https://scholar.google.com/citations?user=7c9k148AAAAJ"> Dr. Henry Zhen Liu</a>. Before I entered HKUST (Guangzhou), I reveived my Bachelor Degree of Science in Atmospheric Sciences at Sun Yat-sen University (SYSU), where I finished my bachelor's thesis under the supervision of Dr. Maoqiu Jian.
+        <a href="https://scholar.google.com/citations?user=7c9k148AAAAJ"> Dr. Henry Zhen Liu</a>. Before I entered HKUST Guangzhou, I reveived my Bachelor Degree of Science in Atmospheric Sciences at Sun Yat-sen University (SYSU), where I finished my bachelor's thesis under the supervision of Dr. Maoqiu Jian.
         <br><br>Recently, I'm dedicated myself to propose my Red Bird MPhil project. 
         My primary research interest lies in <u>enhancing the resilience of drone delivery services to adverse weather</u>. My methodology involves using high-resolution Computational Fluid Dynamics (CFD) simulations to quantify the risks posed by mildly adverse weather, and integrating this data with route planning software to create safer, more reliable flight paths.
         <br><br>This work is highly interdisciplinary, and I am keen to collaborate with <u>excellent colleagues in the following areas</u>:
