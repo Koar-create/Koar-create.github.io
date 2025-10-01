@@ -36,8 +36,12 @@ title: Home
         <br><br>Recently, I'm dedicated myself to propose my Red Bird MPhil project. 
         My primary research interest lies in <u>enhancing the resilience of drone delivery services to adverse weather</u>. My methodology involves using high-resolution Computational Fluid Dynamics (CFD) simulations to quantify the risks posed by mildly adverse weather, and integrating this data with route planning software to create safer, more reliable flight paths.
         <br><br>This work is highly interdisciplinary, and I am keen to collaborate with <u>excellent colleagues in the following areas</u>:
-        <br><strong>• Intelligent Transportation (INTR Thrust) & UAV/VTOL Engineering (INTR/ROAS Thrust):</strong>
-        Seeking partners with knowledge/expertise in industrial-standard drone and VTOL hardware and control systems to bridge the gap between atmospheric modeling and real-world vehicle dynamics.
+        <br><strong>• UAV/VTOL Engineering & Path Planning (INTR/IoT/ROAS Thrust):</strong>
+        Seeking partners with expertise in developing and improving dynamic path planning algorithms that can leverage our weather data. Your knowledge of industrial-standard drone/VTOL hardware and control systems is also essential to bridge the gap between atmospheric modeling and real-world vehicle dynamics.
+        <br><strong>• Atmospheric & Low-Altitude Airflow Modeling (EOAS/SEE Thrust):</strong>
+        I welcome colleagues familiar with low-altitude fluid dynamics. Your theoretical insights will provide a crucial foundation for our research.
+        <br><strong>• Algorithm & Drone Control Optimization (AI/DSA/IoT/ROAS Thrust):</strong>
+        Beyond using nowcasting to expand delivery options, we can explore how to feed real-time weather data into the drone's control system. This would enable more dynamic and flexible responses to changing conditions.
         <br><br><strong>• Carbon Neutrality (CNCC Thrust) & Sustainability (SEE Thrust):</strong>
         I am interested in developing methodologies to quantify the carbon footprint of expanded drone operations, contributing to life cycle assessments and supporting carbon neutrality goals.
         <br><br><strong>• Sustainable Energy (SEE Thrust):</strong>
