@@ -131,3 +131,57 @@ header {
     border-right: none;
   }
 }
+
+/* =============================================================================
+   Role Table Styles
+   ========================================================================== */
+/* 容器样式，用于添加阴影、圆角和外边距 */
+.table-container {
+  margin-top: 24px; /* 在表格和上方段落之间添加一些间距 */
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow-x: auto; /* 在小屏幕上，如果表格太宽，则允许水平滚动 */
+  border: 1px solid #e9ecef;
+}
+
+/* 核心表格样式 */
+.role-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+
+/* 单元格和表头的通用样式 */
+.role-table th,
+.role-table td {
+  padding: 16px 20px; /* 设置充裕的内边距 (留白) */
+  text-align: left;
+  vertical-align: top; /* 确保内容从顶部对齐 */
+  border-bottom: 1px solid #e9ecef; /* 使用更柔和的水平分隔线 */
+  line-height: 1.6;
+}
+
+/* 移除最后一行单元格的下边框，使外观更干净 */
+.role-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* 表头 (thead) 样式 */
+.role-table thead th {
+  background-color: #f8f9fa; /* 浅灰色背景 */
+  font-weight: 600;
+  color: #212529; /* 深色文字以保证对比度 */
+  font-size: 0.95em;
+}
+
+/* 鼠标悬停在表体行上时的高亮效果 */
+.role-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* 第一列 (Role Title) 的特殊样式 */
+.role-table tbody td:first-child {
+  font-weight: 600;
+  color: #0056b3; /* 用蓝色突出显示角色标题 */
+}

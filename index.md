@@ -39,40 +39,62 @@ title: Home
       <p>
         Recently, I'm dedicated myself to propose my <u><strong>RBM project</strong></u>. 
         <br><br><strong>🚁 Project Title:</strong>
-        <br>Addressing the Economic and Operational Impacts of Adverse weather on Last-Mile Drone Logistics ⛈️
-        <br><br><strong>🔭 Project Vision:</strong>
-        <br>In the burgeoning <strong>Low-Altitude Economy (LAE)</strong>, the full potential of drone delivery is currently capped by a critical vulnerability: adverse weather. This project tackles this challenge head-on. Our goal is to develop an intelligent path-planning system that transforms a drone's operational decisions in poor weather from a simple "go/no-go" to a rich spectrum of strategic flight options. We are not just aiming to avoid risk; we are building a product that enables resilience, expands operational windows, and unlocks new economic possibilities for last-mile logistics.
-        By integrating high-resolution Computational Fluid Dynamics (CFD) with predictive data interfaces, we will create a system that empowers drone operators with diverse, safe, and efficient routing choices, turning drone delivery into a truly reliable, all-weather service.
+        <br>Addressing the Economic and Operational Impacts of Adverse weather on Last-Mile Drone Logistics ⛈️: Building a Resilient Digital Twin for Urban Drone Logistics
+        <br><br><strong>🔭 Project Vision: From Go/No-Go to Intelligent, All-Weather Operations</strong>
+        <br>In the burgeoning <strong>Low-Altitude Economy (LAE)</strong>, the full potential of drone delivery is currently capped by a critical vulnerability: adverse weather. This project tackles this challenge head-on by moving beyond simple "go/no-go" decisions. Our goal is to develop an intelligent, multi-layered digital twin that empowers drone operators with a rich spectrum of strategic flight options in complex urban airspace.
+        <br>This initiative is more than just an engineering challenge; it is a mission to build a <strong>Digital Twin Policy Lab</strong>. By fusing high-fidelity atmospheric science, robust flight simulation, and insightful urban analytics, we aim to translate complex physical data into actionable policy and economic insights. We are not just building a risk-avoidance tool; we are creating a system that enables resilience, expands operational windows, and unlocks new economic possibilities for last-mile logistics, turning drone delivery into a truly reliable, all-weather service.
       </p>
       <hr>
       <p>
-        <strong>📈 Project Update (Last updated: Friday, Oct 17, 12 PM):</strong>
+        <strong>workflow End-to-End Validated Workflow</strong>
+        <br><br>Our project is built upon a technically feasible and meticulously planned workflow that ensures seamless integration across interdisciplinary modules. The process transforms raw geospatial and meteorological data into a high-fidelity, interactive digital twin, allowing for robust analysis and decision-making.
+        <br><img src="/assets/images/workflow_latitudinal.svg" alt="workflow" style="max-width:1400px; height:auto;">
+        <br>A detailed technical breakdown of this workflow can be found in our <u>Feasibility & Toolchain Analysis report</u> (中文).
+      </p>
+      <hr>
+      <p>
+        <strong>📈 Project Update (Last updated: Friday, Oct 18, 4 PM):</strong>
         <br>Our team is actively growing! We are excited to confirm that two 25 MPhil students have already committed to the project: one with an interest in the <strong>EOAS Thrust</strong> (Academic Supervisor: Prof. Zhen Liu) and another focusing on the <strong>SEE Thrust</strong> (Academic Supervisor: Prof. Xiaozhou Fan).
-        <br>Furthermore, we are in advanced discussions with two highly promising 25 MPhil students for the <strong>DSA and INTR Thrusts</strong>. We are making great progress towards building a strong, multidisciplinary team.
+        <br>Furthermore, we are in advanced discussions with two highly promising 25 MPhil students for the <strong>INTR Thrust</strong>. We are making great progress towards building a strong, multidisciplinary team.
       </p>
       <hr>
       <p>
         <strong>🤝 Seeking Collaborators to Shape the Future of Drone Logistics:</strong>
-        <br>This project is more than research; it's a mission to build a resilient, intelligent, and autonomous drone logistics system that can operate safely even when the weather turns bad.
-        <br>We are creating a complete decision-making pipeline: from predicting the physics of the atmosphere, to building a rich digital twin of the city, to architecting the AI brain that makes the final flight decision. To achieve this, I am looking for three core partners to own a critical piece of this vision.
+        <br>This project is a mission to build a resilient, intelligent, and autonomous drone logistics system that can operate safely even when the weather turns bad. To achieve this, we are looking for core partners to own a critical piece of this vision. We are recruiting for the following roles:
       </p>
-      <hr>
-      <p style="line-height: 40px;">
-        <strong>We Are Recruiting for Three Core Roles:</strong>
-        <br><br><strong>1. The Brain: AI & Optimization Architect</strong>
-        <br><strong>(Your background: Operations Research, Route Planning, Reinforcement Learning, Systems Engineering, <u>one of them.</u>)</strong>
-        <br>You will be the architect of the project's core decision-making engine. Your mission is to design and implement the dynamic path-planning algorithms that tell the drone where and when to fly. You will consume the rich, high-fidelity risk and performance data from our "World Builder" and transform it into the safest, most efficient flight paths. Your work is the strategic heart of the entire system.
-        <br><br><strong>2. The World Builder: Digital Twin & Simulation Specialist</strong>
-        <br><strong>(Your background: GIS, 3D Modeling, AIGC, IoT, Robotics, Performance Modeling, <u>one of them.</u>)</strong>
-        <br>You will construct the high-fidelity virtual world where our drones are tested to their limits. This role has two critical parts:
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Constructing the Stage:</strong>
-        You will use your skills in <strong>GIS, 3D modeling, or AIGC</strong> to generate diverse, realistic urban environments that form the testbeds for our simulations.
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Defining the Rules:</strong>
-        You will build the crucial <strong>"Drone Performance Simulator"</strong>. This involves modeling the physics of the drone itself and translating the raw atmospheric data (from The Physicist) into the precise "cost" and "risk" parameters that The Brain needs to make smart decisions. You are the indispensable bridge between the physical world and the decision engine.
-        <br><br><strong>3. The Physicist: Atmospheric & CFD Modeler</strong>
-        <br><strong>(Your background: Atmospheric Science, CFD, Fluid Dynamics, e.g., using WRF/Fluent. <u>One of them.</u>)</strong>
-        <br>You are the source of truth for our physical world. Your expertise will provide the scientific backbone of the project by generating high-fidelity atmospheric data—wind, turbulence, and precipitation at the low-altitude, urban scale. This data is the foundational input for the entire system, ensuring every decision our AI makes is grounded in accurate physical reality.
-      </p>
+      <div class="table-container">
+        <table class="role-table">
+          <thead>
+            <tr>
+              <th>Role Title</th>
+              <th>Core Mission</th>
+              <th>Ideal Background</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Urban Analyst & Scenario Designer</td>
+              <td>The "Question Asker" & "Value Interpreter" of the project. You will define the core urban challenges to be investigated and translate the final engineering results into meaningful economic and policy conclusions.</td>
+              <td>Urban Governance & Design (UGOD), GIS, Public Policy (IPE), with a strong interest in data analysis.</td>
+            </tr>
+            <tr>
+              <td>The Physicist:<br>Atmospheric & CFD Modeler</td>
+              <td>The "Source of Truth" for our physical world. You will generate the high-fidelity atmospheric data that forms the scientific backbone of the entire simulation, ensuring all decisions are grounded in accurate physical reality.</td>
+              <td>Atmospheric Science (EOAS), CFD, Fluid Dynamics (e.g., WRF/Fluent), Sustainable Energy & Environment (SEE).</td>
+            </tr>
+            <tr>
+              <td>The Brain:<br>AI & Optimization Architect</td>
+              <td>The architect of the project's core decision-making engine. You will design and implement the dynamic path-planning algorithms that consume rich environmental data and output the safest, most efficient flight paths.</td>
+              <td>Data Science (DSA), Operations Research, Reinforcement Learning, Robotics & Autonomous Systems (ROAS), Intelligent Transport (INTR).</td>
+            </tr>
+            <tr>
+              <td>The World Builder:<br>Digital Twin & Simulation Specialist</td>
+              <td>The master of the virtual world. You will be responsible for both building the simulation environment and visualizing the final results, transforming raw 3D models and data into a fully realized, interactive digital twin.</td>
+              <td>3D Modeling, AIGC, Robotics (ROAS), IoT, Computer Media & Arts (CMA).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <hr>
       <p>
         <strong>💬 Interested in collaborating?</strong>
