@@ -49,7 +49,7 @@ title: Home
         <strong>workflow End-to-End Validated Workflow</strong>
         <br><br>Our project is built upon a technically feasible and meticulously planned workflow that ensures seamless integration across interdisciplinary modules. The process transforms raw geospatial and meteorological data into a high-fidelity, interactive digital twin, allowing for robust analysis and decision-making.
         <br><img src="/assets/images/workflow_latitudinal.svg" alt="workflow" style="max-width:1400px; height:auto;">
-        <br>A detailed technical breakdown of this workflow can be found in our <u>Feasibility & Toolchain Analysis report</u> (中文).
+        <br>A detailed technical breakdown of this workflow can be found in our <u>Feasibility & Toolchain Analysis report</u> (<a href="/assets/documents/Feasibility & Toolchain Analysis report (CN).pdf">中文</a>).
       </p>
       <hr>
       <p>
