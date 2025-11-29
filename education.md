@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Education
+lang: en
 ---
 
 <div class="container">

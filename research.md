@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Research
+lang: en
 ---
 
 <div class="container">
@@ -36,7 +37,7 @@ title: Research
     </h2>
     <p>
       <strong>Abstract&nbsp;&nbsp;</strong>
-      On 7-8 September 2023, southern China witnessed a historic rainfall event. Using the Weather Research and Forecasting (WRF) model, we investigated the underlying physics of this extreme precipitation. More than 250 parameterization experiments revealed that most schemes failed to reproduce the observed rainfall intensity (>400 mm day⁻¹), highlighting the challenge in forecasting such rare events. Sensitivity analyses identified the cumulus parameterization scheme as the dominant controlling factor. Crucially, the initial divergence between successful and unsuccessful simulations originated in the upper-level dynamics, driven by the choice of cumulus scheme in the model's outer domains. This suggests that altered vertical transport of momentum and moisture aloft is a key precursor. However, the precise mechanism linking these early upper-level changes to the subsequent development of intense surface precipitation remains to be elucidated.
+      On 7-8 September 2023, southern China witnessed a historic rainfall event. Using the Weather Research and Forecasting (WRF) model, we investigated the underlying physics of this extreme precipitation. More than 250 parameterization experiments revealed that most schemes failed to reproduce the observed rainfall intensity (>600 mm day⁻¹), highlighting the challenge in forecasting such rare events. Sensitivity analyses identified the cumulus parameterization scheme as the dominant controlling factor. Crucially, the initial divergence between successful and unsuccessful simulations originated in the upper-level dynamics, driven by the choice of cumulus scheme in the model's outer domains. This suggests that altered vertical transport of momentum and moisture aloft is a key precursor. However, the precise mechanism linking these early upper-level changes to the subsequent development of intense surface precipitation remains to be elucidated.
     </p>
     <p>
       <strong>Introduction&nbsp;&nbsp;</strong>On 5 September 2023, Typhoon Haikui (Chinese: 海葵) made landfall in Fujian, subsequently moving into Guangdong and dissipated on September 5th. Yet its remnants stalled over the Greater Bay Area region (GBA) for over two days. As the low pressure trough associated with Haikui's remnants interacted with the south-westerly monsoon, the GBA region started experiencing extreme rainfall beginning on the night of September 7th.

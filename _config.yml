@@ -12,6 +12,8 @@ navigation:
     url: /research
   - title: Education
     url: /education
+  - title: RBM recruit
+    url: /rbm_recruit
 
 assets:
   - /assets/css/style.css

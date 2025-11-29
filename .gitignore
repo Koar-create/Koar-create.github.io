@@ -1,5 +1,5 @@
 index.html
 Archive/
 _site/
-*_.jpg
-*_.png
+*.jpg
+*.png

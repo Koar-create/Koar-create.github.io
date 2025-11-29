@@ -9,6 +9,80 @@
 </head>
 <body>
   <header>
+    <!-- 引入 Font Awesome CDN 用于 globe icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <div class="language-switcher" style="position: absolute; top: 10px; right: 10px; z-index: 1000;">
+      <button class="dropdown-btn" onclick="toggleDropdown()">
+        <i class="fas fa-globe" style="font-size: 20px; color: #333;"></i>
+      </button>
+      <div class="dropdown-content" id="langDropdown" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0,0,0,0.1); min-width: 120px; border-radius: 5px; overflow: hidden;">
+        {% if page.url == '/' %}
+          {% assign en_url = '/' %}
+          {% assign cn_url = '/index_cn.html' %}
+        {% elsif page.url == '/index_cn.html' %}
+          {% assign en_url = '/' %}
+          {% assign cn_url = '/index_cn.html' %}
+        {% else %}
+          {% if page.lang == 'cn' %}
+            {% assign en_url = page.url | replace: '_cn.html', '.html' %}
+            {% assign cn_url = page.url %}
+          {% else %}
+            {% assign en_url = page.url %}
+            {% assign cn_url = page.url | replace: '.html', '_cn.html' %}
+          {% endif %}
+        {% endif %}
+        <a href="{{ en_url }}" {% if page.lang == 'en' %}style="font-weight: bold;"{% endif %}>English</a>
+        <a href="{{ cn_url }}" {% if page.lang == 'cn' %}style="font-weight: bold;"{% endif %}>中文</a>
+      </div>
+    </div>
+    <script>
+    function toggleDropdown() {
+      var dropdown = document.getElementById('langDropdown');
+      if (dropdown.style.display === 'none') {
+        dropdown.style.display = 'block';
+        dropdown.style.animation = 'fadeIn 0.3s'; // 淡入动画
+      } else {
+        dropdown.style.display = 'none';
+      }
+    }
+    // 点击外部关闭
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropdown-btn') && !event.target.matches('.fa-globe')) {
+        var dropdown = document.getElementById('langDropdown');
+        if (dropdown.style.display === 'block') {
+          dropdown.style.display = 'none';
+        }
+      }
+    }
+    </script>
+    <style>
+    .dropdown-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%; /* 圆形按钮 */
+      transition: background 0.3s;
+    }
+    .dropdown-btn:hover {
+      background: #f0f0f0;
+    }
+    .dropdown-content a {
+      display: block;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #333;
+      transition: background 0.3s;
+    }
+    .dropdown-content a:hover {
+      background: #e6e6e6;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    </style>
     <nav>
       {% for item in site.navigation %}
         <a href="{{ item.url | relative_url }}" class="nav-link">{{ item.title }}</a>
