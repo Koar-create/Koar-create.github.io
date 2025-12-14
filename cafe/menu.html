@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>One Shot Coffee Club Menu</title>
+    <style>
+        /* --- 基础视觉样式 --- */
+        :root {
+            --bg-color: #F9F5F0; /* 米色纸质背景 */
+            --text-color: #3E2723; /* 深咖啡色 */
+            --accent-color: #8D6E63; /* 浅咖色 */
+            --line-color: #D7CCC8;
+            --notice-bg: #4E342E; /* 顶部提示条背景色 - 深咖色 */
+            --notice-text: #FFF8E1; /* 顶部提示条文字色 */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            /* 优先使用衬线体，营造复古/高级感 */
+            font-family: "Didot", "Times New Roman", "Songti SC", "SimSun", serif; 
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* --- 新增：顶部醒目提示条 --- */
+        #top-notice {
+            background-color: var(--notice-bg);
+            color: var(--notice-text);
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1001; /* 确保在 Header 之上 */
+        }
+        .notice-en { font-weight: bold; margin-bottom: 4px; display: block; }
+        .notice-cn { font-size: 0.75rem; opacity: 0.9; display: block;}
+
+        /* --- Header & Logo --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            position: sticky;
+            top: 0;
+            background: rgba(249, 245, 240, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 10;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo-container { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .logo-en { 
+            font-size: 1.2rem; 
+            font-weight: 900; 
+            letter-spacing: -0.5px; 
+            line-height: 1; 
+            margin-bottom: 4px; 
+        }
+        .logo-cn { 
+            font-size: 0.7rem; 
+            font-weight: normal; 
+            letter-spacing: 1px; 
+            color: var(--accent-color); 
+        }
+
+        .menu-link {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        .header-nav { display: flex; align-items: center; }
+        
+        /* --- 主内容 --- */
+        main { padding: 40px 25px; }
+
+        /* 双语标题通用样式 */
+        .bilingual-title h1 { margin: 0; font-size: 1.1rem; font-weight: normal; font-family: "Georgia", serif; }
+        .bilingual-title .sub { font-size: 0.9rem; color: var(--accent-color); margin-top: 6px; }
+
+        .price-row { 
+            display: flex; 
+            align-items: baseline; 
+            margin-bottom: 50px; 
+        }
+        .dots-filler { 
+            flex-grow: 1; 
+            border-bottom: 2px dotted var(--line-color); 
+            margin: 0 15px; 
+            position: relative; 
+            top: -6px; 
+        }
+
+        /* --- 修改：价格区域 --- */
+        .price-container {
+            display: flex;
+            align-items: center;
+            position: relative; /* 用于定位气泡 */
+        }
+
+        .price h1 { margin: 0; font-size: 1rem; font-weight: bold; font-family: "Courier New", monospace; }
+        .price .sub { font-size: 0.9rem; color: var(--accent-color); margin-top: 6px; }
+
+        /* 叹号按钮样式 */
+        .info-btn {
+            width: 22px; height: 22px;
+            border: 1px solid var(--text-color);
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text-color);
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex; align-items: center; justify-content: center;
+            margin-left: 8px;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        /* 把原来的 #price-tooltip 改为 .price-tooltip */
+        .price-tooltip {
+            position: absolute;
+            right: 0;
+            top: 55px; /* 稍微调整高度以适应双语价格 */
+            background-color: #000;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            width: 200px;
+            text-align: left;
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: sans-serif; /* 阅读清晰 */
+            pointer-events: none;
+        }
+        
+        /* 气泡显示状态 */
+        .price-tooltip.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        /* 气泡小三角 */
+        .price-tooltip::after {
+            content: "";
+            position: absolute;
+            top: -5px; right: 8px; /* 对齐叹号 */
+            border-width: 0 5px 5px 5px;
+            border-style: solid;
+            border-color: transparent transparent #000 transparent;
+        }
+
+        /* --- 豆单列表 --- */
+        .section-header { margin-bottom: 30px; }
+        .section-title { 
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            margin: 0; 
+            text-transform: uppercase;
+        }
+        .section-cn { 
+            font-size: 0.9rem; 
+            color: var(--accent-color); 
+            margin-top: 2px; 
+        }
+
+        .bean-list { list-style: none; padding: 0; }
+        .bean-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line-color);
+        }
+        
+        /* 编号样式 */
+        .bean-info { flex: 1; padding-right: 10px; display: flex; flex-direction: column; gap: 4px;}
+        .bean-code {
+            font-weight: bold;
+            margin-right: 8px;
+            font-family: "Courier New", monospace;
+            font-size: 1.4rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            width: 30px; /* 固定宽度对齐 */
+        }
+
+
+        /* 第一行：国家 - 产区 */
+        .info-header { margin-bottom: 2px; }
+        .info-header-en { font-size: 1.1rem; font-weight: bold; line-height: 1.1;}
+        .info-header-cn { font-size: 0.8rem; color: var(--accent-color); margin-top: 2px;}
+        
+        /* 第二行：风味 */
+        .info-flavor { margin-top: 6px; }
+        .flavor-en { font-size: 0.9rem; color: #666; line-height: 1.3; }
+        .flavor-cn { font-size: 0.8rem; color: #888; }
+        
+        /* 第三行：处理 - 烘焙 (斜体) */
+        .info-specs { font-style: italic; font-family: serif; margin-top: 4px; color: #5D4037;}
+        .specs-en { font-size: 0.9rem; }
+        .specs-cn { font-size: 0.75rem; opacity: 0.8; }
+
+        .more-btn {
+            flex-shrink: 0;
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            width: 32px; 
+            height: 32px;
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            cursor: pointer; 
+            margin-top: 2px;
+            transition: all 0.2s;
+        }
+        .more-btn:active { background: var(--text-color); color: #fff; transform: scale(0.95); }
+
+        /* --- 侧边栏 (Sidebar) --- */
+        #sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(62, 39, 35, 0.4); 
+            backdrop-filter: blur(2px);
+            opacity: 0; pointer-events: none; z-index: 99;
+        }
+        #sidebar {
+            position: fixed; top: 0; left: 0; bottom: 0;
+            width: 80%; max-width: 320px;
+            background: #fff;
+            transform: translateX(-100%); 
+            z-index: 100;
+            display: flex; flex-direction: column;
+            padding: 40px; box-sizing: border-box;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-links { margin-top: 60px; }
+        .sidebar-links a {
+            display: block; text-decoration: none; color: var(--text-color);
+            font-size: 1.8rem; margin-bottom: 35px; opacity: 0;
+            transform: translateX(-20px); 
+            font-family: "Didot", serif;
+        }
+        
+        /* 侧边栏 - 主理人样式 */
+        .sidebar-footer { margin-top: auto; opacity: 0;}
+        .footer-item { margin-bottom: 10px; }
+        .footer-label { font-size: 0.7rem; font-weight: bold; color: var(--accent-color); letter-spacing: 1px;}
+        .footer-val { font-size: 0.9rem; color: #999; }
+
+        /* 主理人块级样式 */
+        .owner-block {
+            margin-bottom: 12px; /* 两个主理人之间的间距 */
+            line-height: 1.2;    /* 收紧行高 */
+        }
+
+        /* 第一行：英文名 + 年级 */
+        .owner-en {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-color);
+            font-family: "Didot", serif; /* 保持衬线体风格 */
+        }
+
+        /* 年级样式：稍微缩小，避免喧宾夺主 */
+        .owner-grade {
+            font-size: 0.8rem;
+            font-weight: normal;
+            opacity: 0.8;
+        }
+
+        /* 第二行：中文名 + 微信 */
+        .owner-cn {
+            font-size: 0.8rem;
+            color: var(--accent-color); /* 使用浅咖色 */
+            margin-top: 2px;
+        }
+
+        /* 分隔符样式 */
+        .separator {
+            margin: 0 4px;
+            opacity: 0.5;
+        }
+
+        /* --- 详情浮窗 (Modal) --- */
+        #modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.6); 
+            backdrop-filter: blur(10px);
+            opacity: 0; pointer-events: none;
+            display: flex; align-items: center; justify-content: center; z-index: 200;
+        }
+        #modal-card {
+            background: #fff; 
+            width: 85%; 
+            max-width: 360px; 
+            padding: 30px;
+            border-radius: 2px; /* 更锐利的边角更有质感 */
+            box-shadow: 0 20px 50px rgba(62, 39, 35, 0.2);
+            transform: scale(0.9) translateY(30px); 
+            opacity: 0;
+            text-align: left; 
+            border: 1px solid #EFEBE9; 
+            position: relative;
+        }
+        #modal-card::before {
+            content: ""; 
+            position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid var(--bg-color); pointer-events: none;
+        }
+
+        #modal-header { border-bottom: 2px solid var(--bg-color); padding-bottom: 15px; margin-bottom: 15px; }
+        #modal-sub { font-size: 0.8rem; color: var(--accent-color); font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        #modal-title { font-size: 1.4rem; margin: 5px 0 0 0; color: var(--text-color); line-height: 1.2; }
+        #modal-title-cn { font-size: 1rem; color: #666; margin-top: 5px; }
+
+        .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; margin-top: 20px;}
+        .spec-item { display: flex; flex-direction: column; }
+        .spec-label { color: #aaa; margin-bottom: 2px; font-size: 0.7rem; text-transform: uppercase; }
+        .spec-val-en { color: var(--text-color); font-weight: bold; font-size: 0.9rem;}
+        .spec-val-cn { color: var(--accent-color); font-size: 0.8rem;}
+
+        #modal-close {
+            width: 100%; 
+            padding: 12px;
+            background: var(--text-color); 
+            color: #fff; 
+            border: none;
+            font-family: inherit; 
+            font-size: 0.9rem; 
+            letter-spacing: 2px;
+            cursor: pointer; 
+            transition: background 0.3s;
+        }
+        #modal-close:hover { background: #5D4037; }
+
+    </style>
+</head>
+<body>
+
+    <div id="top-notice">
+        <span class="notice-en">Payment not supported here. Please contact the owner to order and transfer via mobile payment.</span>
+        <span class="notice-cn">本咖啡角未开发线上点单系统，点单请直接联系咖啡师，并通过移动支付给咖啡师转账。</span>
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <span class="logo-en">One Shot Coffee Club</span>
+            <span class="logo-cn">整一杯咖啡社</span>
+        </div>
+        <div class="header-nav">
+            <span class="menu-link" id="openMenu">Menu</span>
+        </div>
+    </header>
+
+    <main>
+<div class="price-row">
+            <div class="bilingual-title">
+                <h1>Cold brew coffee</h1>
+                <div class="sub">冷萃咖啡</div>
+            </div>
+            <div class="dots-filler"></div>
+            <div class="price-container">
+                <div class="price">
+                    <h1>¥15/cup (300ml)</h1>
+                    <div class="sub">¥15/杯 (300ml)</div>
+                </div>
+                <button class="info-btn">…</button>
+                <div class="price-tooltip">
+                    Available on Wed<br>目前只在周三提供
+                </div>
+            </div>
+        </div>
+        
+        <div class="price-row">
+            <div class="bilingual-title">
+                <h1>Pour over coffee</h1>
+                <div class="sub">手冲咖啡</div>
+            </div>
+            <div class="dots-filler"></div>
+            <div class="price-container">
+                <div class="price">
+                    <h1>¥10/cup (240ml)</h1>
+                    <div class="sub">¥10/杯 (240ml)</div>
+                </div>
+                <button class="info-btn">!</button>
+                <div class="price-tooltip">
+                    Feel free to increase the price at your discretion when the barista is busy.
+                </div>
+            </div>
+        </div>
+        <div class="section-header">
+            <div class="section-title">OPTIONAL BEANS</div>
+            <div class="section-cn">可选豆种</div>
+        </div>
+        
+        <ul class="bean-list" id="beanList">
+            </ul>
+    </main>
+
+    <div id="sidebar-overlay"></div>
+    <div id="sidebar">
+        <div class="logo-container" style="margin-bottom: 20px;">
+            <span class="logo-en" style="font-size: 1.5rem;">One Shot<br>Coffee Club</span>
+        </div>
+        <nav class="sidebar-links">
+            <a href="#">Menu</a>
+            <a href="about_us.html">About Us</a>
+            <a href="events.html">Events</a>
+        </nav>
+        <div>
+            <div class="footer-item">
+                <div class="footer-label">OWNERS / 主理人</div>
+                
+                <div class="owner-block">
+                    <div class="owner-en">Tekki <span class="owner-grade">(24MPhil)</span></div>
+                    <div class="owner-cn">郑蕲 <span class="separator">|</span> WeChat: w2740543076</div>
+                </div>
+
+                <div class="owner-block">
+                    <div class="owner-en">Jeezen <span class="owner-grade">(25MPhil)</span></div>
+                    <div class="owner-cn">杨智贤 <span class="separator">|</span> WeChat: koar23172_</div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <div class="footer-item">
+                <div class="footer-label">OPEN</div>
+                <div class="footer-val">N/A</div>
+            </div>
+            <div class="footer-item">
+                <div class="footer-label">ADDRESS</div>
+                <div class="footer-val">HKUST(GZ) E1-4F Workplace Area (香港科技大学广州E1-4F工位区)</div>
+            </div>
+            <div class="footer-item">
+                <div class="footer-label">TEL</div>
+                <div class="footer-val">N/A</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-overlay">
+        <div id="modal-card">
+            <div id="modal-header">
+                <div id="modal-sub">FARM</div>
+                <h2 id="modal-title">Farm Name</h2>
+                <div id="modal-title-cn">庄园中文名</div>
+            </div>
+            
+            <div id="modal-flavor-box">
+                <div class="spec-label">FLAVOR NOTES</div>
+                <div style="font-style: italic; margin-top: 5px;">
+                    <div id="m-flavor-en" style="color:var(--text-color);"></div>
+                    <div id="m-flavor-cn" style="color:var(--accent-color); font-size: 0.9rem;"></div>
+                </div>
+            </div>
+
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-label">Process</div>
+                    <div class="spec-val-en" id="spec-process-en"></div>
+                    <div class="spec-val-cn" id="spec-process-cn"></div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Roast</div>
+                    <div class="spec-val-en" id="spec-roast-en"></div>
+                    <div class="spec-val-cn" id="spec-roast-cn"></div>
+                </div>
+                <div class="spec-item" style="grid-column: span 2;">
+                    <div class="spec-label">Varietal</div>
+                    <div class="spec-val-en" id="spec-var-en"></div>
+                    <div class="spec-val-cn" id="spec-var-cn"></div>
+                </div>
+            </div>
+
+            <button id="modal-close">CLOSE</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 通用价格气泡交互逻辑 (支持多个按钮) ---
+        
+        // 1. 获取所有带有 info-btn 类的按钮
+        const allInfoBtns = document.querySelectorAll('.info-btn');
+
+        // 2. 为每一个按钮添加点击事件
+        allInfoBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 阻止冒泡
+                
+                // 找到当前这个按钮对应的气泡
+                // 逻辑：在当前按钮的父容器(price-container)里找 .price-tooltip
+                const container = btn.closest('.price-container');
+                const tooltip = container.querySelector('.price-tooltip');
+
+                // 先关闭页面上所有其他的气泡（互斥逻辑，可选）
+                document.querySelectorAll('.price-tooltip').forEach(t => {
+                    if (t !== tooltip) t.classList.remove('active');
+                });
+
+                // 切换当前气泡的状态
+                tooltip.classList.toggle('active');
+            });
+        });
+
+        // 3. 点击页面空白处关闭所有气泡
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.price-tooltip').forEach(tooltip => {
+                tooltip.classList.remove('active');
+            });
+        });
+
+        // 为了满足英文在上中文在下的要求，我对原始数据进行了英文化补全
+        const beans = [
+            { 
+                id: '1.', 
+                countryEn: 'COLOMBIA', countryCn: '哥伦比亚',
+                regionEn: 'Tolima', regionCn: '托利马',
+                farmEn: 'Finca La Esperanza (Producer: Edwin Guarnizo)', farmCn: 'Finca La Esperanza 庄园 (咖啡农: Edwin Guarnizo)',
+                processEn: 'Washed', processCn: '水洗',
+                roastEn: 'Light', roastCn: '浅烘焙',
+                flavorEn: 'Blueberry, Yogurt, Mango', flavorCn: '蓝莓、酸奶、芒果',
+                varietalEn: 'Pink Bourbon', varietalCn: '粉红波旁'
+            },
+            { 
+                id: '2.', 
+                countryEn: 'COSTA RICA', countryCn: '哥斯达黎加',
+                regionEn: 'Brunca', regionCn: '布伦卡',
+                farmEn: 'Las Piedras', farmCn: 'Las Piedras 庄园',
+                processEn: 'Black Honey', processCn: '黑蜜处理',
+                roastEn: 'Light', roastCn: '浅烘焙',
+                flavorEn: 'Raisin, Green Tea, Date, Pineapple', flavorCn: '葡萄干、樱桃绿茶、蜜枣、熟凤梨',
+                varietalEn: 'F1 Hybrid', varietalCn: 'F1种'
+            },
+            { 
+                id: '3.', 
+                countryEn: 'ETHIOPIA', countryCn: '埃塞俄比亚',
+                regionEn: 'Guji', regionCn: '古吉',
+                farmEn: 'Harro Wachu', farmCn: 'Harro Wachu',
+                processEn: 'Washed', processCn: '水洗',
+                roastEn: 'Light', roastCn: '浅烘焙',
+                flavorEn: 'Lemongrass, Ginger Lily, White Peach', flavorCn: '柠檬草、姜花、白桃',
+                varietalEn: 'Heirloom', varietalCn: '原生种'
+            },
+            { 
+                id: '4.', 
+                countryEn: 'ETHIOPIA', countryCn: '埃塞俄比亚',
+                regionEn: 'Yirgacheffe - Kochere', regionCn: '耶加雪菲 - 科契尔',
+                farmEn: 'Beloya', farmCn: ' 碧罗雅处理站',
+                processEn: 'Washed', processCn: '水洗',
+                roastEn: 'Med-Light', roastCn: '中浅烘焙',
+                flavorEn: 'Citrus, Lime, Berry, Jasmine', flavorCn: '柑橘、青柠、莓果、茉莉花',
+                varietalEn: 'Heirloom', varietalCn: '原生种'
+            },
+            { 
+                id: '5.', 
+                countryEn: 'ETHIOPIA', countryCn: '埃塞俄比亚',
+                regionEn: 'Sidamo - Bensa - Bura', regionCn: '西达摩 - 班萨地区 - 布拉区/镇', 
+                farmEn: 'Karamo - Agena', farmCn: '卡拉莫村 - 阿吉纳处理厂',
+                processEn: 'Natural', processCn: '日晒',
+                roastEn: 'Light', roastCn: '浅烘焙',
+                flavorEn: 'Red Floral, Strawberry, Pineapple', flavorCn: '红色花、草莓、菠萝、橘子汽水',
+                varietalEn: 'Heirloom/74158', varietalCn: '原生种/74158'
+            },
+            { 
+                id: '6.', 
+                countryEn: 'EL SALVADOR', countryCn: '萨尔瓦多',
+                regionEn: 'Chalatenango', regionCn: '查拉特南戈',
+                farmEn: 'Finca La Joya (Producer: Jaime Guevara)', farmCn: 'Finca La Joya 庄园 (咖啡农: Jaime Guevara)',
+                processEn: 'Honey', processCn: '蜜处理',
+                roastEn: 'Light', roastCn: '浅烘焙',
+                flavorEn: 'Apple, Candied Lemon, Almond', flavorCn: '苹果、蜜渍柠檬、杏仁、红糖',
+                varietalEn: 'Single Origin Pacas', varietalCn: '单一种帕卡斯'
+            },
+            { 
+                id: '7.', 
+                countryEn: 'GUATEMALA', countryCn: '危地马拉',
+                regionEn: 'Antigua', regionCn: '安提瓜',
+                farmEn: 'San Jose', farmCn: '圣荷西庄园',
+                processEn: 'Washed', processCn: '水洗',
+                roastEn: 'Med-Dark', roastCn: '中深烘焙',
+                flavorEn: 'Floral, Spice, Caramel, Cocoa', flavorCn: '花香、香料、焦糖、烟丝、可可',
+                varietalEn: 'Bourbon, Caturra', varietalCn: '波旁、卡杜拉'
+            },
+            { 
+                id: '8.', 
+                countryEn: 'PANAMA', countryCn: '巴拿马',
+                regionEn: 'Boquete', regionCn: '波奎特',
+                farmEn: 'Elida', farmCn: '艾力达庄园',
+                processEn: 'Natural', processCn: '日晒',
+                roastEn: 'Direct Fire', roastCn: '直火烘焙',
+                flavorEn: 'Fig, Raisin, Apricot, Pomelo', flavorCn: '无花果、葡萄干、杏桃、柚子茶',
+                varietalEn: 'Typica', varietalCn: '铁皮卡'
+            },
+            { 
+                id: '9.', 
+                countryEn: 'RWANDA', countryCn: '卢旺达',
+                regionEn: 'N/A', regionCn: '-', 
+                farmEn: 'N/A', farmCn: '-',
+                processEn: 'Washed', processCn: '水洗',
+                roastEn: 'Med-Light', roastCn: '中浅烘焙',
+                flavorEn: 'Tangerine, Black Tea, Sweet', flavorCn: '蜜橘、红茶、果甜感',
+                varietalEn: 'Bourbon', varietalCn: '波旁'
+            }
+        ];
+
+        // --- 渲染列表 ---
+        const listContainer = document.getElementById('beanList');
+        beans.forEach(bean => {
+            const li = document.createElement('li');
+            li.className = 'bean-item';
+
+            // 布局：Code | Country-Region / Process Roast / Flavor
+            li.innerHTML = `
+                <div class="bean-code">${bean.id}</div>
+
+                <div class="bean-info">
+                    <div class="info-header">
+                        <div class="info-header-en">${bean.countryEn} - ${bean.regionEn}</div>
+                        <div class="info-header-cn">${bean.countryCn} - ${bean.regionCn}</div>
+                    </div>
+
+                    <div class="info-specs">
+                        <div class="specs-en">${bean.processEn} · ${bean.roastEn}</div>
+                        <div class="specs-cn">${bean.processCn} · ${bean.roastCn}</div>
+                    </div>
+
+                    <div class="info-flavor">
+                        <div class="flavor-en">${bean.flavorEn}</div>
+                        <div class="flavor-cn">${bean.flavorCn}</div>
+                    </div>
+                </div>
+
+                <button class="more-btn" onclick="openModal('${bean.id}')">···</button>
+            `;
+            listContainer.appendChild(li);
+        });
+
+        // --- 动画引擎 (保持不变) ---
+        const sidebar = document.getElementById('sidebar');
+        const sbOverlay = document.getElementById('sidebar-overlay');
+        const openBtn = document.getElementById('openMenu');
+        const navLinks = document.querySelectorAll('.sidebar-links a');
+        const sbFooter = document.querySelector('.sidebar-footer');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            if (isMenuOpen) {
+                sidebar.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-100%)' }], { duration: 300, easing: 'ease-in', fill: 'forwards' });
+                sbOverlay.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' });
+                sbOverlay.style.pointerEvents = 'none';
+            } else {
+                sidebar.animate([{ transform: 'translateX(-100%)' }, { transform: 'translateX(0)' }], { duration: 400, easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)', fill: 'forwards' });
+                sbOverlay.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, fill: 'forwards' });
+                sbOverlay.style.pointerEvents = 'auto';
+                navLinks.forEach((link, i) => {
+                    link.animate([
+                        { opacity: 0, transform: 'translateX(-20px)' }, 
+                        { opacity: 1, transform: 'translateX(0)' }
+                    ], { duration: 500, delay: 100 + (i * 80), easing: 'ease-out', fill: 'forwards' });
+                });
+
+                sbFooter.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, delay: 400, fill: 'forwards'});
+            }
+            isMenuOpen = !isMenuOpen;
+        }
+
+        openBtn.addEventListener('click', toggleMenu);
+        sbOverlay.addEventListener('click', toggleMenu);
+
+        // 2. Modal Logic
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalCard = document.getElementById('modal-card');
+        const modalClose = document.getElementById('modal-close');
+        
+        function openModal(id) {
+            const data = beans.find(b => b.id === id);
+            
+            // Farm 在这里显示
+            document.getElementById('modal-title').innerText = data.farmEn;
+            document.getElementById('modal-title-cn').innerText = data.farmCn;
+
+            document.getElementById('m-flavor-en').innerText = data.flavorEn;
+            document.getElementById('m-flavor-cn').innerText = data.flavorCn;
+
+            document.getElementById('spec-process-en').innerText = data.processEn;
+            document.getElementById('spec-process-cn').innerText = data.processCn;
+
+            document.getElementById('spec-roast-en').innerText = data.roastEn;
+            document.getElementById('spec-roast-cn').innerText = data.roastCn;
+
+            document.getElementById('spec-var-en').innerText = data.varietalEn;
+            document.getElementById('spec-var-cn').innerText = data.varietalCn;
+
+            modalOverlay.style.pointerEvents = 'auto';
+            modalOverlay.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, fill: 'forwards' });
+            modalCard.animate([
+                { transform: 'scale(0.9) translateY(40px)', opacity: 0 },
+                { transform: 'scale(1.02) translateY(0)', opacity: 1, offset: 0.7 },
+                { transform: 'scale(1) translateY(0)', opacity: 1 }
+            ], { duration: 500, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', fill: 'forwards' });
+        }
+
+        function closeModal() {
+            modalOverlay.style.pointerEvents = 'none';
+            modalOverlay.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
+            modalCard.animate([
+                { transform: 'scale(1) translateY(0)', opacity: 1 },
+                { transform: 'scale(0.95) translateY(20px)', opacity: 0 }
+            ], { duration: 200, fill: 'forwards' });
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+    </script>
+</body>
+</html>
