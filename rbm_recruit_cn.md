@@ -1,5 +1,6 @@
 ---
 layout: default
+permalink: /rbm_recruit_cn.html
 title: rbm_recruit
 lang: en
 ---

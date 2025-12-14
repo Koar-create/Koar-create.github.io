@@ -1,5 +1,6 @@
 ---
 layout: default
+permalink: /research_cn.html
 title: Research
 lang: cn
 ---

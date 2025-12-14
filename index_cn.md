@@ -1,5 +1,6 @@
 ---
 layout: default
+permalink: /index_cn.html
 title: Home
 lang: cn
 ---

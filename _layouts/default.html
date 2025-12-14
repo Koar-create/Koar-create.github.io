@@ -87,6 +87,10 @@
       {% for item in site.navigation %}
         <a href="{{ item.url | relative_url }}" class="nav-link">{{ item.title }}</a>
       {% endfor %}
+      <!-- Language toggle here, e.g., a link or button with globe icon -->
+      <a href="javascript:void(0);" id="lang-toggle">
+        {% if page.url contains '_cn' %}English{% else %}中文{% endif %}
+      </a>  <!-- Or wrap in <span class="globe">🌐</span> if that's your icon -->
     </nav>
   </header>
   <main>
@@ -95,5 +99,6 @@
   <footer>
     {{ site.footer }}
   </footer>
+  <script src="{{ site.baseurl }}/js/language.js"></script>
 </body>
 </html>
