@@ -79,6 +79,12 @@
             color: var(--accent-color);
             letter-spacing: 4px;
         }
+        /* 功能：状态中文超链接样式，继承主题强调色并展示下划线 */
+        .status-cn a {
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
         
         .divider {
             width: 40px;
@@ -100,9 +106,12 @@
     </header>
 
     <main id="main-content">
-        <h1 class="status-title">UPCOMING</h1>
+        <h1 class="status-title">VISIT OFFICIAL WEBSITE</h1>
         <div class="divider"></div>
-        <div class="status-cn">敬请期待</div>
+        <!-- 功能：点击中文链接跳转到官网 -->
+        <div class="status-cn">
+            <a href="https://magnificent-tent-c89.notion.site/2b51357c336c80aeb7aad8e190862349">移步官网</a>
+        </div>
     </main>
 
     <script>

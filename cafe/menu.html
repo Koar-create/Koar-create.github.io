@@ -216,10 +216,10 @@
         .flavor-en { font-size: 0.9rem; color: #666; line-height: 1.3; }
         .flavor-cn { font-size: 0.8rem; color: #888; }
         
-        /* 第三行：处理 - 烘焙 (斜体) */
-        .info-specs { font-style: italic; font-family: serif; margin-top: 4px; color: #5D4037;}
-        .specs-en { font-size: 0.9rem; }
-        .specs-cn { font-size: 0.75rem; opacity: 0.8; }
+        /* 第三行：推荐&价格 */
+        .info-recos { font-style: italic; font-family: serif; margin-top: 4px; color: #5D4037;}
+        .recos-en { font-size: 0.9rem; }
+        .recos-cn { font-size: 0.75rem; opacity: 0.8; }
 
         .more-btn {
             flex-shrink: 0;
@@ -375,8 +375,27 @@
         </div>
     </header>
 
-    <main>
-<div class="price-row">
+    <main>  
+        <div class="price-row">
+            <div class="bilingual-title">
+                <h1>Caffè latte</h1>
+                <div class="sub">拿铁咖啡</div>
+            </div>
+            <div class="dots-filler"></div>
+            <div class="price-container">
+                <div class="price">
+                    <h1>300ml · See bean list</h1>
+                    <div class="sub">300ml · 价格参阅豆单</div>
+                </div>
+                <button class="info-btn">!</button>
+                <div class="price-tooltip">
+                    We offer special promotions from time to time. Stay tuned. 
+                    不定期推出优惠价格，敬请期待。
+                </div>
+            </div>
+        </div>
+            
+        <div class="price-row">
             <div class="bilingual-title">
                 <h1>Cold brew coffee</h1>
                 <div class="sub">冷萃咖啡</div>
@@ -384,8 +403,8 @@
             <div class="dots-filler"></div>
             <div class="price-container">
                 <div class="price">
-                    <h1>¥15/cup (300ml)</h1>
-                    <div class="sub">¥15/杯 (300ml)</div>
+                    <h1>300ml · See bean list</h1>
+                    <div class="sub">300ml · 价格参阅豆单</div>
                 </div>
                 <button class="info-btn">…</button>
                 <div class="price-tooltip">
@@ -393,7 +412,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="price-row">
             <div class="bilingual-title">
                 <h1>Pour over coffee</h1>
@@ -402,12 +421,13 @@
             <div class="dots-filler"></div>
             <div class="price-container">
                 <div class="price">
-                    <h1>¥10/cup (240ml)</h1>
-                    <div class="sub">¥10/杯 (240ml)</div>
+                    <h1>240ml · See bean list</h1>
+                    <div class="sub">240ml · 价格参阅豆单</div>
                 </div>
                 <button class="info-btn">!</button>
                 <div class="price-tooltip">
-                    Feel free to increase the price at your discretion when the barista is busy.
+                    We offer special promotions from time to time. Stay tuned. 
+                    不定期推出优惠价格，敬请期待。
                 </div>
             </div>
         </div>
@@ -488,10 +508,15 @@
                     <div class="spec-val-en" id="spec-roast-en"></div>
                     <div class="spec-val-cn" id="spec-roast-cn"></div>
                 </div>
-                <div class="spec-item" style="grid-column: span 2;">
+                <div class="spec-item">
                     <div class="spec-label">Varietal</div>
                     <div class="spec-val-en" id="spec-var-en"></div>
                     <div class="spec-val-cn" id="spec-var-cn"></div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Recommend</div>
+                    <div class="spec-val-en" id="spec-recommend-en"></div>
+                    <div class="spec-val-cn" id="spec-recommend-cn"></div>
                 </div>
             </div>
 
@@ -500,6 +525,69 @@
     </div>
 
     <script>
+        /**
+         * 功能：全局豆单数据容器
+         * 说明：存放从 beans.json 加载的数据
+         */
+        let beans = [];
+
+        /**
+         * 功能：渲染豆单列表（自动生成编号）
+         * 输入：beansData 数组（不含 id）
+         * 行为：按索引自动生成展示编号，如 "1."
+         */
+        function renderBeans(beansData) {
+            const listContainer = document.getElementById('beanList');
+            listContainer.innerHTML = '';
+            beansData.forEach((bean, index) => {
+                const displayId = `${index + 1}.`;
+                const li = document.createElement('li');
+                li.className = 'bean-item';
+                li.innerHTML = `
+                    <div class="bean-code">${displayId}</div>
+
+                    <div class="bean-info">
+                        <div class="info-header">
+                            <div class="info-header-en">${bean.countryEn} - ${bean.regionEn}</div>
+                            <div class="info-header-cn">${bean.countryCn} - ${bean.regionCn}</div>
+                        </div>
+
+                        <div class="info-flavor">
+                            <div class="flavor-en">${bean.flavorEn}</div>
+                            <div class="flavor-cn">${bean.flavorCn}</div>
+                        </div>
+
+                        <div class="info-recos">
+                            <div class="recos-en">${bean.recommendEn}</div>
+                            <div class="recos-cn">${bean.recommendCn}</div>
+                        </div>
+                    </div>
+
+                    <button class="more-btn" onclick="openModal(${index})">···</button>
+                `;
+                listContainer.appendChild(li);
+            });
+        }
+
+        /**
+         * 功能：加载豆单数据
+         * 来源：cafe/js/beans.json
+         * 流程：fetch -> 更新全局 beans -> 渲染列表
+         */
+        async function loadBeans() {
+            try {
+                const res = await fetch('js/beans.json', { cache: 'no-store' });
+                if (!res.ok) throw new Error('网络错误：' + res.status);
+                const data = await res.json();
+                beans = data;
+                renderBeans(beans);
+            } catch (err) {
+                console.error('豆单加载失败：', err);
+            }
+        }
+
+        // 页面初始化：加载豆单并渲染
+        loadBeans();
         // --- 通用价格气泡交互逻辑 (支持多个按钮) ---
         
         // 1. 获取所有带有 info-btn 类的按钮
@@ -530,132 +618,6 @@
             document.querySelectorAll('.price-tooltip').forEach(tooltip => {
                 tooltip.classList.remove('active');
             });
-        });
-
-        // 为了满足英文在上中文在下的要求，我对原始数据进行了英文化补全
-        const beans = [
-            { 
-                id: '1.', 
-                countryEn: 'COLOMBIA', countryCn: '哥伦比亚',
-                regionEn: 'Tolima', regionCn: '托利马',
-                farmEn: 'Finca La Esperanza (Producer: Edwin Guarnizo)', farmCn: 'Finca La Esperanza 庄园 (咖啡农: Edwin Guarnizo)',
-                processEn: 'Washed', processCn: '水洗',
-                roastEn: 'Light', roastCn: '浅烘焙',
-                flavorEn: 'Blueberry, Yogurt, Mango', flavorCn: '蓝莓、酸奶、芒果',
-                varietalEn: 'Pink Bourbon', varietalCn: '粉红波旁'
-            },
-            { 
-                id: '2.', 
-                countryEn: 'COSTA RICA', countryCn: '哥斯达黎加',
-                regionEn: 'Brunca', regionCn: '布伦卡',
-                farmEn: 'Las Piedras', farmCn: 'Las Piedras 庄园',
-                processEn: 'Black Honey', processCn: '黑蜜处理',
-                roastEn: 'Light', roastCn: '浅烘焙',
-                flavorEn: 'Raisin, Green Tea, Date, Pineapple', flavorCn: '葡萄干、樱桃绿茶、蜜枣、熟凤梨',
-                varietalEn: 'F1 Hybrid', varietalCn: 'F1种'
-            },
-            { 
-                id: '3.', 
-                countryEn: 'ETHIOPIA', countryCn: '埃塞俄比亚',
-                regionEn: 'Guji', regionCn: '古吉',
-                farmEn: 'Harro Wachu', farmCn: 'Harro Wachu',
-                processEn: 'Washed', processCn: '水洗',
-                roastEn: 'Light', roastCn: '浅烘焙',
-                flavorEn: 'Lemongrass, Ginger Lily, White Peach', flavorCn: '柠檬草、姜花、白桃',
-                varietalEn: 'Heirloom', varietalCn: '原生种'
-            },
-            { 
-                id: '4.', 
-                countryEn: 'ETHIOPIA', countryCn: '埃塞俄比亚',
-                regionEn: 'Yirgacheffe - Kochere', regionCn: '耶加雪菲 - 科契尔',
-                farmEn: 'Beloya', farmCn: ' 碧罗雅处理站',
-                processEn: 'Washed', processCn: '水洗',
-                roastEn: 'Med-Light', roastCn: '中浅烘焙',
-                flavorEn: 'Citrus, Lime, Berry, Jasmine', flavorCn: '柑橘、青柠、莓果、茉莉花',
-                varietalEn: 'Heirloom', varietalCn: '原生种'
-            },
-            { 
-                id: '5.', 
-                countryEn: 'ETHIOPIA', countryCn: '埃塞俄比亚',
-                regionEn: 'Sidamo - Bensa - Bura', regionCn: '西达摩 - 班萨地区 - 布拉区/镇', 
-                farmEn: 'Karamo - Agena', farmCn: '卡拉莫村 - 阿吉纳处理厂',
-                processEn: 'Natural', processCn: '日晒',
-                roastEn: 'Light', roastCn: '浅烘焙',
-                flavorEn: 'Red Floral, Strawberry, Pineapple', flavorCn: '红色花、草莓、菠萝、橘子汽水',
-                varietalEn: 'Heirloom/74158', varietalCn: '原生种/74158'
-            },
-            { 
-                id: '6.', 
-                countryEn: 'EL SALVADOR', countryCn: '萨尔瓦多',
-                regionEn: 'Chalatenango', regionCn: '查拉特南戈',
-                farmEn: 'Finca La Joya (Producer: Jaime Guevara)', farmCn: 'Finca La Joya 庄园 (咖啡农: Jaime Guevara)',
-                processEn: 'Honey', processCn: '蜜处理',
-                roastEn: 'Light', roastCn: '浅烘焙',
-                flavorEn: 'Apple, Candied Lemon, Almond', flavorCn: '苹果、蜜渍柠檬、杏仁、红糖',
-                varietalEn: 'Single Origin Pacas', varietalCn: '单一种帕卡斯'
-            },
-            { 
-                id: '7.', 
-                countryEn: 'GUATEMALA', countryCn: '危地马拉',
-                regionEn: 'Antigua', regionCn: '安提瓜',
-                farmEn: 'San Jose', farmCn: '圣荷西庄园',
-                processEn: 'Washed', processCn: '水洗',
-                roastEn: 'Med-Dark', roastCn: '中深烘焙',
-                flavorEn: 'Floral, Spice, Caramel, Cocoa', flavorCn: '花香、香料、焦糖、烟丝、可可',
-                varietalEn: 'Bourbon, Caturra', varietalCn: '波旁、卡杜拉'
-            },
-            { 
-                id: '8.', 
-                countryEn: 'PANAMA', countryCn: '巴拿马',
-                regionEn: 'Boquete', regionCn: '波奎特',
-                farmEn: 'Elida', farmCn: '艾力达庄园',
-                processEn: 'Natural', processCn: '日晒',
-                roastEn: 'Direct Fire', roastCn: '直火烘焙',
-                flavorEn: 'Fig, Raisin, Apricot, Pomelo', flavorCn: '无花果、葡萄干、杏桃、柚子茶',
-                varietalEn: 'Typica', varietalCn: '铁皮卡'
-            },
-            { 
-                id: '9.', 
-                countryEn: 'RWANDA', countryCn: '卢旺达',
-                regionEn: 'N/A', regionCn: '-', 
-                farmEn: 'N/A', farmCn: '-',
-                processEn: 'Washed', processCn: '水洗',
-                roastEn: 'Med-Light', roastCn: '中浅烘焙',
-                flavorEn: 'Tangerine, Black Tea, Sweet', flavorCn: '蜜橘、红茶、果甜感',
-                varietalEn: 'Bourbon', varietalCn: '波旁'
-            }
-        ];
-
-        // --- 渲染列表 ---
-        const listContainer = document.getElementById('beanList');
-        beans.forEach(bean => {
-            const li = document.createElement('li');
-            li.className = 'bean-item';
-
-            // 布局：Code | Country-Region / Process Roast / Flavor
-            li.innerHTML = `
-                <div class="bean-code">${bean.id}</div>
-
-                <div class="bean-info">
-                    <div class="info-header">
-                        <div class="info-header-en">${bean.countryEn} - ${bean.regionEn}</div>
-                        <div class="info-header-cn">${bean.countryCn} - ${bean.regionCn}</div>
-                    </div>
-
-                    <div class="info-specs">
-                        <div class="specs-en">${bean.processEn} · ${bean.roastEn}</div>
-                        <div class="specs-cn">${bean.processCn} · ${bean.roastCn}</div>
-                    </div>
-
-                    <div class="info-flavor">
-                        <div class="flavor-en">${bean.flavorEn}</div>
-                        <div class="flavor-cn">${bean.flavorCn}</div>
-                    </div>
-                </div>
-
-                <button class="more-btn" onclick="openModal('${bean.id}')">···</button>
-            `;
-            listContainer.appendChild(li);
         });
 
         // --- 动画引擎 (保持不变) ---
@@ -694,11 +656,16 @@
         const modalOverlay = document.getElementById('modal-overlay');
         const modalCard = document.getElementById('modal-card');
         const modalClose = document.getElementById('modal-close');
-        
-        function openModal(id) {
-            const data = beans.find(b => b.id === id);
-            
-            // Farm 在这里显示
+
+        /**
+         * 功能：打开豆单详情弹窗
+         * 输入：index（列表索引）
+         * 行为：根据索引从全局 beans 取数据并填充弹窗
+         */
+        function openModal(index) {
+            const data = beans[index];
+            if (!data) return;
+
             document.getElementById('modal-title').innerText = data.farmEn;
             document.getElementById('modal-title-cn').innerText = data.farmCn;
 
@@ -714,6 +681,9 @@
             document.getElementById('spec-var-en').innerText = data.varietalEn;
             document.getElementById('spec-var-cn').innerText = data.varietalCn;
 
+            document.getElementById('spec-recommend-en').innerText = data.recommendEn;
+            document.getElementById('spec-recommend-cn').innerText = data.recommendCn;
+
             modalOverlay.style.pointerEvents = 'auto';
             modalOverlay.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, fill: 'forwards' });
             modalCard.animate([
@@ -723,6 +693,10 @@
             ], { duration: 500, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', fill: 'forwards' });
         }
 
+        /**
+         * 功能：关闭豆单详情弹窗
+         * 行为：隐藏遮罩并播放关闭动画
+         */
         function closeModal() {
             modalOverlay.style.pointerEvents = 'none';
             modalOverlay.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
@@ -732,6 +706,7 @@
             ], { duration: 200, fill: 'forwards' });
         }
 
+        // 绑定关闭事件
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) closeModal();
