@@ -1,4 +1,23 @@
 [
+{
+    "countryEn": "KENYA",
+    "countryCn": "肯尼亚",
+    "regionEn": "Nyeri",
+    "regionCn": "涅里",
+    "farmEn": "Tiane Washing Station (NH)",
+    "farmCn": "缇安妮处理站 (NH)",
+    "processEn": "Natural",
+    "processCn": "日晒",
+    "roastEn": "Light",
+    "roastCn": "浅烘焙",
+    "flavorEn": "Grape, Cherry, Tropical Fruit, Juicy & Smooth",
+    "flavorCn": "葡萄、樱桃、热带水果、果汁顺滑",
+    "varietalEn": "SL28/SL34",
+    "varietalCn": "SL28/SL34",
+    "recommendEn": "Pour over coffee (15.9 ¥)",
+    "recommendCn": "手冲咖啡 (15.9 ¥)",
+    "available": true
+  },
   {
     "countryEn": "COLOMBIA",
     "countryCn": "哥伦比亚",
@@ -15,7 +34,8 @@
     "varietalEn": "Pink Bourbon",
     "varietalCn": "粉红波旁",
     "recommendEn": "Pour over coffee (15.9 ¥)",
-    "recommendCn": "手冲咖啡 (15.9 ¥)"
+    "recommendCn": "手冲咖啡 (15.9 ¥)",
+    "available": true
   },
   {
     "countryEn": "COSTA RICA",
@@ -33,7 +53,8 @@
     "varietalEn": "F1 Hybrid",
     "varietalCn": "F1种",
     "recommendEn": "Pour over coffee (15.9 ¥)",
-    "recommendCn": "手冲咖啡 (15.9 ¥)"
+    "recommendCn": "手冲咖啡 (15.9 ¥)",
+    "available": false
   },
   {
     "countryEn": "ETHIOPIA",
@@ -51,7 +72,8 @@
     "varietalEn": "Heirloom",
     "varietalCn": "原生种",
     "recommendEn": "Pour over coffee (12.9 ¥)",
-    "recommendCn": "手冲咖啡 (12.9 ¥)"
+    "recommendCn": "手冲咖啡 (12.9 ¥)",
+    "available": false
   },
   {
     "countryEn": "ETHIOPIA",
@@ -69,7 +91,8 @@
     "varietalEn": "Heirloom/74158",
     "varietalCn": "原生种/74158",
     "recommendEn": "Pour over coffee (12.9 ¥)",
-    "recommendCn": "手冲咖啡 (12.9 ¥)"
+    "recommendCn": "手冲咖啡 (12.9 ¥)",
+    "available": false
   },
   {
     "countryEn": "EL SALVADOR",
@@ -87,7 +110,8 @@
     "varietalEn": "Single Origin Pacas",
     "varietalCn": "单一种帕卡斯",
     "recommendEn": "Pour over coffee (15.9 ¥)",
-    "recommendCn": "手冲咖啡 (15.9 ¥)"
+    "recommendCn": "手冲咖啡 (15.9 ¥)",
+    "available": true
   },
   {
     "countryEn": "PANAMA",
@@ -105,7 +129,8 @@
     "varietalEn": "Typica",
     "varietalCn": "铁皮卡",
     "recommendEn": "Pour over coffee (15.9 ¥)",
-    "recommendCn": "手冲咖啡 (15.9 ¥)"
+    "recommendCn": "手冲咖啡 (15.9 ¥)",
+    "available": false
   },
   {
     "countryEn": "RWANDA",
@@ -123,7 +148,8 @@
     "varietalEn": "Bourbon",
     "varietalCn": "波旁",
     "recommendEn": "Pour over coffee (10.9 ¥)",
-    "recommendCn": "手冲咖啡 (10.9 ¥)"
+    "recommendCn": "手冲咖啡 (10.9 ¥)",
+    "available": true
   },
   {
     "countryEn": "ETHIOPIA",
@@ -141,7 +167,8 @@
     "varietalEn": "Heirloom",
     "varietalCn": "原生种",
     "recommendEn": "Cold brew coffee (15.9 ¥)",
-    "recommendCn": "冷萃咖啡 (15.9 ¥)"
+    "recommendCn": "冷萃咖啡 (15.9 ¥)",
+    "available": true
   },
   {
     "countryEn": "COLOMBIA",
@@ -159,7 +186,8 @@
     "varietalEn": "Caturra",
     "varietalCn": "卡杜拉",
     "recommendEn": "Cold brew coffee (16.9 ¥)",
-    "recommendCn": "冷萃咖啡 (16.9 ¥)"
+    "recommendCn": "冷萃咖啡 (16.9 ¥)",
+    "available": true
   },
   {
     "countryEn": "YEMEN",
@@ -177,6 +205,7 @@
     "varietalEn": "Nia",
     "varietalCn": "妮娅",
     "recommendEn": "Caffè latte (12.9 ¥)",
-    "recommendCn": "拿铁 (12.9 ¥)"
+    "recommendCn": "拿铁 (12.9 ¥)",
+    "available": true
   }
 ]

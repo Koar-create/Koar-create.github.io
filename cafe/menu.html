@@ -171,7 +171,10 @@
         }
 
         /* --- 豆单列表 --- */
-        .section-header { margin-bottom: 30px; }
+        .section-header { margin-bottom: 30px; margin-top: 10px;}
+        /* 针对历史豆单增加一些顶部间距 */
+        #archive-section .section-header { margin-top: 60px; }
+
         .section-title { 
             font-size: 1.2rem; 
             font-weight: bold; 
@@ -192,6 +195,24 @@
             padding: 18px 0;
             border-bottom: 1px solid var(--line-color);
         }
+
+        /* --- 新增：售罄状态样式 --- */
+        .bean-item.sold-out {
+            opacity: 0.5; /* 降低整体透明度 */
+            filter: grayscale(100%); /* 灰度处理，仿佛褪色的墨水 */
+        }
+        
+        /* 售罄标记 */
+        .sold-out-badge {
+            font-size: 0.7rem;
+            font-weight: bold;
+            border: 1px solid var(--text-color);
+            padding: 1px 4px;
+            margin-left: 6px;
+            vertical-align: middle;
+            display: inline-block;
+            transform: rotate(-5deg); /* 盖章效果 */
+        }
         
         /* 编号样式 */
         .bean-info { flex: 1; padding-right: 10px; display: flex; flex-direction: column; gap: 4px;}
@@ -204,8 +225,7 @@
             opacity: 0.8;
             width: 30px; /* 固定宽度对齐 */
         }
-
-
+        
         /* 第一行：国家 - 产区 */
         .info-header { margin-bottom: 2px; }
         .info-header-en { font-size: 1.1rem; font-weight: bold; line-height: 1.1;}
@@ -431,13 +451,24 @@
                 </div>
             </div>
         </div>
+        
         <div class="section-header">
             <div class="section-title">OPTIONAL BEANS</div>
             <div class="section-cn">可选豆种</div>
         </div>
-        
+
         <ul class="bean-list" id="beanList">
             </ul>
+
+        <div id="archive-section" style="display:none;">
+            <div class="section-header">
+                <div class="section-title">ARCHIVED SELECTION</div>
+                <div class="section-cn">历史豆单 (已售罄)</div>
+            </div>
+            <ul class="bean-list" id="archiveList">
+                </ul>
+        </div>
+
     </main>
 
     <div id="sidebar-overlay"></div>
@@ -535,38 +566,87 @@
          * 功能：渲染豆单列表（自动生成编号）
          * 输入：beansData 数组（不含 id）
          * 行为：按索引自动生成展示编号，如 "1."
+         * 修改说明：根据 available 字段分流到 activeList 和 archiveList
          */
         function renderBeans(beansData) {
-            const listContainer = document.getElementById('beanList');
-            listContainer.innerHTML = '';
+            const activeList = document.getElementById('beanList');
+            const archiveList = document.getElementById('archiveList');
+            const archiveSection = document.getElementById('archive-section');
+            
+            // 清空现有列表
+            activeList.innerHTML = '';
+            archiveList.innerHTML = '';
+            
+            let activeCount = 0;
+            // 历史豆单也可以选择是否需要编号，这里暂时不加编号，或者用特殊符号
+            
+            let hasArchive = false;
+
             beansData.forEach((bean, index) => {
-                const displayId = `${index + 1}.`;
+                // 判断豆子状态
+                // 如果 JSON 里没有 available 字段，默认为 true (兼容旧数据)
+                const isAvailable = (bean.available === undefined) ? true : bean.available;
+
                 const li = document.createElement('li');
-                li.className = 'bean-item';
-                li.innerHTML = `
-                    <div class="bean-code">${displayId}</div>
+                
+                if (isAvailable) {
+                    // --- 当季豆单 ---
+                    activeCount++;
+                    li.className = 'bean-item';
+                    li.innerHTML = `
+                        <div class="bean-code">${activeCount}.</div>
 
-                    <div class="bean-info">
-                        <div class="info-header">
-                            <div class="info-header-en">${bean.countryEn} - ${bean.regionEn}</div>
-                            <div class="info-header-cn">${bean.countryCn} - ${bean.regionCn}</div>
+                        <div class="bean-info">
+                            <div class="info-header">
+                                <div class="info-header-en">${bean.countryEn} - ${bean.regionEn}</div>
+                                <div class="info-header-cn">${bean.countryCn} - ${bean.regionCn}</div>
+                            </div>
+
+                            <div class="info-flavor">
+                                <div class="flavor-en">${bean.flavorEn}</div>
+                                <div class="flavor-cn">${bean.flavorCn}</div>
+                            </div>
+
+                            <div class="info-recos">
+                                <div class="recos-en">${bean.recommendEn}</div>
+                                <div class="recos-cn">${bean.recommendCn}</div>
+                            </div>
                         </div>
-
-                        <div class="info-flavor">
-                            <div class="flavor-en">${bean.flavorEn}</div>
-                            <div class="flavor-cn">${bean.flavorCn}</div>
+                        <button class="more-btn" onclick="openModal(${index})">···</button>
+                    `;
+                    activeList.appendChild(li);
+                } else {
+                    // --- 历史豆单 (已售罄) ---
+                    hasArchive = true;
+                    li.className = 'bean-item sold-out';
+                    // 历史豆单可以不显示价格推荐，或者保留。这里保留但样式变灰
+                    li.innerHTML = `
+                        <div class="bean-code" style="opacity:0.3;">-</div>
+                        <div class="bean-info">
+                            <div class="info-header">
+                                <div class="info-header-en">
+                                    ${bean.countryEn} - ${bean.regionEn} 
+                                    <span class="sold-out-badge">SOLD OUT</span>
+                                </div>
+                                <div class="info-header-cn">${bean.countryCn} - ${bean.regionCn}</div>
+                            </div>
+                            <div class="info-flavor">
+                                <div class="flavor-en">${bean.flavorEn}</div>
+                                <div class="flavor-cn">${bean.flavorCn}</div>
+                            </div>
                         </div>
-
-                        <div class="info-recos">
-                            <div class="recos-en">${bean.recommendEn}</div>
-                            <div class="recos-cn">${bean.recommendCn}</div>
-                        </div>
-                    </div>
-
-                    <button class="more-btn" onclick="openModal(${index})">···</button>
-                `;
-                listContainer.appendChild(li);
+                        <button class="more-btn" onclick="openModal(${index})">···</button>
+                    `;
+                    archiveList.appendChild(li);
+                }
             });
+
+            // 如果有历史豆子，显示历史区域，否则隐藏
+            if (hasArchive) {
+                archiveSection.style.display = 'block';
+            } else {
+                archiveSection.style.display = 'none';
+            }
         }
 
         /**
@@ -576,6 +656,7 @@
          */
         async function loadBeans() {
             try {
+                // 注意：如果本地测试需要确保路径正确
                 const res = await fetch('js/beans.json', { cache: 'no-store' });
                 if (!res.ok) throw new Error('网络错误：' + res.status);
                 const data = await res.json();
@@ -589,15 +670,16 @@
         // 页面初始化：加载豆单并渲染
         loadBeans();
         // --- 通用价格气泡交互逻辑 (支持多个按钮) ---
-        
+
         // 1. 获取所有带有 info-btn 类的按钮
+        // --- 价格气泡逻辑 ---
         const allInfoBtns = document.querySelectorAll('.info-btn');
 
         // 2. 为每一个按钮添加点击事件
         allInfoBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation(); // 阻止冒泡
-                
+
                 // 找到当前这个按钮对应的气泡
                 // 逻辑：在当前按钮的父容器(price-container)里找 .price-tooltip
                 const container = btn.closest('.price-container');
