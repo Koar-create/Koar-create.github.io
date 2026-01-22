@@ -16,7 +16,7 @@
     "varietalCn": "SL28/SL34",
     "recommendEn": "Pour over coffee (15.9 ¥)",
     "recommendCn": "手冲咖啡 (15.9 ¥)",
-    "available": true
+    "available": false
   },
   {
     "countryEn": "COLOMBIA",
@@ -35,7 +35,7 @@
     "varietalCn": "粉红波旁",
     "recommendEn": "Pour over coffee (15.9 ¥)",
     "recommendCn": "手冲咖啡 (15.9 ¥)",
-    "available": true
+    "available": false
   },
   {
     "countryEn": "COSTA RICA",
@@ -111,7 +111,7 @@
     "varietalCn": "单一种帕卡斯",
     "recommendEn": "Pour over coffee (15.9 ¥)",
     "recommendCn": "手冲咖啡 (15.9 ¥)",
-    "available": true
+    "available": false
   },
   {
     "countryEn": "PANAMA",
@@ -149,7 +149,7 @@
     "varietalCn": "波旁",
     "recommendEn": "Pour over coffee (10.9 ¥)",
     "recommendCn": "手冲咖啡 (10.9 ¥)",
-    "available": true
+    "available": false
   },
   {
     "countryEn": "ETHIOPIA",
@@ -166,8 +166,8 @@
     "flavorCn": "柠檬草、姜花、白桃",
     "varietalEn": "Heirloom",
     "varietalCn": "原生种",
-    "recommendEn": "Cold brew coffee (15.9 ¥)",
-    "recommendCn": "冷萃咖啡 (15.9 ¥)",
+    "recommendEn": "Pour over coffee (10.9 ¥) / Cold brew coffee (15.9 ¥)",
+    "recommendCn": "手冲咖啡 (10.9 ¥) / 冷萃咖啡 (15.9 ¥)",
     "available": true
   },
   {
