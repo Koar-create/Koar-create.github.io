@@ -6,27 +6,7 @@ lang: cn
 ---
 
 <div class="container">
-  <div class="sidebar">
-    <img src="/assets/images/Portrait.jpg" alt="Portrait">
-    <p class="name">杨智贤</p>
-    <div class="social-icons">
-      <a href="mailto:zyang248@connect.hkust-gz.edu.cn?Subject=Hello" title="Email (Academic)">
-        <i class="fas fa-envelope"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/zhixian-yang-45ba71241/" title="LinkedIn" target="_blank">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="https://www.github.com/Koar-create/" title="Github" target="_blank">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://orcid.org/0009-0002-8477-4304" title="ORCID" target="_blank">
-        <i class="fab fa-orcid"></i>
-      </a>
-    </div>
-    <p><strong>邮寄地址：</strong>
-    <br>笃学路1号，南沙区，广州市，广东省，中华人民共和国（邮政编码：511453）</p>
-    <p><strong>我的工位：</strong>E1-4F-218</p>
-  </div>
+  {% include sidebar.html %}
   <div class="content">
     <h1>教育与经历</h1>
     <p>

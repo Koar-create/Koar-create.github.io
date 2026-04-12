@@ -1,22 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&display=swap');
 
+/* =============================================================================
+   Design Tokens — extracted from inline magic values for future theming
+   ========================================================================== */
+:root {
+  --color-text:          #333333;
+  --color-text-muted:    #555555;
+  --color-brand:         #0056b3;
+  --color-brand-hover:   #0077b5;
+  --color-bg-page:       #ffffff;
+  --color-bg-header:     #f8f8f8;
+  --color-bg-sidebar:    #f9f9f9;
+  --color-border:        #dddddd;
+  --color-border-light:  #eeeeee;
+  --color-border-table:  #e9ecef;
+  --color-bg-table-head: #f8f9fa;
+  --color-bg-table-row-hover: #f1f5f9;
+  --color-shadow:        rgba(0, 0, 0, 0.1);
+  --color-shadow-table:  rgba(0, 0, 0, 0.05);
+
+  --font-body: 'Lato', sans-serif;
+}
+
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: var(--font-body);
   margin: 0;
-  color: #333;
+  color: var(--color-text);
 }
 
 .nav-link {
   font-size: 1.2em;
   padding: 5px 10px;
   margin-right: 15px;
-  color: #333;
+  color: var(--color-text);
 }
 
 header {
-  background-color: #f8f8f8;
+  background-color: var(--color-bg-header);
   padding: 15px 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-border-light);
   display: flex;
   align-items: center;
 }
@@ -30,8 +52,8 @@ header {
   width: 20vw;
   min-width: 250px;
   padding: 30px;
-  border-right: 1px solid #ddd;
-  background-color: #f9f9f9;
+  border-right: 1px solid var(--color-border);
+  background-color: var(--color-bg-sidebar);
   box-sizing: border-box;
 }
 
@@ -70,7 +92,7 @@ header {
 .content h1 {
   font-size: 28px;
   font-weight: 700;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid var(--color-border-light);
   padding-bottom: 10px;
   margin-top: 0;
 }
@@ -94,8 +116,8 @@ header {
   max-width: 100%;
   height: auto;
   margin: 10px 0;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 2px 5px var(--color-shadow);
 }
 
 .content.full-width {
@@ -112,13 +134,13 @@ header {
 .social-icons a {
   display: inline-block;
   font-size: 24px;
-  color: #555;
+  color: var(--color-text-muted);
   margin: 0 12px;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-icons a:hover {
-  color: #0077b5;
+  color: var(--color-brand-hover);
   transform: scale(1.2);
 }
 
@@ -140,16 +162,16 @@ header {
   margin-top: 24px; /* 在表格和上方段落之间添加一些间距 */
   margin-bottom: 24px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px var(--color-shadow-table);
   overflow-x: auto; /* 在小屏幕上，如果表格太宽，则允许水平滚动 */
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--color-border-table);
 }
 
 /* 核心表格样式 */
 .role-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #ffffff;
+  background-color: var(--color-bg-page);
 }
 
 /* 单元格和表头的通用样式 */
@@ -158,7 +180,7 @@ header {
   padding: 16px 20px; /* 设置充裕的内边距 (留白) */
   text-align: left;
   vertical-align: top; /* 确保内容从顶部对齐 */
-  border-bottom: 1px solid #e9ecef; /* 使用更柔和的水平分隔线 */
+  border-bottom: 1px solid var(--color-border-table); /* 使用更柔和的水平分隔线 */
   line-height: 1.6;
 }
 
@@ -169,7 +191,7 @@ header {
 
 /* 表头 (thead) 样式 */
 .role-table thead th {
-  background-color: #f8f9fa; /* 浅灰色背景 */
+  background-color: var(--color-bg-table-head); /* 浅灰色背景 */
   font-weight: 600;
   color: #212529; /* 深色文字以保证对比度 */
   font-size: 0.95em;
@@ -177,11 +199,11 @@ header {
 
 /* 鼠标悬停在表体行上时的高亮效果 */
 .role-table tbody tr:hover {
-  background-color: #f1f5f9;
+  background-color: var(--color-bg-table-row-hover);
 }
 
 /* 第一列 (Role Title) 的特殊样式 */
 .role-table tbody td:first-child {
   font-weight: 600;
-  color: #0056b3; /* 用蓝色突出显示角色标题 */
+  color: var(--color-brand); /* 用蓝色突出显示角色标题 */
 }
