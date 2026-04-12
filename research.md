@@ -29,7 +29,7 @@ lang: en
   <div class="content">
     <h1>Research</h1>
     <p>
-      My current work focuses on the numerical model WRF’s reproducibility and performance during a record-breaking precipitation event happened during September 7 to 8 in 2023 at the Greater Bay Area (GBA). About 250 experiments have been conducted, and most experiments underestimate the peak precipitation. Evaluation are based on station records offered by the China's Meteorological Administration during the event.
+      My current work focuses on the numerical model WRF’s reproducibility and performance during a record-breaking precipitation event happened during September 7 to 8 in 2023 at the Greater Bay Area (GBA). Over 270 experiments have been conducted, and most experiments underestimate the peak precipitation. Evaluation are based on station records offered by the China's Meteorological Administration during the event.
     </p>
     <hr>
     <h2>
@@ -37,7 +37,7 @@ lang: en
     </h2>
     <p>
       <strong>Abstract&nbsp;&nbsp;</strong>
-      On 7-8 September 2023, southern China witnessed a historic rainfall event. Using the Weather Research and Forecasting (WRF) model, we investigated the underlying physics of this extreme precipitation. More than 250 parameterization experiments revealed that most schemes failed to reproduce the observed rainfall intensity (>600 mm day⁻¹), highlighting the challenge in forecasting such rare events. Sensitivity analyses identified the cumulus parameterization scheme as the dominant controlling factor. Crucially, the initial divergence between successful and unsuccessful simulations originated in the upper-level dynamics, driven by the choice of cumulus scheme in the model's outer domains. This suggests that altered vertical transport of momentum and moisture aloft is a key precursor. However, the precise mechanism linking these early upper-level changes to the subsequent development of intense surface precipitation remains to be elucidated.
+      On 7-8 September 2023, southern China witnessed a historic rainfall event. Using the Weather Research and Forecasting (WRF) model, we investigated the underlying physics of this extreme precipitation. Over 270 parameterization experiments revealed that most schemes failed to reproduce the observed rainfall intensity (>600 mm day⁻¹), highlighting the challenge in forecasting such rare events. Sensitivity analyses identified the cumulus parameterization scheme as the dominant controlling factor. Crucially, the initial divergence between successful and unsuccessful simulations originated in the upper-level dynamics, driven by the choice of cumulus scheme in the model's outer domains. This suggests that altered vertical transport of momentum and moisture aloft is a key precursor. However, the precise mechanism linking these early upper-level changes to the subsequent development of intense surface precipitation remains to be elucidated.
     </p>
     <p>
       <strong>Introduction&nbsp;&nbsp;</strong>On 5 September 2023, Typhoon Haikui (Chinese: 海葵) made landfall in Fujian, subsequently moving into Guangdong and dissipated on September 5th. Yet its remnants stalled over the Greater Bay Area region (GBA) for over two days. As the low pressure trough associated with Haikui's remnants interacted with the south-westerly monsoon, the GBA region started experiencing extreme rainfall beginning on the night of September 7th.
@@ -72,6 +72,28 @@ lang: en
       <br>&nbsp;&nbsp;&nbsp;&nbsp;• In the early stages of the experiments, comparisons were made between the control run and the cumulus-perturbed experiments in terms of dynamic and thermodynamic fields.
       <br>&nbsp;&nbsp;&nbsp;&nbsp;• The key divergence between the control and perturbed runs first appears in the <strong>upper-level dynamics</strong>. This difference is attributed to the use of different cumulus schemes in the outer domains.
       <br>&nbsp;&nbsp;&nbsp;&nbsp;• A possible way is: The cumulus scheme influences the vertical transport of momentum and moisture in the outer domains, leading to the discrepancies aloft. <u>This process is still being investigated.</u>
+    </p>
+    <hr>
+    <h2>Phase 2: WRF-OpenFOAM Coupling for Urban Wind Field Downscaling</h2>
+    <p>
+      Building on the findings from Phase 1, my second phase of research (starting Nov 2025) shifts focus from regional parameterization to multi-scale urban wind field reconstruction. By monodirectionally coupling the <strong>WRF mesoscale model</strong> with the <strong>OpenFOAM CFD solver</strong>, we developed a downscaling pipeline capable of resolving complex urban aerodynamics (e.g., building wakes and street canyons).
+    </p>
+    <p>
+      <strong>Validation Results&nbsp;&nbsp;</strong>
+      The framework was validated against multi-station <strong>LiDAR vertical wind profiles</strong> in the Guangzhou Central Business District (CBD). Statistical results across three valid time steps (0000, 0400, 0800 UTC) show a positive <strong>Skill Score (SS > 0)</strong>, demonstrating that the CFD model significantly reduces wind speed biases in the lower urban boundary layer compared to the standalone WRF model.
+      <br><em>Note: The 1200 UTC case was excluded as the stable atmospheric boundary layer suppressed Turbulence Kinetic Energy (TKE), rendering steady-state RANS simulations inapplicable.</em>
+    </p>
+    <p style="text-align:center;">
+      <img src="/assets/images/fig4_simple_ws_profiles_fixed.png" alt="Wind Speed Profiles" style="max-width:800px; height:auto;">
+      <br><em>Figure 1: Comparison of vertical wind speed profiles between LiDAR observations, WRF, and OpenFOAM CFD at 4 stations in Guangzhou.</em>
+    </p>
+    <p style="text-align:center;">
+      <img src="/assets/images/fig2_taylor_diagram.png" alt="Taylor Diagram" style="max-width:600px; height:auto;">
+      <br><em>Figure 2: Taylor diagram illustrating the improved statistical performance (correlation and standard deviation) of the CFD downscaling results.</em>
+    </p>
+    <p>
+      <strong>Future Directions&nbsp;&nbsp;</strong>
+      Upcoming work includes the implementation of a <strong>split-roughness boundary strategy</strong> to eliminate double-counting artifacts in ground roughness, and the transition from RANS to <strong>LES/WMLES</strong> for resolving transient gust features and non-Gaussian turbulence, crucial for Low-Altitude Economy applications (e.g., UAV safety).
     </p>
   </div>
 </div>
