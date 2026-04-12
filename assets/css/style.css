@@ -33,6 +33,30 @@ body {
   padding: 5px 10px;
   margin-right: 15px;
   color: var(--color-text);
+  text-decoration: none;
+  position: relative;
+}
+
+/* Underline-expand hover animation */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: calc(100% - 20px);
+  height: 2px;
+  background-color: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+  color: var(--color-brand);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
 }
 
 header {
@@ -136,13 +160,56 @@ header {
   font-size: 24px;
   color: var(--color-text-muted);
   margin: 0 12px;
-  transition: color 0.3s ease, transform 0.3s ease;
+  /* Combine opacity + scale for a polished 'breathing' hover */
+  transition: color 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0.8;
 }
 
 .social-icons a:hover {
   color: var(--color-brand-hover);
-  transform: scale(1.2);
+  transform: scale(1.18);
+  opacity: 1;
 }
+
+/* =============================================================================
+   Phase 2 — Scroll-triggered Entrance Animations (Intersection Observer)
+   Principle: opacity + translateY only — no scale, no bounce — academic gravitas.
+   ========================================================================== */
+
+/* Initial hidden state applied by JS before item enters viewport */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Stagger delay: driven by --reveal-delay CSS var set inline by JS */
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+/* Visible state toggled by IntersectionObserver when item crosses threshold */
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Sidebar avatar — subtle fade-in on load */
+.sidebar img {
+  animation: sidebar-avatar-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes sidebar-avatar-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================================= */
 
 @media (max-width: 768px) {
   .container {
