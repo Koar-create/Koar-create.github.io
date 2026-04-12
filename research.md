@@ -13,89 +13,28 @@ lang: en
     </p>
     <hr>
 
+    {% for pub in site.data.publications %}
     <div class="reveal-item">
-      <h2>
-        A Case Study on the Record-Breaking Rainfall in Southern China during September 7-8, 2023
+      <h2 style="display: flex; justify-content: space-between; align-items: center;">
+        <span>{{ pub.title }}</span>
+        {% if pub.bibtex %}
+          <button class="bibtex-btn" onclick="copyBibtex('{{ pub.id }}')" style="font-size: 14px; padding: 4px 10px; cursor: pointer; border: 1px solid var(--color-border); background: var(--color-bg-page); color: var(--color-text-muted); border-radius: 4px; transition: all 0.2s;">Copy BibTeX</button>
+        {% endif %}
       </h2>
-      <p>
-        <strong>Abstract&nbsp;&nbsp;</strong>
-        On 7-8 September 2023, southern China witnessed a historic rainfall event. Using the Weather Research and Forecasting (WRF) model, we investigated the underlying physics of this extreme precipitation. Over 270 parameterization experiments revealed that most schemes failed to reproduce the observed rainfall intensity (&gt;600 mm day⁻¹), highlighting the challenge in forecasting such rare events. Sensitivity analyses identified the cumulus parameterization scheme as the dominant controlling factor. Crucially, the initial divergence between successful and unsuccessful simulations originated in the upper-level dynamics, driven by the choice of cumulus scheme in the model's outer domains. This suggests that altered vertical transport of momentum and moisture aloft is a key precursor. However, the precise mechanism linking these early upper-level changes to the subsequent development of intense surface precipitation remains to be elucidated.
-      </p>
-      <p>
-        <strong>Introduction&nbsp;&nbsp;</strong>On 5 September 2023, Typhoon Haikui (Chinese: 海葵) made landfall in Fujian, subsequently moving into Guangdong and dissipated on September 5th. Yet its remnants stalled over the Greater Bay Area region (GBA) for over two days. As the low pressure trough associated with Haikui's remnants interacted with the south-westerly monsoon, the GBA region started experiencing extreme rainfall beginning on the night of September 7th.
-      </p>
-      <img src="/assets/images/background.png" alt="Research Image 1" style="max-width:800px; height:auto;">
+      {% if pub.bibtex %}
+        <!-- Hidden BibTeX data for copy function -->
+        <pre id="{{ pub.id }}" style="display: none;">{{ pub.bibtex }}</pre>
+      {% endif %}
+      {{ pub.blocks[0].html }}
     </div>
-
+    {% for block in pub.blocks offset: 1 %}
     <hr>
-
     <div class="reveal-item">
-      <p>
-        <strong>Results</strong>
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• Over 250 parameterization experiments yielded mixed results, with most schemes unable to simulate extreme precipitation above 400 mm/day due to the rarity of this events.
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• Five experiments performed well, showing high correlation with observations and low error.
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• A detailed analysis investigating the physical mechanisms contributing to the success of these high-performing parameterizations are necessary.
-        <br><img src="/assets/images/pattern_ACC-RMSE-TS.png" alt="Research Image 2" style="max-width:800px; height:auto;">
-      </p>
+      {{ block.html }}
     </div>
-
-    <div class="reveal-item">
-      <p>
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• The experiment that performs best in simulating precipitation is selected as the <strong>control</strong> run.
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• Three parameterization schemes (cumulus, microphysics, PBL) are individually perturbed based on the control run (see results below).
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• Results show that perturbing the cumulus scheme leads to a more substantial decrease in simulated precipitation intensity than perturbing either the microphysics or PBL schemes.
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• <strong>This suggests that</strong> the choice of cumulus parameterization in the outer domains has a stronger influence on precipitation performance than changes in microphysics schemes.
-      </p>
-      <p style="display:flex; gap:50px;">
-        <img src="/assets/images/sensitivity_analysis_1.png" alt="Research Image 3" style="max-height:200px; width:auto;">
-        <img src="/assets/images/sensitivity_analysis_2.png" alt="Research Image 4" style="max-height:200px; width:auto;">
-      </p>
-    </div>
-
-    <hr>
-
-    <div class="reveal-item">
-      <p>
-      Temporal mean is conducted from 14:00 to 17:00 on September 4 2025 (UTC).<br>
-      <img src="/assets/images/U_ano.0412_0414.png" alt="Research Image 5" style="max-width:800px; height:auto;">
-      <br>Temporal mean is conducted from 06:00 to 09:00 on September 5 2025 (UTC).<br>
-      <img src="/assets/images/U_ano.0506_0508.png" alt="Research Image 6" style="max-width:800px; height:auto;">
-      </p>
-      <p>
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• In the early stages of the experiments, comparisons were made between the control run and the cumulus-perturbed experiments in terms of dynamic and thermodynamic fields.
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• The key divergence between the control and perturbed runs first appears in the <strong>upper-level dynamics</strong>. This difference is attributed to the use of different cumulus schemes in the outer domains.
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;• A possible way is: The cumulus scheme influences the vertical transport of momentum and moisture in the outer domains, leading to the discrepancies aloft. <u>This process is still being investigated.</u>
-      </p>
-    </div>
-
-    <hr>
-
-    <div class="reveal-item">
-      <h2>Phase 2: WRF-OpenFOAM Coupling for Urban Wind Field Downscaling</h2>
-      <p>
-        Building on the findings from Phase 1, my second phase of research (starting Nov 2025) shifts focus from regional parameterization to multi-scale urban wind field reconstruction. By monodirectionally coupling the <strong>WRF mesoscale model</strong> with the <strong>OpenFOAM CFD solver</strong>, we developed a downscaling pipeline capable of resolving complex urban aerodynamics (e.g., building wakes and street canyons).
-      </p>
-      <p>
-        <strong>Validation Results&nbsp;&nbsp;</strong>
-        The framework was validated against multi-station <strong>LiDAR vertical wind profiles</strong> in the Guangzhou Central Business District (CBD). Statistical results across three valid time steps (0000, 0400, 0800 UTC) show a positive <strong>Skill Score (SS &gt; 0)</strong>, demonstrating that the CFD model significantly reduces wind speed biases in the lower urban boundary layer compared to the standalone WRF model.
-        <br><em>Note: The 1200 UTC case was excluded as the stable atmospheric boundary layer suppressed Turbulence Kinetic Energy (TKE), rendering steady-state RANS simulations inapplicable.</em>
-      </p>
-      <p style="text-align:center;">
-        <img src="/assets/images/fig4_simple_ws_profiles_fixed.png" alt="Wind Speed Profiles" style="max-width:800px; height:auto;">
-        <br><em>Figure 1: Comparison of vertical wind speed profiles between LiDAR observations, WRF, and OpenFOAM CFD at 4 stations in Guangzhou.</em>
-      </p>
-      <p style="text-align:center;">
-        <img src="/assets/images/fig2_taylor_diagram.png" alt="Taylor Diagram" style="max-width:600px; height:auto;">
-        <br><em>Figure 2: Taylor diagram illustrating the improved statistical performance (correlation and standard deviation) of the CFD downscaling results.</em>
-      </p>
-    </div>
-
-    <div class="reveal-item">
-      <p>
-        <strong>Future Directions&nbsp;&nbsp;</strong>
-        Upcoming work includes the implementation of a <strong>split-roughness boundary strategy</strong> to eliminate double-counting artifacts in ground roughness, and the transition from RANS to <strong>LES/WMLES</strong> for resolving transient gust features and non-Gaussian turbulence, crucial for Low-Altitude Economy applications (e.g., UAV safety).
-      </p>
-    </div>
+    {% endfor %}
+    {% unless forloop.last %}<hr>{% endunless %}
+    {% endfor %}
 
   </div>
 </div>
