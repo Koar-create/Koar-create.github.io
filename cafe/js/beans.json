@@ -1,5 +1,24 @@
 [
-{
+  {
+    "countryEn": "COSTA RICA",
+    "countryCn": "哥斯达黎加",
+    "regionEn": "Tarrazú",
+    "regionCn": "塔拉珠",
+    "farmEn": "El Tirra",
+    "farmCn": "El Tirra 庄园",
+    "processEn": "Honey",
+    "processCn": "蜜处理",
+    "roastEn": "Light",
+    "roastCn": "浅烘焙",
+    "flavorEn": "Eucalyptus, Perfume Lemon, Honey, Stone Fruit",
+    "flavorCn": "尤加利、香水柠檬、蜂蜜、核果",
+    "varietalEn": "Wush Wush",
+    "varietalCn": "Wush Wush",
+    "recommendEn": "Pour over coffee (10.9 ¥)",
+    "recommendCn": "手冲咖啡 (10.9 ¥)",
+    "available": true
+  },
+  {
     "countryEn": "KENYA",
     "countryCn": "肯尼亚",
     "regionEn": "Nyeri",
@@ -14,8 +33,8 @@
     "flavorCn": "葡萄、樱桃、热带水果、果汁顺滑",
     "varietalEn": "SL28/SL34",
     "varietalCn": "SL28/SL34",
-    "recommendEn": "Pour over coffee (15.9 ¥)",
-    "recommendCn": "手冲咖啡 (15.9 ¥)",
+    "recommendEn": "Pour over coffee (10.9 ¥)",
+    "recommendCn": "手冲咖啡 (10.9 ¥)",
     "available": false
   },
   {
@@ -52,8 +71,8 @@
     "flavorCn": "葡萄干、樱桃绿茶、蜜枣、熟凤梨",
     "varietalEn": "F1 Hybrid",
     "varietalCn": "F1种",
-    "recommendEn": "Pour over coffee (15.9 ¥)",
-    "recommendCn": "手冲咖啡 (15.9 ¥)",
+    "recommendEn": "Pour over coffee (10.9 ¥)",
+    "recommendCn": "手冲咖啡 (10.9 ¥)",
     "available": false
   },
   {
@@ -71,8 +90,8 @@
     "flavorCn": "柑橘、青柠、莓果、茉莉花",
     "varietalEn": "Heirloom",
     "varietalCn": "原生种",
-    "recommendEn": "Pour over coffee (12.9 ¥)",
-    "recommendCn": "手冲咖啡 (12.9 ¥)",
+    "recommendEn": "Pour over coffee (9.9 ¥)",
+    "recommendCn": "手冲咖啡 (9.9 ¥)",
     "available": false
   },
   {
@@ -90,8 +109,8 @@
     "flavorCn": "红色花、草莓、菠萝、橘子汽水",
     "varietalEn": "Heirloom/74158",
     "varietalCn": "原生种/74158",
-    "recommendEn": "Pour over coffee (12.9 ¥)",
-    "recommendCn": "手冲咖啡 (12.9 ¥)",
+    "recommendEn": "Pour over coffee (10.9 ¥)",
+    "recommendCn": "手冲咖啡 (10.9 ¥)",
     "available": false
   },
   {
@@ -128,8 +147,8 @@
     "flavorCn": "无花果、葡萄干、杏桃、柚子茶",
     "varietalEn": "Typica",
     "varietalCn": "铁皮卡",
-    "recommendEn": "Pour over coffee (15.9 ¥)",
-    "recommendCn": "手冲咖啡 (15.9 ¥)",
+    "recommendEn": "Pour over coffee (10.9 ¥)",
+    "recommendCn": "手冲咖啡 (10.9 ¥)",
     "available": false
   },
   {
@@ -147,8 +166,8 @@
     "flavorCn": "蜜橘、红茶、果甜感",
     "varietalEn": "Bourbon",
     "varietalCn": "波旁",
-    "recommendEn": "Pour over coffee (10.9 ¥)",
-    "recommendCn": "手冲咖啡 (10.9 ¥)",
+    "recommendEn": "Pour over coffee (15.9 ¥)",
+    "recommendCn": "手冲咖啡 (15.9 ¥)",
     "available": false
   },
   {
@@ -166,9 +185,9 @@
     "flavorCn": "柠檬草、姜花、白桃",
     "varietalEn": "Heirloom",
     "varietalCn": "原生种",
-    "recommendEn": "Pour over coffee (10.9 ¥) / Cold brew coffee (15.9 ¥)",
-    "recommendCn": "手冲咖啡 (10.9 ¥) / 冷萃咖啡 (15.9 ¥)",
-    "available": true
+    "recommendEn": "Pour over coffee (10.9 ¥) / Cold brew coffee (12.9 ¥)",
+    "recommendCn": "手冲咖啡 (10.9 ¥) / 冷萃咖啡 (12.9 ¥)",
+    "available": false
   },
   {
     "countryEn": "COLOMBIA",
@@ -185,8 +204,8 @@
     "flavorCn": "玫瑰、荔枝糖、山竹、水果红茶",
     "varietalEn": "Caturra",
     "varietalCn": "卡杜拉",
-    "recommendEn": "Cold brew coffee (16.9 ¥)",
-    "recommendCn": "冷萃咖啡 (16.9 ¥)",
+    "recommendEn": "Cold brew coffee (12.9 ¥)",
+    "recommendCn": "冷萃咖啡 (12.9 ¥)",
     "available": true
   },
   {
@@ -204,8 +223,8 @@
     "flavorCn": "肉桂、可可、香料、红糖",
     "varietalEn": "Nia",
     "varietalCn": "妮娅",
-    "recommendEn": "Caffè latte (12.9 ¥)",
-    "recommendCn": "拿铁 (12.9 ¥)",
+    "recommendEn": "Caffè latte (10.9 ¥)",
+    "recommendCn": "拿铁 (10.9 ¥)",
     "available": true
   }
 ]
