@@ -13,11 +13,22 @@
       {% for item in site.navigation %}
         <a href="{{ item.url | relative_url }}" class="nav-link">{{ item.title }}</a>
       {% endfor %}
-      <!-- Language toggle here, e.g., a link or button with globe icon -->
-      <a href="javascript:void(0);" id="lang-toggle">
-        {% if page.url contains '_cn' %}English{% else %}中文{% endif %}
-      </a>  <!-- Or wrap in <span class="globe">🌐</span> if that's your icon -->
+      
+      <div class="nav-right">
+        <!-- Language toggle -->
+        <a href="javascript:void(0);" id="lang-toggle" class="toggle-btn" title="Toggle Language">
+          {% if page.url contains '_cn' %}EN{% else %}中{% endif %}
+        </a>
+        <!-- Dark mode toggle -->
+        <a href="javascript:void(0);" id="theme-toggle" class="toggle-btn" title="Toggle Dark Mode">
+          <i class="fas fa-moon"></i>
+        </a>
+      </div>
     </nav>
+    <!-- Reading Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar" id="myBar"></div>
+    </div>
   </header>
   <main>
     {{ content }}
@@ -27,5 +38,6 @@
   </footer>
   <script src="{{ site.baseurl }}/js/language.js"></script>
   <script src="{{ site.baseurl }}/js/reveal.js"></script>
+  <script src="{{ site.baseurl }}/js/features.js"></script>
 </body>
 </html>
