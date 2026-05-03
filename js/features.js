@@ -6,42 +6,44 @@
 (function () {
   'use strict';
 
-  // 1. Theme (Dark Mode) Toggle
-  var themeToggle = document.getElementById('theme-toggle');
-  var icon = themeToggle ? themeToggle.querySelector('i') : null;
-  
-  // Apply saved theme on load
-  var currentTheme = localStorage.getItem('theme') || 'light';
-  if (currentTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    if (icon) {
+  function updateThemeIcon(isDark) {
+    var themeToggle = document.getElementById('theme-toggle');
+    var icon = themeToggle ? themeToggle.querySelector('i') : null;
+    if (!icon) return;
+    if (isDark) {
       icon.classList.remove('fa-moon');
       icon.classList.add('fa-sun');
+    } else {
+      icon.classList.remove('fa-sun');
+      icon.classList.add('fa-moon');
     }
   }
 
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      var targetTheme = 'light';
-      
-      if (document.documentElement.getAttribute('data-theme') !== 'dark') {
-        targetTheme = 'dark';
-        document.documentElement.setAttribute('data-theme', 'dark');
-        if(icon) {
-          icon.classList.remove('fa-moon');
-          icon.classList.add('fa-sun');
+  // Theme is already applied by the blocking <head> script.
+  // This function only syncs the UI icon and wires the toggle.
+  function initThemeToggle() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    updateThemeIcon(isDark);
+
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var nowDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (nowDark) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          updateThemeIcon(false);
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          updateThemeIcon(true);
         }
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-        if(icon) {
-          icon.classList.remove('fa-sun');
-          icon.classList.add('fa-moon');
-        }
-      }
-      localStorage.setItem('theme', targetTheme);
-    });
+      });
+    }
   }
+
+  document.addEventListener('DOMContentLoaded', initThemeToggle);
 
   // 2. Reading Progress Bar
   window.addEventListener('scroll', function() {
@@ -64,7 +66,7 @@
     if (!bibtexElement) return;
 
     var bibtexText = bibtexElement.textContent || bibtexElement.innerText;
-    
+
     // Fallback for older browsers
     const fallbackCopy = function(text) {
       var textArea = document.createElement("textarea");
@@ -92,7 +94,7 @@
     btn.textContent = 'Copied!';
     btn.style.color = 'var(--color-brand)';
     btn.style.borderColor = 'var(--color-brand)';
-    
+
     setTimeout(function() {
       btn.textContent = originalText;
       btn.style.color = '';

@@ -3,11 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ page.title }} | {{ site.title }}</title>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch(e) {}
+      document.documentElement.classList.add('theme-ready');
+    })();
+  </script>
+  <noscript><style>html { visibility: visible; }</style></noscript>
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   {% seo %}
 </head>
 <body>
+  <div class="site-wrapper">
   <header>
     <nav>
       {% for item in site.navigation %}
@@ -33,9 +46,20 @@
   <main>
     {{ content }}
   </main>
-  <footer>
-    {{ site.footer }}
+  <footer class="site-footer">
+    <div class="footer-copyright">
+      {{ site.footer }}
+    </div>
+    <div class="footer-cafe-link" aria-label="Side projects">
+      <span class="footer-cafe-label">Side project</span>
+      <a href="{{ '/cafe/menu.html' | relative_url }}">☕ Cafe Menu</a>
+      <span class="footer-cafe-sep" aria-hidden="true">·</span>
+      <a href="{{ '/cafe/about_us.html' | relative_url }}">About</a>
+      <span class="footer-cafe-sep" aria-hidden="true">·</span>
+      <a href="{{ '/cafe/events.html' | relative_url }}">Events</a>
+    </div>
   </footer>
+  </div>
   <script src="{{ site.baseurl }}/js/language.js"></script>
   <script src="{{ site.baseurl }}/js/reveal.js"></script>
   <script src="{{ site.baseurl }}/js/features.js"></script>

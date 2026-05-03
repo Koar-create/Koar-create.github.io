@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&display=swap');
 
+/* Anti-flash: hide root until blocking head script sets theme + theme-ready */
+html {
+  visibility: hidden;
+}
+
+html.theme-ready {
+  visibility: visible;
+}
+
 /* =============================================================================
    Design Tokens — extracted from inline magic values for future theming
    ========================================================================== */
@@ -42,10 +51,87 @@
   --color-shadow-table:  rgba(0, 0, 0, 0.5);
 }
 
+/* Dark mode: force main structural surfaces to theme tokens (covers legacy inline backgrounds) */
+[data-theme="dark"] .content-area,
+[data-theme="dark"] .post-content,
+[data-theme="dark"] main,
+[data-theme="dark"] article,
+[data-theme="dark"] section,
+[data-theme="dark"] .content {
+  background-color: var(--color-bg-page) !important;
+  color: var(--color-text) !important;
+}
+
+[data-theme="dark"] div[style*="background"],
+[data-theme="dark"] div[style*="background-color"] {
+  background-color: var(--color-bg-page) !important;
+}
+
 body {
   font-family: var(--font-body);
   margin: 0;
   color: var(--color-text);
+  background-color: var(--color-bg-page);
+}
+
+main {
+  background-color: var(--color-bg-page);
+}
+
+/* Site footer + café “side door” (not in primary nav) */
+.site-footer {
+  padding: 1.25rem 2rem 1.75rem;
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-bg-header);
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.footer-copyright {
+  color: var(--color-text-muted);
+}
+
+.footer-cafe-link {
+  margin-top: 0.65rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.footer-cafe-label {
+  display: inline-block;
+  margin-right: 0.35rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.footer-cafe-link a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.footer-cafe-link a:hover {
+  color: var(--color-brand);
+  border-bottom-color: var(--color-brand-hover);
+}
+
+.footer-cafe-sep {
+  display: inline-block;
+  margin: 0 0.35rem;
+  opacity: 0.45;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-cafe-link a {
+    transition: none;
+  }
 }
 
 .nav-link {
@@ -265,6 +351,60 @@ nav {
   animation: sidebar-avatar-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
+/* Language switch: fade out before navigation, fade in after (sessionStorage handoff) */
+@keyframes langFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.lang-fade-out {
+  animation: langFadeOut 180ms ease forwards;
+  pointer-events: none;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html.lang-entering .site-wrapper {
+  animation: pageEnter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.lang-entering * {
+    animation: none !important;
+  }
+
+  .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .sidebar img {
+    animation: none;
+  }
+
+  .progress-bar {
+    transition: none;
+  }
+
+  .lang-fade-out {
+    animation: none !important;
+  }
+}
+
 @keyframes sidebar-avatar-in {
   from {
     opacity: 0;
@@ -327,7 +467,7 @@ nav {
 .role-table thead th {
   background-color: var(--color-bg-table-head); /* 浅灰色背景 */
   font-weight: 600;
-  color: #212529; /* 深色文字以保证对比度 */
+  color: var(--color-text);
   font-size: 0.95em;
 }
 
