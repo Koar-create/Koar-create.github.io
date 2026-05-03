@@ -36,6 +36,10 @@
 
 - **`index_cn.md`、`rbm_recruit.md`、`rbm_recruit_cn.md`**：删除内联 `<div class="sidebar">…</div>`，改为 `{% include sidebar.html %}`，与 `index.md`、`research.md`、`research_cn.md` 一致；中英文仍由各页 front matter 的 `lang: en` / `lang: cn` 驱动 `_includes/sidebar.html` 内的条件渲染。
 
+## 会话任务（nav 中文偏好无英文闪屏）
+
+- **`js/language.js`**：增加 `PAGE_MAP` / `PAGE_MAP_REVERSE` 与 `resolveUrl()`（覆盖 `_config.yml` 导航对应之 `/`、`/research`、`/education`、`/rbm_recruit` 及 `.html` 变体，与 `index_cn.html`、`research_cn.html`、`education_cn.html`、`rbm_recruit_cn.html` 一致）。在 `DOMContentLoaded` 于 `header nav`（或后备 `nav` / `.site-nav`）上委托点击：当 `localStorage.preferredLang === 'cn'` 且为同域导航链时，用 `resolveUrl` 解析中文 URL，`preventDefault` 后走 **`navigateWithLangFade`**。移除原先基于 `isChinesePath` 比较的跨语言点击逻辑。保留 **`updateNavLinks`**：用 `resolveUrl` 同步改写 `href`（供新标签页/复制链接），并排除 **`#theme-toggle`**；`load` 里在重定向逻辑之后 **`setTimeout(..., 0)`** 再调用一次 `updateNavLinks`。语言纠偏仍使用 **`location.replace`**。
+
 ## 备注
 
 - 主站设计令牌为 `--color-bg-page` / `--color-text`（非 `--bg-color`）；暗色安全网按现有 `:root` 变量书写。

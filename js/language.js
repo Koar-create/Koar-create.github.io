@@ -1,6 +1,33 @@
 var LANG_FADE_OUT_MS = 180;
 var SESSION_KEY = 'justSwitchedLang';
 
+/* English path → Chinese path (from _config.yml navigation + built *_cn.html permalinks) */
+var PAGE_MAP = {
+    '/': '/index_cn.html',
+    '/index.html': '/index_cn.html',
+    '/research': '/research_cn.html',
+    '/research.html': '/research_cn.html',
+    '/education': '/education_cn.html',
+    '/education.html': '/education_cn.html',
+    '/rbm_recruit': '/rbm_recruit_cn.html',
+    '/rbm_recruit.html': '/rbm_recruit_cn.html'
+};
+
+var PAGE_MAP_REVERSE = {};
+Object.keys(PAGE_MAP).forEach(function (en) {
+    PAGE_MAP_REVERSE[PAGE_MAP[en]] = en === '/' ? '/index.html' : en;
+});
+
+function resolveUrl(pathname, targetLang) {
+    var p = pathname.replace(/\/$/, '') || '/';
+    if (targetLang === 'cn') {
+        if (PAGE_MAP[p]) return PAGE_MAP[p];
+        if (PAGE_MAP[p + '.html']) return PAGE_MAP[p + '.html'];
+        return null;
+    }
+    return PAGE_MAP_REVERSE[p] || null;
+}
+
 function applyLangEnteringIfNeeded() {
     try {
         if (!sessionStorage.getItem(SESSION_KEY)) return;
@@ -37,10 +64,6 @@ function isChinesePage() {
     return window.location.pathname.includes('_cn');
 }
 
-function isChinesePath(pathname) {
-    return pathname.indexOf('_cn') !== -1;
-}
-
 function navigateWithLangFade(url) {
     try {
         sessionStorage.setItem('justSwitchedLang', '1');
@@ -64,18 +87,17 @@ window.addEventListener('load', function () {
     const currentIsCn = isChinesePage();
 
     if (preferredLang === 'cn' && !currentIsCn) {
-        // Redirect to Chinese version
         const newPath = (baseName === 'index') ? '/index_cn.html' : `/${baseName}_cn.html`;
         window.location.replace(newPath);
     } else if (preferredLang === 'en' && currentIsCn) {
-        // Redirect to English version
         const newPath = (baseName === 'index') ? '/' : `/${baseName}.html`;
         window.location.replace(newPath);
     }
 
-    // Update nav links and toggle button
-    updateNavLinks(preferredLang);
     updateToggleButton(preferredLang);
+    window.setTimeout(function () {
+        updateNavLinks(preferredLang);
+    }, 0);
 });
 
 // Function to toggle language
@@ -102,20 +124,28 @@ function updateToggleButton(lang) {
     }
 }
 
-// Dynamically update all nav links based on preferred lang
+// Fallback: rewrite nav hrefs for "Open in new tab" / copy link (primary clicks use interceptor when lang is cn)
 function updateNavLinks(lang) {
-    const navLinks = document.querySelectorAll('nav a:not(#lang-toggle)'); // Adjust to your nav selector, exclude lang-toggle
-    navLinks.forEach(link => {
-        let href = link.getAttribute('href');
-        if (href && !href.includes('_cn') && href !== 'javascript:void(0);') { // Only modify internal page links
-            if (lang === 'cn') {
-                if (href === '/' || href === '/index.html') {
-                    link.setAttribute('href', '/index_cn.html');
-                } else {
-                    link.setAttribute('href', href.replace('.html', '_cn.html').replace(/\/$/, '_cn.html'));
-                }
-            } else {
-                link.setAttribute('href', href.replace('_cn.html', '.html'));
+    document.querySelectorAll('nav a:not(#lang-toggle):not(#theme-toggle)').forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (!href || href.indexOf('javascript:') === 0) return;
+        var url;
+        try {
+            url = new URL(link.href, window.location.href);
+        } catch (err) {
+            return;
+        }
+        if (url.origin !== window.location.origin) return;
+
+        if (lang === 'cn') {
+            var cnPath = resolveUrl(url.pathname, 'cn');
+            if (cnPath) {
+                link.setAttribute('href', cnPath + url.search + url.hash);
+            }
+        } else if (url.pathname.indexOf('_cn') !== -1) {
+            var enPath = resolveUrl(url.pathname, 'en');
+            if (enPath) {
+                link.setAttribute('href', enPath + url.search + url.hash);
             }
         }
     });
@@ -129,29 +159,41 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleElement.addEventListener('click', toggleLanguage);
     }
 
-    var headerNav = document.querySelector('header nav');
-    if (!headerNav) return;
+    var preferredNav = localStorage.getItem('preferredLang') || 'en';
+    updateNavLinks(preferredNav);
 
-    headerNav.addEventListener('click', function (e) {
-        var a = e.target.closest('a');
-        if (!a || !headerNav.contains(a)) return;
-        if (a.id === 'lang-toggle' || a.id === 'theme-toggle') return;
-        var href = a.getAttribute('href');
-        if (!href || href.indexOf('javascript:') === 0) return;
+    var nav = document.querySelector('header nav') ||
+        document.querySelector('nav') ||
+        document.querySelector('.site-nav');
+    if (nav) {
+        nav.addEventListener('click', function (e) {
+            var link = e.target.closest('a');
+            if (!link || !nav.contains(link)) return;
 
-        var targetUrl;
-        try {
-            targetUrl = new URL(a.href, window.location.href);
-        } catch (err) {
-            return;
-        }
-        if (targetUrl.origin !== window.location.origin) return;
+            if (link.id === 'lang-toggle' ||
+                link.id === 'theme-toggle' ||
+                link.classList.contains('lang-toggle') ||
+                link.classList.contains('theme-toggle')) {
+                return;
+            }
 
-        var cur = window.location.pathname;
-        var next = targetUrl.pathname;
-        if (isChinesePath(cur) === isChinesePath(next)) return;
+            if (link.hostname !== window.location.hostname) return;
 
-        e.preventDefault();
-        navigateWithLangFade(targetUrl.pathname + targetUrl.search + targetUrl.hash);
-    });
+            var preferredLang = localStorage.getItem('preferredLang') || 'en';
+            if (preferredLang !== 'cn') return;
+
+            var targetPath = link.pathname;
+            var cnUrl = resolveUrl(targetPath, 'cn');
+
+            if (cnUrl && cnUrl !== window.location.pathname) {
+                e.preventDefault();
+                var dest = cnUrl + link.search + link.hash;
+                if (typeof navigateWithLangFade === 'function') {
+                    navigateWithLangFade(dest);
+                } else {
+                    window.location.href = dest;
+                }
+            }
+        });
+    }
 });
