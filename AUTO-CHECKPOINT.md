@@ -27,6 +27,11 @@
 - [x] `ruby -e "require 'yaml'; YAML.load_file('_data/publications_cn.yml')"` 通过
 - [x] 已阅读用户指定的布局、样式、脚本、含区与页面后再改代码
 
+## 会话任务（FIX 3 — 中文研究页数据驱动）
+
+- **`_data/publications_cn.yml`**：在文件首增加 YAML 注释头（中文数据源说明、`id` 与 `publications.yml` 对照）；条目结构保持与英文一致（`title` / `id` / `bibtex` / `blocks` 下 `html: |`）。
+- **`research_cn.md`**：保留页首中文引言段；正文改为 `{% for pub in site.data.publications_cn %}`，每条为 **`publication-entry reveal-item`**，**`<h3>{{ pub.title }}</h3>`**，BibTeX 为 **「复制 BibTeX」** 按钮 + 隐藏 `<pre>`；**`{% for block in pub.blocks %}`** 输出 **`{{ block.html }}`**，每块包在 **`reveal-item`** 中，块间 **`{% unless forloop.first %}<hr>{% endunless %}`**，条目间保留 **`{% unless forloop.last %}<hr>{% endunless %}`**。未改动 `publications.yml` 与 `research.md`。
+
 ## 会话任务（sidebar 单文件 include 同步）
 
 - **`index_cn.md`、`rbm_recruit.md`、`rbm_recruit_cn.md`**：删除内联 `<div class="sidebar">…</div>`，改为 `{% include sidebar.html %}`，与 `index.md`、`research.md`、`research_cn.md` 一致；中英文仍由各页 front matter 的 `lang: en` / `lang: cn` 驱动 `_includes/sidebar.html` 内的条件渲染。
