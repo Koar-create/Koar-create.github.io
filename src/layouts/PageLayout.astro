@@ -1,0 +1,42 @@
+---
+import Base from './Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
+import type { Locale } from '../lib/i18n';
+
+interface Props {
+  title: string;
+  description?: string;
+  locale: Locale;
+  currentPath: string;
+  pageLabel?: string;
+  pageLead?: string;
+}
+
+const { title, description, locale, currentPath, pageLabel, pageLead } = Astro.props;
+---
+
+<Base title={title} description={description} locale={locale}>
+  <header class="site-header">
+    <Nav locale={locale} currentPath={currentPath} />
+    <ReadingProgress />
+  </header>
+  <main>
+    <div class="page-container">
+      <div class="content">
+        {
+          pageLabel && (
+            <header class="page-header">
+              <span class="label">{pageLabel}</span>
+              <h1>{title}</h1>
+              {pageLead && <p class="lead">{pageLead}</p>}
+            </header>
+          )
+        }
+        <slot />
+      </div>
+    </div>
+  </main>
+  <Footer locale={locale} />
+</Base>

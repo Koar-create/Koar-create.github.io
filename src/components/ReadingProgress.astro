@@ -1,0 +1,17 @@
+<div class="progress-container" aria-hidden="true">
+  <div class="progress-bar" id="reading-progress"></div>
+</div>
+
+<script>
+  function updateProgress() {
+    const winScroll = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const bar = document.getElementById('reading-progress');
+    if (!bar || height <= 0) return;
+    bar.style.width = `${(winScroll / height) * 100}%`;
+  }
+
+  document.addEventListener('astro:page-load', updateProgress);
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>

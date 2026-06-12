@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { siteConfig } from '../lib/i18n';
+import type { Locale } from '../lib/i18n';
+
+interface Props {
+  title: string;
+  description?: string;
+  locale?: Locale;
+}
+
+const { title, description = siteConfig.description, locale = 'en' } = Astro.props;
+const fullTitle = `${title} | ${siteConfig.title}`;
+---
+
+<!doctype html>
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.author} />
+    <meta name="google-site-verification" content={siteConfig.googleSiteVerification} />
+    <title>{fullTitle}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script is:inline>
+      (function () {
+        function applyThemeReady() {
+          try {
+            var t = localStorage.getItem('theme');
+            if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+          } catch (e) {}
+          document.documentElement.classList.add('theme-ready');
+        }
+        applyThemeReady();
+        document.addEventListener('astro:page-load', applyThemeReady);
+      })();
+    </script>
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <slot />
+    </div>
+    <script>
+      function applyThemeReady() {
+        try {
+          const theme = localStorage.getItem('theme');
+          if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        } catch {}
+        document.documentElement.classList.add('theme-ready');
+      }
+      document.addEventListener('astro:page-load', applyThemeReady);
+      applyThemeReady();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+:root {
+  /* Typography — Cormorant Garamond (display) + Crimson Pro (body) */
+  --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+  --font-body: 'Crimson Pro', 'Crimson Text', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Palette — light */
+  --color-bg: #f0ede8;
+  --color-bg-elevated: #ffffff;
+  --color-text: #0a0a0a;
+  --color-text-muted: #5a5a5a;
+  --color-text-subtle: #8a8a8a;
+  --color-border: #0a0a0a;
+  --color-border-light: rgba(10, 10, 10, 0.12);
+  --color-accent: #ff3b00;
+  --color-accent-hover: #e03400;
+  --color-on-accent: #ffffff;
+  --color-inverse-bg: #0a0a0a;
+  --color-inverse-text: #f0ede8;
+
+  /* Fluid type scale */
+  --step-0: clamp(0.8125rem, 0.78rem + 0.15vw, 0.9375rem);
+  --step-1: clamp(1rem, 0.92rem + 0.35vw, 1.125rem);
+  --step-2: clamp(1.25rem, 1.1rem + 0.65vw, 1.5rem);
+  --step-3: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+  --step-4: clamp(2.5rem, 1.8rem + 2.5vw, 4rem);
+  --step-5: clamp(3.5rem, 2.2rem + 5vw, 7rem);
+  --step-6: clamp(4.5rem, 2.5rem + 8vw, 11rem);
+
+  /* Spacing */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-5xl: 8rem;
+
+  /* Layout */
+  --content-max: 72rem;
+  --content-narrow: 42rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --radius: 0;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 0.2s;
+  --duration-base: 0.45s;
+  --duration-slow: 0.85s;
+  --transition-fast: var(--duration-fast) var(--ease-out-expo);
+  --transition-smooth: var(--duration-slow) var(--ease-out-expo);
+
+  /* Legacy aliases for components still referencing old names */
+  --color-bg-page: var(--color-bg);
+  --color-bg-header: var(--color-bg-elevated);
+  --color-bg-sidebar: var(--color-bg);
+  --color-brand: var(--color-accent);
+  --color-brand-hover: var(--color-accent-hover);
+}
+
+[data-theme='dark'] {
+  --color-bg: #0a0a0a;
+  --color-bg-elevated: #141414;
+  --color-text: #f0ede8;
+  --color-text-muted: #b4b0a8;
+  --color-text-subtle: #7a7670;
+  --color-border: #f0ede8;
+  --color-border-light: rgba(240, 237, 232, 0.14);
+  --color-accent: #ff3b00;
+  --color-accent-hover: #ff5522;
+  --color-on-accent: #ffffff;
+  --color-inverse-bg: #f0ede8;
+  --color-inverse-text: #0a0a0a;
+}

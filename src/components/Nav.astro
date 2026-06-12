@@ -1,0 +1,45 @@
+---
+import { navItems, t, localePath } from '../lib/i18n';
+import type { Locale } from '../lib/i18n';
+import ThemeToggle from './ThemeToggle.astro';
+import LangToggle from './LangToggle.astro';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const strings = t(locale);
+---
+
+<nav class="site-nav" aria-label="Main">
+  <div class="nav-links">
+    {
+      navItems.map((item, i) => {
+        const href = item.fixed ? item.path : localePath(locale, item.path);
+        const index = String(i + 1).padStart(2, '0');
+        const isActive =
+          !item.fixed &&
+          (currentPath === href ||
+            currentPath === `${href}/` ||
+            (item.path !== '/' && currentPath.startsWith(href)));
+        return (
+          <a
+            href={href}
+            class="nav-link"
+            aria-current={isActive ? 'page' : undefined}
+            {...(item.fixed ? { target: '_self' } : {})}
+          >
+            <span class="nav-index">{index}</span>
+            {strings.nav[item.key]}
+          </a>
+        );
+      })
+    }
+  </div>
+  <div class="nav-right">
+    <LangToggle locale={locale} currentPath={currentPath} />
+    <ThemeToggle locale={locale} />
+  </div>
+</nav>

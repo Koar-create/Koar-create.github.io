@@ -1,0 +1,63 @@
+---
+import { siteConfig, t } from '../lib/i18n';
+import type { Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  showEmail?: boolean;
+}
+
+const { locale, showEmail = false } = Astro.props;
+const strings = t(locale);
+---
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      {showEmail && (
+        <>
+          <span class="label">{strings.home.contactLabel}</span>
+          <a class="footer-email" href={`mailto:${siteConfig.email}?Subject=Hello`}>
+            {siteConfig.email}
+          </a>
+        </>
+      )}
+      <div class="footer-contact">
+        <span class="label">{strings.sidebar.name}</span>
+        <div class="social-icons">
+          <a href={`mailto:${siteConfig.email}?Subject=Hello`} title="Email">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+          </a>
+          <a href={siteConfig.social.linkedin} title="LinkedIn" target="_blank" rel="noopener">
+            <i class="fab fa-linkedin" aria-hidden="true"></i>
+          </a>
+          <a href={siteConfig.social.github} title="GitHub" target="_blank" rel="noopener">
+            <i class="fab fa-github" aria-hidden="true"></i>
+          </a>
+          <a href={siteConfig.social.orcid} title="ORCID" target="_blank" rel="noopener">
+            <i class="fab fa-orcid" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="footer-address">
+          <div class="footer-address-block">
+            <span class="label">{strings.sidebar.mailingAddress}</span>
+            <p>{strings.sidebar.address}</p>
+          </div>
+          <div class="footer-address-block">
+            <span class="label">{strings.sidebar.workplace}</span>
+            <p>{strings.sidebar.workplaceValue}</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-cafe-link" aria-label="Side projects">
+        <span class="footer-cafe-label">{strings.sideProject}</span>
+        <a href="/cafe/menu.html">{strings.cafeMenu}</a>
+        <span class="footer-cafe-sep" aria-hidden="true">·</span>
+        <a href="/cafe/about_us.html">{strings.cafeAbout}</a>
+        <span class="footer-cafe-sep" aria-hidden="true">·</span>
+        <a href="/cafe/events.html">{strings.cafeEvents}</a>
+      </div>
+    </div>
+    <div class="footer-meta">{siteConfig.footer}</div>
+  </div>
+</footer>

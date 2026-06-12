@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>One Shot Coffee Club</title>
+    <style>
+        /* --- 复用 Menu.html 的核心样式 --- */
+        :root {
+            --bg-color: #F9F5F0; 
+            --text-color: #3E2723; 
+            --accent-color: #8D6E63;
+            --line-color: #D7CCC8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Didot", "Times New Roman", "Songti SC", serif; 
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden; /* 防止滚动 */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .logo-container { display: flex; flex-direction: column; }
+        .logo-en { font-size: 1.2rem; font-weight: 900; letter-spacing: -0.5px; line-height: 1; margin-bottom: 4px; }
+        .logo-cn { font-size: 0.7rem; font-weight: normal; letter-spacing: 1px; color: var(--accent-color); }
+
+        .back-link {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--text-color);
+            padding-bottom: 2px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* --- Main Content (居中显示) --- */
+        main { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            text-align: center;
+            opacity: 0; /* 初始隐藏，用于动画 */
+        }
+
+        .status-title {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin: 0;
+            font-weight: normal;
+            font-family: "Georgia", serif;
+        }
+
+        .status-cn {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: var(--accent-color);
+            letter-spacing: 4px;
+        }
+        
+        .divider {
+            width: 40px;
+            height: 1px;
+            background-color: var(--line-color);
+            margin: 30px auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <span class="logo-en">One Shot Coffee Club</span>
+            <span class="logo-cn">整一杯咖啡社</span>
+        </div>
+        <a href="menu.html" class="back-link">Back</a>
+    </header>
+
+    <main id="main-content">
+        <h1 class="status-title">UPCOMING</h1>
+        <div class="divider"></div>
+        <div class="status-cn">敬请期待</div>
+    </main>
+
+    <script>
+        // 简单的淡入上浮动画 (WAAPI)
+        document.getElementById('main-content').animate([
+            { opacity: 0, transform: 'translateY(20px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+        ], { 
+            duration: 1000, 
+            easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', 
+            fill: 'forwards' 
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import EntryLayout from '../../layouts/EntryLayout.astro';
+import { entrySlug } from '../../lib/content';
+import { t } from '../../lib/i18n';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('ideas', ({ data }) => !data.draft && data.lang === 'en');
+  return entries.map((entry) => ({
+    params: { slug: entrySlug(entry) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const locale = 'en';
+const strings = t(locale);
+const slug = entrySlug(entry);
+---
+
+<EntryLayout
+  title={entry.data.title}
+  summary={entry.data.summary}
+  locale={locale}
+  currentPath={`/ideas/${slug}/`}
+  date={entry.data.date}
+  statusLabel={strings.status[entry.data.status]}
+  tags={entry.data.tags}
+  commentSlug={`ideas/${slug}`}
+>
+  <Content />
+</EntryLayout>

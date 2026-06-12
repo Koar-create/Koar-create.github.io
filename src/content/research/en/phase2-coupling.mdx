@@ -1,0 +1,38 @@
+---
+title: "WRF-OpenFOAM Coupling for Urban Wind Field Downscaling"
+summary: "Monodirectional WRF–OpenFOAM coupling for urban wind downscaling, validated against LiDAR vertical profiles in Guangzhou CBD."
+date: 2026-01-10
+status: active
+tags: [WRF, OpenFOAM, urban CFD, LiDAR, downscaling]
+order: 1
+lang: en
+draft: false
+translationKey: phase2-coupling
+bibtex: |
+  @article{yang2026phase2,
+    title={WRF-OpenFOAM Coupling for Urban Wind Field Downscaling},
+    author={Yang, Zhixian and Liu, Zhen},
+    journal={Working Paper},
+    year={2026}
+  }
+---
+
+Starting November 2025, this research targets urban wind field reconstruction at the building-resolving scale. By monodirectionally coupling the **WRF mesoscale model** with the **OpenFOAM CFD solver**, we developed a downscaling pipeline capable of resolving complex urban aerodynamics (e.g., building wakes and street canyons).
+
+## Validation Results
+
+The framework was validated against multi-station **LiDAR vertical wind profiles** in the Guangzhou Central Business District (CBD). Statistical results across three valid time steps (0000, 0400, 0800 UTC) show a positive **Skill Score (SS > 0)**, demonstrating that the CFD model significantly reduces wind speed biases in the lower urban boundary layer compared to the standalone WRF model.
+
+*Note: The 1200 UTC case was excluded as the stable atmospheric boundary layer suppressed Turbulence Kinetic Energy (TKE), rendering steady-state RANS simulations inapplicable.*
+
+![Wind Speed Profiles](/assets/images/fig4_simple_ws_profiles_fixed.png)
+
+*Figure 1: Comparison of vertical wind speed profiles between LiDAR observations, WRF, and OpenFOAM CFD at 4 stations in Guangzhou.*
+
+![Taylor Diagram](/assets/images/fig2_taylor_diagram.png)
+
+*Figure 2: Taylor diagram illustrating the improved statistical performance of the CFD downscaling results.*
+
+## Future Directions
+
+Upcoming work includes the implementation of a **split-roughness boundary strategy** to eliminate double-counting artifacts in ground roughness, and the transition from RANS to **LES/WMLES** for resolving transient gust features and non-Gaussian turbulence, crucial for Low-Altitude Economy applications (e.g., UAV safety).

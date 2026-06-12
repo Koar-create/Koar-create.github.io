@@ -1,0 +1,87 @@
+---
+import PageLayout from './PageLayout.astro';
+import Reveal from '../components/Reveal.astro';
+import BibtexButton from '../components/BibtexButton.astro';
+import Comments from '../components/Comments';
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/i18n';
+import { formatDate } from '../lib/content';
+
+interface Props {
+  title: string;
+  summary: string;
+  locale: Locale;
+  currentPath: string;
+  date: Date;
+  statusLabel?: string;
+  tags?: string[];
+  bibtex?: string;
+  commentSlug: string;
+}
+
+const {
+  title,
+  summary,
+  locale,
+  currentPath,
+  date,
+  statusLabel,
+  tags = [],
+  bibtex,
+  commentSlug,
+} = Astro.props;
+const strings = t(locale);
+---
+
+<PageLayout title={title} locale={locale} currentPath={currentPath}>
+  <Reveal variant="mask">
+    <article class="entry-article">
+      <div class="entry-header">
+        <div>
+          <span class="label">{formatDate(date, locale)}</span>
+          <h1>{title}</h1>
+          <p class="entry-meta">
+            {statusLabel && <span class="status-badge">{statusLabel}</span>}
+          </p>
+        </div>
+        {bibtex && (
+          <BibtexButton
+            bibtex={bibtex}
+            label={strings.research.copyBibtex}
+            copiedLabel={strings.research.copied}
+          />
+        )}
+      </div>
+      <p class="lead" style="font-size: var(--step-2); color: var(--color-text-muted); max-width: 52ch;">
+        {summary}
+      </p>
+      {tags.length > 0 && (
+        <div class="tag-list">
+          {tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+      <div class="entry-body">
+        <slot />
+      </div>
+    </article>
+  </Reveal>
+
+  <section class="comments-section">
+    <h2>{strings.comments.title}</h2>
+    <Comments client:load slug={commentSlug} lang={locale} strings={strings.comments} />
+  </section>
+</PageLayout>
+
+<style>
+  .entry-body :global(h2) {
+    margin-top: var(--space-3xl);
+  }
+
+  .entry-body :global(.figure-row) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+</style>

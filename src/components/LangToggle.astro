@@ -1,0 +1,50 @@
+---
+import { t, switchLocalePath } from '../lib/i18n';
+import type { Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const targetLocale: Locale = locale === 'en' ? 'zh' : 'en';
+const href = switchLocalePath(currentPath, targetLocale);
+const strings = t(locale);
+---
+
+<a href={href} class="toggle-btn lang-toggle" title="Toggle language">
+  {strings.langToggle}
+</a>
+
+<script>
+  const LANG_FADE_MS = 180;
+
+  document.querySelectorAll('.lang-toggle').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const anchor = event.currentTarget as HTMLAnchorElement;
+      event.preventDefault();
+      document.body.classList.add('lang-fade-out');
+      window.setTimeout(() => {
+        window.location.href = anchor.href;
+      }, LANG_FADE_MS);
+    });
+  });
+</script>
+
+<style>
+  .lang-fade-out {
+    animation: langFadeOut 180ms ease forwards;
+    pointer-events: none;
+  }
+
+  @keyframes langFadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+</style>

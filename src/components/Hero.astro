@@ -1,0 +1,57 @@
+---
+import type { Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+  name: string;
+  role: string;
+  tagline: string;
+  portrait?: string;
+}
+
+const { locale, name, role, tagline, portrait } = Astro.props;
+---
+
+<section class="hero" aria-label={locale === 'zh' ? '首页介绍' : 'Introduction'}>
+  <div class="hero-inner">
+    {
+      portrait && (
+        <img
+          class="hero-portrait reveal-item"
+          src={portrait}
+          alt={name}
+          width="200"
+          height="200"
+          data-reveal
+        />
+      )
+    }
+    <div class="hero-text">
+      <p class="hero-role reveal-mask" data-reveal data-variant="mask">{role}</p>
+      <h1 class="hero-name reveal-mask" data-reveal data-variant="mask" style="--reveal-delay: 0.08s">
+        {name}
+      </h1>
+      <p class="hero-tagline reveal-item" data-reveal style="--reveal-delay: 0.18s">{tagline}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initHeroReveal() {
+    document.querySelectorAll('.hero [data-reveal]').forEach((el, i) => {
+      const variant = el.getAttribute('data-variant');
+      if (variant === 'mask') {
+        el.classList.add('reveal-mask');
+      } else {
+        el.classList.add('reveal-item');
+      }
+      if (!el.style.getPropertyValue('--reveal-delay')) {
+        el.style.setProperty('--reveal-delay', `${i * 0.08}s`);
+      }
+      requestAnimationFrame(() => el.classList.add('is-visible'));
+    });
+  }
+
+  document.addEventListener('astro:page-load', initHeroReveal);
+  initHeroReveal();
+</script>

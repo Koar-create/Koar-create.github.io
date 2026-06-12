@@ -1,0 +1,96 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Reveal from '../components/Reveal.astro';
+import RoleTable from '../components/RoleTable.astro';
+import { siteConfig, t } from '../lib/i18n';
+
+const locale = 'en';
+const strings = t(locale);
+const currentPath = Astro.url.pathname;
+
+const roles = [
+  {
+    title: 'Urban Analyst & Scenario Designer',
+    mission:
+      'Define core urban challenges and translate engineering results into economic and policy conclusions.',
+    background: 'Urban Governance & Design (UGOD), GIS, Public Policy (IPE), with interest in data analysis.',
+  },
+  {
+    title: 'The Physicist:\nAtmospheric & CFD Modeler',
+    mission:
+      'Generate high-fidelity atmospheric data as the scientific backbone of the simulation.',
+    background: 'Atmospheric Science (EOAS), CFD, Fluid Dynamics (e.g., WRF/Fluent), SEE.',
+  },
+  {
+    title: 'The Brain:\nAI & Optimization Architect',
+    mission:
+      'Design dynamic path-planning algorithms that consume environmental data and output safe, efficient flight paths.',
+    background: 'Data Science (DSA), Operations Research, Reinforcement Learning, ROAS, INTR.',
+  },
+  {
+    title: 'The World Builder:\nDigital Twin & Simulation Specialist',
+    mission:
+      'Build the simulation environment and visualize results into an interactive digital twin.',
+    background: '3D Modeling, AIGC, Robotics (ROAS), IoT, Computer Media & Arts (CMA).',
+  },
+];
+---
+
+<PageLayout
+  title={strings.rbm.title}
+  locale={locale}
+  currentPath={currentPath}
+  pageLabel="05 / RBM"
+>
+  <Reveal>
+    <p>
+      Recently, I'm dedicated myself to propose my <u><strong>RBM project</strong></u>.
+    </p>
+    <p>
+      <strong>🚁 Project Title:</strong><br />
+      Addressing the Economic and Operational Impacts of Adverse weather on Last-Mile Drone Logistics ⛈️:
+      Building a Resilient Digital Twin for Urban Drone Logistics
+    </p>
+    <p>
+      <strong>🔭 Project Vision: From Go/No-Go to Intelligent, All-Weather Operations</strong><br />
+      In the burgeoning <strong>Low-Altitude Economy (LAE)</strong>, the full potential of drone delivery
+      is currently capped by adverse weather. This project moves beyond simple go/no-go decisions toward
+      an intelligent, multi-layered digital twin for complex urban airspace.
+    </p>
+    <hr />
+    <p>
+      <strong><span style="color: red">📈 Project Update (Last updated: Sunday, Nov 30):</span></strong><br />
+      Regrettably, the previously proposed project was not established due to insufficient staffing. I
+      have currently joined a new RBM project led by
+      <a href={siteConfig.social.scholarJi}>Dr. Yiding Ji</a>. I will update this homepage with details
+      regarding the new project ASAP.
+    </p>
+    <hr />
+    <p>
+      <strong>End-to-End Validated Workflow</strong><br /><br />
+      Our project is built upon a technically feasible workflow that transforms raw geospatial and
+      meteorological data into a high-fidelity, interactive digital twin.
+      <br /><img
+        src="/assets/images/workflow_latitudinal.svg"
+        alt="Workflow diagram"
+        style="max-width:1400px; height:auto;"
+      />
+      <br />A detailed technical breakdown can be found in our
+      <u>Feasibility & Toolchain Analysis report</u> (<a
+        href="/assets/documents/Feasibility & Toolchain Analysis report (CN).pdf">中文</a
+      >).
+    </p>
+    <hr />
+    <p>
+      <strong>🤝 Seeking Collaborators to Shape the Future of Drone Logistics:</strong><br />
+      We are recruiting for the following roles:
+    </p>
+    <RoleTable locale={locale} roles={roles} />
+    <hr />
+    <p>
+      <strong>💬 Interested in collaborating?</strong><br />
+      Please feel free to <a href={`mailto:${siteConfig.email}?Subject=Hello`}>contact me</a> if you are
+      interested in my research.
+    </p>
+  </Reveal>
+</PageLayout>

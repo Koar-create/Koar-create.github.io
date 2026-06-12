@@ -1,0 +1,55 @@
+---
+interface Props {
+  bibtex: string;
+  label: string;
+  copiedLabel: string;
+}
+
+const { bibtex, label, copiedLabel } = Astro.props;
+const id = `bibtex-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<button type="button" class="bibtex-btn" data-bibtex-id={id} data-copied={copiedLabel}>
+  {label}
+</button>
+<pre id={id} hidden>{bibtex}</pre>
+
+<script>
+  function initBibtexButtons() {
+    document.querySelectorAll('.bibtex-btn[data-bibtex-id]').forEach((btn) => {
+      if (btn.getAttribute('data-bound') === '1') return;
+      btn.setAttribute('data-bound', '1');
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-bibtex-id');
+        const pre = id ? document.getElementById(id) : null;
+        if (!pre) return;
+        const text = pre.textContent ?? '';
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const area = document.createElement('textarea');
+            area.value = text;
+            document.body.appendChild(area);
+            area.select();
+            document.execCommand('copy');
+            document.body.removeChild(area);
+          }
+        } catch {
+          /* ignore */
+        }
+        const original = btn.textContent ?? '';
+        const copied = btn.getAttribute('data-copied') ?? 'Copied!';
+        btn.textContent = copied;
+        btn.classList.add('copied');
+        window.setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initBibtexButtons);
+  initBibtexButtons();
+</script>

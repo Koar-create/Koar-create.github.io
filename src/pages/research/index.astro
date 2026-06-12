@@ -1,0 +1,39 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import Reveal from '../../components/Reveal.astro';
+import { getEntriesForLocale, entrySlug, entryUrl } from '../../lib/content';
+import { t } from '../../lib/i18n';
+
+const locale = 'en';
+const strings = t(locale);
+const currentPath = Astro.url.pathname;
+const entries = await getEntriesForLocale('research', locale);
+---
+
+<PageLayout
+  title={strings.research.title}
+  locale={locale}
+  currentPath={currentPath}
+  pageLabel="01 / Research"
+  pageLead={strings.research.intro}
+>
+  <Reveal variant="stagger">
+    <div class="entry-grid">
+      {
+        entries.map((entry, i) => (
+          <EntryCard
+            index={i + 1}
+            href={entryUrl('research', locale, entrySlug(entry))}
+            title={entry.data.title}
+            summary={entry.data.summary}
+            date={entry.data.date}
+            statusLabel={strings.status[entry.data.status]}
+            tags={entry.data.tags}
+            locale={locale}
+          />
+        ))
+      }
+    </div>
+  </Reveal>
+</PageLayout>

@@ -1,0 +1,21 @@
+---
+title: "站点重构：Astro + 内容集合"
+summary: "记录从 Jekyll 迁移至 Astro，并引入研究、设想与博客集合的说明。"
+pubDate: 2026-06-01
+tags: [meta, astro, 站点]
+lang: zh
+draft: false
+translationKey: site-relaunch-2026
+---
+
+本站现已运行于 **Astro 6**，以内容集合管理研究项目、研究设想与博客文章。
+
+## 主要变化
+
+- 英文在 `/`，中文在 `/zh/`。
+- 新研究条目添加至 `src/content/research/` 下 MDX 文件即可。
+- 详情页留言使用 Supabase 认证（魔法链接或 Google）。
+
+## 贡献者
+
+新增博客：在 `src/content/blog/zh/your-slug.mdx`（及可选英文版 `en/`）创建文件即可。

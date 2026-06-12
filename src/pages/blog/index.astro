@@ -1,0 +1,38 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import Reveal from '../../components/Reveal.astro';
+import { getEntriesForLocale, entrySlug, entryUrl } from '../../lib/content';
+import { t } from '../../lib/i18n';
+
+const locale = 'en';
+const strings = t(locale);
+const currentPath = Astro.url.pathname;
+const entries = await getEntriesForLocale('blog', locale);
+---
+
+<PageLayout
+  title={strings.blog.title}
+  locale={locale}
+  currentPath={currentPath}
+  pageLabel="03 / Blog"
+  pageLead={strings.blog.intro}
+>
+  <Reveal variant="stagger">
+    <div class="entry-grid">
+      {
+        entries.map((entry, i) => (
+          <EntryCard
+            index={i + 1}
+            href={entryUrl('blog', locale, entrySlug(entry))}
+            title={entry.data.title}
+            summary={entry.data.summary}
+            date={entry.data.pubDate}
+            tags={entry.data.tags}
+            locale={locale}
+          />
+        ))
+      }
+    </div>
+  </Reveal>
+</PageLayout>

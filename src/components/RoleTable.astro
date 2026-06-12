@@ -1,0 +1,39 @@
+---
+import type { Locale } from '../lib/i18n';
+
+interface Role {
+  title: string;
+  mission: string;
+  background: string;
+}
+
+interface Props {
+  locale: Locale;
+  roles: Role[];
+}
+
+const { roles } = Astro.props;
+---
+
+<div class="table-container">
+  <table class="role-table">
+    <thead>
+      <tr>
+        <th>Role Title</th>
+        <th>Core Mission</th>
+        <th>Ideal Background</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        roles.map((role) => (
+          <tr>
+            <td set:html={role.title.replace(/\n/g, '<br>')} />
+            <td>{role.mission}</td>
+            <td>{role.background}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,95 @@
+---
+interface Props {
+  variant?: 'fade' | 'mask' | 'stagger';
+  class?: string;
+}
+
+const { variant = 'fade', class: className } = Astro.props;
+const variantClass =
+  variant === 'mask' ? 'reveal-mask' : variant === 'stagger' ? 'reveal-stagger' : 'reveal-item';
+---
+
+<div class:list={[variantClass, className]} data-reveal data-variant={variant}>
+  <slot />
+</div>
+
+<script>
+  const STAGGER_MS = 100;
+  const THRESHOLD = 0.08;
+
+  function initReveal() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('[data-reveal]').forEach((container) => {
+      if (container.getAttribute('data-reveal-init') === '1') return;
+      container.setAttribute('data-reveal-init', '1');
+
+      const variant = container.getAttribute('data-variant') || 'fade';
+
+      if (variant === 'stagger') {
+        const children = container.querySelectorAll(':scope > *');
+        children.forEach((child, i) => {
+          child.classList.add('reveal-item');
+          (child as HTMLElement).style.setProperty('--reveal-delay', `${(i * STAGGER_MS) / 1000}s`);
+        });
+      } else if (variant === 'mask') {
+        container.classList.add('reveal-mask');
+      } else {
+        container.classList.add('reveal-item');
+      }
+
+      if (reduced || !('IntersectionObserver' in window)) {
+        container.classList.add('is-visible');
+        container.querySelectorAll('.reveal-item, .reveal-mask').forEach((el) =>
+          el.classList.add('is-visible'),
+        );
+        return;
+      }
+
+      let visibleCount = 0;
+      let batchTimer: ReturnType<typeof setTimeout> | null = null;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const target = entry.target as HTMLElement;
+            if (!entry.isIntersecting || target.classList.contains('is-visible')) return;
+
+            if (variant === 'stagger' && target === container) {
+              target.classList.add('is-visible');
+              target.querySelectorAll('.reveal-item, .reveal-mask').forEach((child, i) => {
+                (child as HTMLElement).style.setProperty(
+                  '--reveal-delay',
+                  `${(i * STAGGER_MS) / 1000}s`,
+                );
+                child.classList.add('is-visible');
+              });
+              observer.unobserve(target);
+              return;
+            }
+
+            const delay = (visibleCount * STAGGER_MS) / 1000;
+            target.style.setProperty('--reveal-delay', `${delay}s`);
+            target.classList.add('is-visible');
+            visibleCount += 1;
+            if (batchTimer) clearTimeout(batchTimer);
+            batchTimer = setTimeout(() => {
+              visibleCount = 0;
+            }, 700);
+            observer.unobserve(target);
+          });
+        },
+        { threshold: THRESHOLD, rootMargin: '0px 0px -8% 0px' },
+      );
+
+      if (variant === 'stagger') {
+        observer.observe(container);
+      } else {
+        observer.observe(container);
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initReveal);
+  initReveal();
+</script>

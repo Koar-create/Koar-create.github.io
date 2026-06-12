@@ -1,0 +1,21 @@
+---
+title: "Site relaunch: Astro + content collections"
+summary: "Notes on migrating this academic homepage from Jekyll to Astro with research, ideas, and blog collections."
+pubDate: 2026-06-01
+tags: [meta, astro, site]
+lang: en
+draft: false
+translationKey: site-relaunch-2026
+---
+
+This site now runs on **Astro 6** with content collections for research projects, research ideas, and blog posts.
+
+## What changed
+
+- Bilingual routing uses `/` for English and `/zh/` for Chinese.
+- New research entries are added as MDX files under `src/content/research/`.
+- Comments on detail pages use Supabase auth (magic link or Google).
+
+## For contributors
+
+Add a new blog post by creating `src/content/blog/en/your-slug.mdx` (and optionally a Chinese counterpart under `zh/`).

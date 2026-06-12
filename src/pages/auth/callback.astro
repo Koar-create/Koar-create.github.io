@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Signing in…" locale="en">
+  <main class="content" style="max-width: 640px; margin: 4rem auto; padding: 2rem;">
+    <h1>Signing in…</h1>
+    <p id="auth-status">Please wait while we complete authentication.</p>
+  </main>
+</Base>
+
+<script>
+  import { getSupabase } from '../../lib/supabase';
+
+  async function finishAuth() {
+    const status = document.getElementById('auth-status');
+    const supabase = getSupabase();
+    const params = new URLSearchParams(window.location.search);
+    const next = params.get('next') || '/';
+
+    if (!supabase) {
+      if (status) status.textContent = 'Supabase is not configured.';
+      return;
+    }
+
+    try {
+      const code = params.get('code');
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (error && status) status.textContent = error.message;
+      }
+
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        window.location.replace(next);
+        return;
+      }
+
+      if (status) status.textContent = 'No session found. Please try signing in again.';
+    } catch (err) {
+      if (status) {
+        status.textContent = err instanceof Error ? err.message : 'Authentication failed.';
+      }
+    }
+  }
+
+  finishAuth();
+</script>

@@ -1,0 +1,27 @@
+---
+title: "All-Weather Digital Twin for Urban Drone Logistics"
+summary: "A multi-layer digital twin concept connecting mesoscale weather, CFD, and path planning for resilient last-mile drone operations."
+date: 2025-11-01
+status: exploring
+tags: [digital twin, LAE, drone logistics, CFD]
+lang: en
+draft: false
+translationKey: drone-digital-twin
+---
+
+This research idea extends the WRF–OpenFOAM coupling work toward an operational decision-support layer for urban drone logistics under adverse weather.
+
+## Core hypothesis
+
+High-fidelity wind and turbulence fields at building-resolving scales can expand go/no-go windows beyond coarse mesoscale thresholds, if coupled with robust path-planning under uncertainty.
+
+## Open questions
+
+- How to propagate WRF–CFD uncertainty into route risk scores?
+- What policy metrics (delay cost, reroute frequency) matter most to operators?
+- Can a lightweight twin run fast enough for same-day operational use?
+
+## Next steps
+
+- Prototype a single-corridor CFD case with gust metrics exported to a planner API.
+- Interview operators on acceptable risk thresholds.

@@ -1,0 +1,86 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Reveal from '../../components/Reveal.astro';
+import RoleTable from '../../components/RoleTable.astro';
+import { siteConfig, t } from '../../lib/i18n';
+
+const locale = 'zh';
+const strings = t(locale);
+const currentPath = Astro.url.pathname;
+
+const roles = [
+  {
+    title: 'Urban Analyst & Scenario Designer',
+    mission:
+      'Define core urban challenges and translate engineering results into economic and policy conclusions.',
+    background: 'Urban Governance & Design (UGOD), GIS, Public Policy (IPE), with interest in data analysis.',
+  },
+  {
+    title: 'The Physicist:\nAtmospheric & CFD Modeler',
+    mission:
+      'Generate high-fidelity atmospheric data as the scientific backbone of the simulation.',
+    background: 'Atmospheric Science (EOAS), CFD, Fluid Dynamics (e.g., WRF/Fluent), SEE.',
+  },
+  {
+    title: 'The Brain:\nAI & Optimization Architect',
+    mission:
+      'Design dynamic path-planning algorithms that consume environmental data and output safe, efficient flight paths.',
+    background: 'Data Science (DSA), Operations Research, Reinforcement Learning, ROAS, INTR.',
+  },
+  {
+    title: 'The World Builder:\nDigital Twin & Simulation Specialist',
+    mission:
+      'Build the simulation environment and visualize results into an interactive digital twin.',
+    background: '3D Modeling, AIGC, Robotics (ROAS), IoT, Computer Media & Arts (CMA).',
+  },
+];
+---
+
+<PageLayout
+  title={strings.rbm.title}
+  locale={locale}
+  currentPath={currentPath}
+  pageLabel="05 / 红鸟"
+>
+  <Reveal>
+    <p>迩来仆专攻<u><strong>红鸟项目</strong></u>之构划。</p>
+    <p>
+      <strong>🚁 其题曰：</strong><br />
+      构建城厢无人机物流之数字孪生体⛈️——破解极端天气对末端物流经济与运营之困局
+    </p>
+    <p>
+      <strong>🔭 项目愿景：从“可行与否”至“智能全气象运营”之飞跃</strong><br />
+      当此<strong>低空经济</strong>方兴未艾之际，无人机物流犹困于天时之桎梏。本项目破局之法，非止于“行止”之判，意在铸就智能多层数字孪生系统。
+    </p>
+    <hr />
+    <p>
+      <strong><span style="color: red">📈 项目更新（最后更新于乙巳(2025)年十一月三十日）：</span></strong><br />
+      惜乎前议项目因人员未备而中辍，仆今已加入<a href={siteConfig.social.scholarJi}>季一丁博士</a>所领之新红鸟项目。旦夕间当以此处主页布告新项详要。
+    </p>
+    <hr />
+    <p>
+      <strong>流程纲目：首尾相衔之验证体系</strong><br /><br />
+      本项目立基于技术可行之精心规划，使跨学科模块如环无端。
+      <br /><img
+        src="/assets/images/workflow_latitudinal.svg"
+        alt="Workflow diagram"
+        style="max-width:1400px; height:auto;"
+      />
+      <br /><i>（以下皆西番英吉利文字）</i> A detailed technical breakdown can be found in our
+      <u>Feasibility & Toolchain Analysis report</u> (<a
+        href="/assets/documents/Feasibility & Toolchain Analysis report (CN).pdf">中文</a
+      >).
+    </p>
+    <hr />
+    <p>
+      <i>（以下皆为西番英吉利文字）</i><br />
+      <strong>🤝 Seeking Collaborators to Shape the Future of Drone Logistics:</strong><br />
+      We are recruiting for the following roles:
+    </p>
+    <RoleTable locale={locale} roles={roles} />
+    <hr />
+    <p>
+      若有同好垂询，不妨<a href={`mailto:${siteConfig.email}?Subject=Hello`}>遣鲤传书</a>。
+    </p>
+  </Reveal>
+</PageLayout>

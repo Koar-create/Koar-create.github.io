@@ -1,0 +1,54 @@
+---
+title: "癸卯(2023)岁岭南暴雨破纪案牍"
+summary: "以WRF重演癸卯粤港澳破纪暴雨，敏析积云参数为降水模拟之枢机。"
+date: 2025-01-15
+status: preparing
+tags: [WRF, 极端降水, 粤港澳大湾区, 积云参数化]
+order: 2
+lang: zh
+draft: false
+translationKey: case-study-2023
+bibtex: |
+  @article{yang2025case,
+    title={A Case Study on the Record-Breaking Rainfall in Southern China during September 7-8, 2023},
+    author={Yang, Zhixian and Liu, Zhen},
+    journal={In Preparation},
+    year={2025}
+  }
+---
+
+## 提要
+
+癸卯白露之交，南土见亘古未遇之霖。余操WRF之器以究玄机，二百七十余调参之试犹难复现日雨四百毫米之观，足证预报此类异象之艰。敏析示积云参数实为枢机，尤异者，成败早判于九霄动力之场，此乃外域积云方案取舍所致。
+
+## 缘起
+
+癸卯(2023)年桂月(九月)初，飓风「海葵」挟威叩闽，旋移粤土而散。然其残魄盘桓湾區二昼夜，迫低压槽接西南季风，遂启九月七日夜暴雨之枢。
+
+![Research background](/assets/images/background.png)
+
+## 验效
+
+- 二百七十余调参之试各呈异效，泰半难拟日雨六百毫米之极，盖此象百年不遇。
+- 五试独善，与实测契若符节，误差异乎其微。
+- 当深究此五试成功之物理枢机，以明其妙。
+
+![Pattern ACC-RMSE-TS](/assets/images/pattern_ACC-RMSE-TS.png)
+
+- 择模拟降水最精者，立为**基准之试**。
+- 依基准更易三要法：积云参数、微物理、边界层。
+- 效验昭然：扰动积云参数所致雨强衰减，远甚于更易微物理或边界层之法。
+- **由是观之，**外域积云参数之择，其关乎降水模拟之效，尤胜微物理之变。
+
+<div class="figure-row">
+  <img src="/assets/images/sensitivity_analysis_1.png" alt="Sensitivity analysis 1" />
+  <img src="/assets/images/sensitivity_analysis_2.png" alt="Sensitivity analysis 2" />
+</div>
+
+![U anomaly 0412-0414](/assets/images/U_ano.0412_0414.png)
+
+![U anomaly 0506-0508](/assets/images/U_ano.0506_0508.png)
+
+- 验效之初，以基准试与积云扰动试相较动力与热力诸场。
+- 成败之分，首见于**高层动力**；此异源于外域积云方案之不同。
+- 积云方案或改外域垂直动量与水汽输送，致高层场分歧。*其机理尚在深究。*

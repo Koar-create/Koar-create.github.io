@@ -1,0 +1,52 @@
+---
+import { t } from '../lib/i18n';
+import type { Locale } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const strings = t(locale);
+---
+
+<button
+  type="button"
+  id="theme-toggle"
+  class="toggle-btn"
+  title={strings.themeToggle}
+  aria-label={strings.themeToggle}
+>
+  <i class="fas fa-moon" aria-hidden="true"></i>
+</button>
+
+<script>
+  function updateThemeIcon(isDark: boolean) {
+    const btn = document.getElementById('theme-toggle');
+    const icon = btn?.querySelector('i');
+    if (!icon) return;
+    icon.classList.toggle('fa-moon', !isDark);
+    icon.classList.toggle('fa-sun', isDark);
+  }
+
+  function initThemeToggle() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    updateThemeIcon(isDark);
+
+    document.getElementById('theme-toggle')?.addEventListener('click', () => {
+      const nowDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (nowDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        updateThemeIcon(false);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        updateThemeIcon(true);
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initThemeToggle);
+  initThemeToggle();
+</script>

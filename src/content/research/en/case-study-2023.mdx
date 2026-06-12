@@ -1,0 +1,58 @@
+---
+title: "A Case Study on the Record-Breaking Rainfall in Southern China during September 7-8, 2023"
+summary: "WRF parameterization experiments on the September 2023 GBA extreme precipitation event, with sensitivity analysis on cumulus schemes."
+date: 2025-01-15
+status: preparing
+tags: [WRF, extreme precipitation, GBA, cumulus parameterization]
+order: 2
+lang: en
+draft: false
+translationKey: case-study-2023
+bibtex: |
+  @article{yang2025case,
+    title={A Case Study on the Record-Breaking Rainfall in Southern China during September 7-8, 2023},
+    author={Yang, Zhixian and Liu, Zhen},
+    journal={In Preparation},
+    year={2025}
+  }
+---
+
+## Abstract
+
+On 7-8 September 2023, southern China witnessed a historic rainfall event. Using the Weather Research and Forecasting (WRF) model, we investigated the underlying physics of this extreme precipitation. Over 270 parameterization experiments revealed that most schemes failed to reproduce the observed rainfall intensity (>600 mm day⁻¹), highlighting the challenge in forecasting such rare events. Sensitivity analyses identified the cumulus parameterization scheme as the dominant controlling factor. Crucially, the initial divergence between successful and unsuccessful simulations originated in the upper-level dynamics, driven by the choice of cumulus scheme in the model's outer domains.
+
+## Introduction
+
+On 5 September 2023, Typhoon Haikui made landfall in Fujian, subsequently moving into Guangdong and dissipated on September 5th. Yet its remnants stalled over the Greater Bay Area region (GBA) for over two days. As the low pressure trough associated with Haikui's remnants interacted with the south-westerly monsoon, the GBA region started experiencing extreme rainfall beginning on the night of September 7th.
+
+![Research background](/assets/images/background.png)
+
+## Results
+
+- Over 250 parameterization experiments yielded mixed results, with most schemes unable to simulate extreme precipitation above 400 mm/day due to the rarity of this events.
+- Five experiments performed well, showing high correlation with observations and low error.
+- A detailed analysis investigating the physical mechanisms contributing to the success of these high-performing parameterizations are necessary.
+
+![Pattern ACC-RMSE-TS](/assets/images/pattern_ACC-RMSE-TS.png)
+
+- The experiment that performs best in simulating precipitation is selected as the **control** run.
+- Three parameterization schemes (cumulus, microphysics, PBL) are individually perturbed based on the control run.
+- Results show that perturbing the cumulus scheme leads to a more substantial decrease in simulated precipitation intensity than perturbing either the microphysics or PBL schemes.
+- **This suggests that** the choice of cumulus parameterization in the outer domains has a stronger influence on precipitation performance than changes in microphysics schemes.
+
+<div class="figure-row">
+  <img src="/assets/images/sensitivity_analysis_1.png" alt="Sensitivity analysis 1" />
+  <img src="/assets/images/sensitivity_analysis_2.png" alt="Sensitivity analysis 2" />
+</div>
+
+Temporal mean is conducted from 14:00 to 17:00 on September 4 2025 (UTC).
+
+![U anomaly 0412-0414](/assets/images/U_ano.0412_0414.png)
+
+Temporal mean is conducted from 06:00 to 09:00 on September 5 2025 (UTC).
+
+![U anomaly 0506-0508](/assets/images/U_ano.0506_0508.png)
+
+- In the early stages of the experiments, comparisons were made between the control run and the cumulus-perturbed experiments in terms of dynamic and thermodynamic fields.
+- The key divergence between the control and perturbed runs first appears in the **upper-level dynamics**. This difference is attributed to the use of different cumulus schemes in the outer domains.
+- A possible way is: The cumulus scheme influences the vertical transport of momentum and moisture in the outer domains, leading to the discrepancies aloft. *This process is still being investigated.*
