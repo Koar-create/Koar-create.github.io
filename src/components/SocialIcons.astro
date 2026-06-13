@@ -1,0 +1,24 @@
+---
+import { siteConfig } from '../lib/i18n';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['social-icons', className]}>
+  <a href={`mailto:${siteConfig.email}?Subject=Hello`} title="Email">
+    <i class="fas fa-envelope" aria-hidden="true"></i>
+  </a>
+  <a href={siteConfig.social.linkedin} title="LinkedIn" target="_blank" rel="noopener">
+    <i class="fab fa-linkedin" aria-hidden="true"></i>
+  </a>
+  <a href={siteConfig.social.github} title="GitHub" target="_blank" rel="noopener">
+    <i class="fab fa-github" aria-hidden="true"></i>
+  </a>
+  <a href={siteConfig.social.orcid} title="ORCID" target="_blank" rel="noopener">
+    <i class="fab fa-orcid" aria-hidden="true"></i>
+  </a>
+</div>
