@@ -1,16 +1,19 @@
-# 依赖包
+# dependencies
 node_modules/
 
-# Astro 构建输出和本地缓存
+# Astro build output and local cache
 dist/
 .astro/
 
-# 环境配置文件
+# environment configuration files
 .env
 .env.production
 .env.local
 
-# 日志文件
+# log files
 *.log
 npm-debug.log*
 AUTO-CHECKPOINT.md
+
+# excluded images
+public/assets/images/*-*.jpg
