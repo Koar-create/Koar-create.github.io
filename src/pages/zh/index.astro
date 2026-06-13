@@ -3,6 +3,7 @@ import HomeLayout from '../../layouts/HomeLayout.astro';
 import Hero from '../../components/Hero.astro';
 import Reveal from '../../components/Reveal.astro';
 import EntryCard from '../../components/EntryCard.astro';
+import SocialIcons from '../../components/SocialIcons.astro';
 import { getEntriesForLocale, entrySlug, entryUrl } from '../../lib/content';
 import { siteConfig, t, localePath } from '../../lib/i18n';
 
@@ -24,20 +25,18 @@ const blogPosts = (await getEntriesForLocale('blog', locale)).slice(0, 2);
     portrait="/assets/images/Portrait.jpg"
   />
 
-  <section class="home-section container">
-    <Reveal variant="mask">
-      <span class="label">{strings.home.bioLabel}</span>
-      <div class="home-bio">
-        <p>
-          余今游艺广州珠江，栖踪羊浦，为香港科大哲学硕士生。若欲观吾校红鸟硕士之制，可览<a
-            href={siteConfig.social.rbmProgram}>此方</a
-          >。夙怀振翼之心，志在 PhD 之位，究天人之际于大气模拟，穷机变之巧于流体计算，兼探航天无人机之妙用。
-        </p>
-        <p>
-          授业恩师，<a href={siteConfig.social.scholarSupervisor}>刘振博士</a>也。初发硎于康乐园中，获中山大学大气科学学士之衔，学士论文蒙简茂球公亲炙。
-        </p>
-      </div>
-    </Reveal>
+  <section class="home-section home-section--bio container">
+    <span class="label">{strings.home.bioLabel}</span>
+    <div class="home-bio">
+      <p>
+        余今游艺广州珠江，栖踪羊浦，为香港科大哲学硕士生。若欲观吾校红鸟硕士之制，可览<a
+          href={siteConfig.social.rbmProgram}>此方</a
+        >。夙怀振翼之心，志在 PhD 之位，究天人之际于大气模拟，穷机变之巧于流体计算，兼探航天无人机之妙用。
+      </p>
+      <p>
+        授业恩师，<a href={siteConfig.social.scholarSupervisor}>刘振博士</a>也。初发硎于康乐园中，获中山大学大气科学学士之衔，学士论文蒙简茂球公亲炙。
+      </p>
+    </div>
   </section>
 
   <section class="home-section container">
@@ -91,13 +90,12 @@ const blogPosts = (await getEntriesForLocale('blog', locale)).slice(0, 2);
     )
   }
 
-  <section class="home-section container">
-    <Reveal>
-      <span class="label">{strings.home.contactLabel}</span>
-      <a class="contact-cta" href={`mailto:${siteConfig.email}?Subject=Hello`}>
-        {siteConfig.email}
-      </a>
-      <p style="margin-top: var(--space-lg); color: var(--color-text-muted);">{strings.home.contact}</p>
-    </Reveal>
+  <section class="home-section home-section--contact container">
+    <span class="label">{strings.home.contactLabel}</span>
+    <a class="contact-cta" href={`mailto:${siteConfig.email}?Subject=Hello`}>
+      {siteConfig.email}
+    </a>
+    <SocialIcons class="social-icons--prominent" />
+    <p class="home-contact-note">{strings.home.contact}</p>
   </section>
 </HomeLayout>
