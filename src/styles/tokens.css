@@ -41,6 +41,7 @@
 
   /* Layout */
   --content-max: 72rem;
+  --content-medium: 56rem;
   --content-narrow: 42rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --radius: 0;
