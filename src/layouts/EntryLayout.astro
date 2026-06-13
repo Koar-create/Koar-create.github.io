@@ -1,6 +1,5 @@
 ---
 import PageLayout from './PageLayout.astro';
-import Reveal from '../components/Reveal.astro';
 import BibtexButton from '../components/BibtexButton.astro';
 import Comments from '../components/Comments';
 import { t } from '../lib/i18n';
@@ -34,39 +33,37 @@ const strings = t(locale);
 ---
 
 <PageLayout title={title} locale={locale} currentPath={currentPath}>
-  <Reveal variant="mask">
-    <article class="entry-article">
-      <div class="entry-header">
-        <div>
-          <span class="label">{formatDate(date, locale)}</span>
-          <h1>{title}</h1>
-          <p class="entry-meta">
-            {statusLabel && <span class="status-badge">{statusLabel}</span>}
-          </p>
-        </div>
-        {bibtex && (
-          <BibtexButton
-            bibtex={bibtex}
-            label={strings.research.copyBibtex}
-            copiedLabel={strings.research.copied}
-          />
-        )}
+  <article class="entry-article">
+    <div class="entry-header">
+      <div>
+        <span class="label">{formatDate(date, locale)}</span>
+        <h1>{title}</h1>
+        <p class="entry-meta">
+          {statusLabel && <span class="status-badge">{statusLabel}</span>}
+        </p>
       </div>
-      <p class="lead" style="font-size: var(--step-2); color: var(--color-text-muted); max-width: 52ch;">
-        {summary}
-      </p>
-      {tags.length > 0 && (
-        <div class="tag-list">
-          {tags.map((tag) => (
-            <span class="tag">{tag}</span>
-          ))}
-        </div>
+      {bibtex && (
+        <BibtexButton
+          bibtex={bibtex}
+          label={strings.research.copyBibtex}
+          copiedLabel={strings.research.copied}
+        />
       )}
-      <div class="entry-body">
-        <slot />
+    </div>
+    <p class="lead" style="font-size: var(--step-2); color: var(--color-text-muted); max-width: 52ch;">
+      {summary}
+    </p>
+    {tags.length > 0 && (
+      <div class="tag-list">
+        {tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
       </div>
-    </article>
-  </Reveal>
+    )}
+    <div class="entry-body">
+      <slot />
+    </div>
+  </article>
 
   <section class="comments-section">
     <h2>{strings.comments.title}</h2>

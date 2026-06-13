@@ -12,9 +12,11 @@ interface Props {
   currentPath: string;
   pageLabel?: string;
   pageLead?: string;
+  wideLead?: boolean;
 }
 
-const { title, description, locale, currentPath, pageLabel, pageLead } = Astro.props;
+const { title, description, locale, currentPath, pageLabel, pageLead, wideLead = false } = Astro.props;
+const showPageHeader = Boolean(pageLabel || pageLead);
 ---
 
 <Base title={title} description={description} locale={locale}>
@@ -23,17 +25,26 @@ const { title, description, locale, currentPath, pageLabel, pageLead } = Astro.p
     <ReadingProgress />
   </header>
   <main>
+    {
+      showPageHeader && wideLead && (
+        <header class="page-header page-header--wide">
+          {pageLabel && <span class="label">{pageLabel}</span>}
+          <h1>{title}</h1>
+          {pageLead && <p class="lead">{pageLead}</p>}
+        </header>
+      )
+    }
     <div class="page-container">
+      {
+        showPageHeader && !wideLead && (
+          <header class="page-header">
+            {pageLabel && <span class="label">{pageLabel}</span>}
+            <h1>{title}</h1>
+            {pageLead && <p class="lead">{pageLead}</p>}
+          </header>
+        )
+      }
       <div class="content">
-        {
-          pageLabel && (
-            <header class="page-header">
-              <span class="label">{pageLabel}</span>
-              <h1>{title}</h1>
-              {pageLead && <p class="lead">{pageLead}</p>}
-            </header>
-          )
-        }
         <slot />
       </div>
     </div>
