@@ -246,6 +246,19 @@
         .info-header { margin-bottom: 2px; }
         .info-header-en { font-size: 1.1rem; font-weight: bold; line-height: 1.1;}
         .info-header-cn { font-size: 0.8rem; color: var(--accent-color); margin-top: 2px;}
+
+        /* 可选：烘焙商（有噱头时单独一行） */
+        .info-roaster { margin-top: 4px; }
+        .roaster-en { font-size: 0.85rem; font-weight: bold; color: var(--text-color); letter-spacing: 0.02em; }
+        .roaster-cn { font-size: 0.75rem; color: var(--accent-color); margin-top: 1px; }
+        .info-roaster a,
+        #modal-roaster-box a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .info-roaster a:active,
+        #modal-roaster-box a:active { opacity: 0.7; }
         
         /* 第二行：风味 */
         .info-flavor { margin-top: 6px; }
@@ -536,6 +549,12 @@
                 <h2 id="modal-title">Farm Name</h2>
                 <div id="modal-title-cn">庄园中文名</div>
             </div>
+
+            <div id="modal-roaster-box" style="display:none; margin-bottom: 15px;">
+                <div class="spec-label">ROASTER</div>
+                <div class="spec-val-en" id="m-roaster-en"></div>
+                <div class="spec-val-cn" id="m-roaster-cn"></div>
+            </div>
             
             <div id="modal-flavor-box">
                 <div class="spec-label">FLAVOR NOTES</div>
@@ -583,7 +602,8 @@
          * 功能：渲染豆单列表（自动生成编号）
          * 输入：beansData 数组（不含 id）
          * 行为：按索引自动生成展示编号，如 "1."
-         * 修改说明：根据 available 字段分流到 activeList 和 archiveList
+         * 修改说明：根据 available 字段分流到 activeList 和 archiveList；
+         *           历史豆单按产区（regionEn）字母升序排序
          */
         function renderBeans(beansData) {
             const activeList = document.getElementById('beanList');
@@ -595,20 +615,25 @@
             archiveList.innerHTML = '';
             
             let activeCount = 0;
-            // 历史豆单也可以选择是否需要编号，这里暂时不加编号，或者用特殊符号
-            
-            let hasArchive = false;
+            const archiveEntries = []; // { bean, index }
 
             beansData.forEach((bean, index) => {
-                // 判断豆子状态
                 // 如果 JSON 里没有 available 字段，默认为 true (兼容旧数据)
                 const isAvailable = (bean.available === undefined) ? true : bean.available;
 
-                const li = document.createElement('li');
-                
+                const wrapRoaster = (text) => bean.roasterUrl
+                    ? `<a href="${bean.roasterUrl}" target="_blank" rel="noopener noreferrer">${text}</a>`
+                    : text;
+                const roasterHtml = (bean.roasterEn || bean.roasterCn) ? `
+                            <div class="info-roaster">
+                                ${bean.roasterEn ? `<div class="roaster-en">${wrapRoaster(bean.roasterEn)}</div>` : ''}
+                                ${bean.roasterCn ? `<div class="roaster-cn">${wrapRoaster(bean.roasterCn)}</div>` : ''}
+                            </div>` : '';
+
                 if (isAvailable) {
                     // --- 当季豆单 ---
                     activeCount++;
+                    const li = document.createElement('li');
                     li.className = 'bean-item';
                     li.innerHTML = `
                         <div class="bean-code">${activeCount}.</div>
@@ -618,7 +643,7 @@
                                 <div class="info-header-en">${bean.countryEn} - ${bean.regionEn}</div>
                                 <div class="info-header-cn">${bean.countryCn} - ${bean.regionCn}</div>
                             </div>
-
+                            ${roasterHtml}
                             <div class="info-flavor">
                                 <div class="flavor-en">${bean.flavorEn}</div>
                                 <div class="flavor-cn">${bean.flavorCn}</div>
@@ -633,10 +658,16 @@
                     `;
                     activeList.appendChild(li);
                 } else {
-                    // --- 历史豆单 (已售罄) ---
-                    hasArchive = true;
+                    archiveEntries.push({ bean, index, roasterHtml });
+                }
+            });
+
+            // 历史豆单：按产区英文名字母升序
+            archiveEntries
+                .sort((a, b) => (a.bean.regionEn || '').localeCompare(b.bean.regionEn || '', 'en', { sensitivity: 'base' }))
+                .forEach(({ bean, index, roasterHtml }) => {
+                    const li = document.createElement('li');
                     li.className = 'bean-item sold-out';
-                    // 历史豆单可以不显示价格推荐，或者保留。这里保留但样式变灰
                     li.innerHTML = `
                         <div class="bean-code" style="opacity:0.3;">-</div>
                         <div class="bean-info">
@@ -647,6 +678,7 @@
                                 </div>
                                 <div class="info-header-cn">${bean.countryCn} - ${bean.regionCn}</div>
                             </div>
+                            ${roasterHtml}
                             <div class="info-flavor">
                                 <div class="flavor-en">${bean.flavorEn}</div>
                                 <div class="flavor-cn">${bean.flavorCn}</div>
@@ -655,15 +687,9 @@
                         <button class="more-btn" onclick="openModal(${index})">···</button>
                     `;
                     archiveList.appendChild(li);
-                }
-            });
+                });
 
-            // 如果有历史豆子，显示历史区域，否则隐藏
-            if (hasArchive) {
-                archiveSection.style.display = 'block';
-            } else {
-                archiveSection.style.display = 'none';
-            }
+            archiveSection.style.display = archiveEntries.length > 0 ? 'block' : 'none';
         }
 
         /**
@@ -767,6 +793,18 @@
 
             document.getElementById('modal-title').innerText = data.farmEn;
             document.getElementById('modal-title-cn').innerText = data.farmCn;
+
+            const roasterBox = document.getElementById('modal-roaster-box');
+            if (data.roasterEn || data.roasterCn) {
+                const linkWrap = (text) => data.roasterUrl
+                    ? `<a href="${data.roasterUrl}" target="_blank" rel="noopener noreferrer">${text}</a>`
+                    : text;
+                document.getElementById('m-roaster-en').innerHTML = data.roasterEn ? linkWrap(data.roasterEn) : '';
+                document.getElementById('m-roaster-cn').innerHTML = data.roasterCn ? linkWrap(data.roasterCn) : '';
+                roasterBox.style.display = 'block';
+            } else {
+                roasterBox.style.display = 'none';
+            }
 
             document.getElementById('m-flavor-en').innerText = data.flavorEn;
             document.getElementById('m-flavor-cn').innerText = data.flavorCn;
