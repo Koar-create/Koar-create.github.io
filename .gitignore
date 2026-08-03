@@ -15,5 +15,8 @@ dist/
 npm-debug.log*
 AUTO-CHECKPOINT.md
 
-# excluded images
-public/assets/images/*-*.jpg
+# excluded files/directories
+archive/
+assets/images/*-*.jpg
+assets/images/*_.jpg
+public/cafe/menu_*.html
