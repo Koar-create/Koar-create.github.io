@@ -101,7 +101,7 @@
         }
         
         /* --- 主内容 --- */
-        main { padding: 40px 25px; }
+        main { padding: 40px 25px 70px; }
 
         /* 双语标题通用样式 */
         .bilingual-title h1 { margin: 0; font-size: 1.1rem; font-weight: normal; font-family: "Georgia", serif; }
@@ -405,6 +405,39 @@
         }
         #modal-close:hover { background: #5D4037; }
 
+        /* --- 新增：最后更新时间浮标 --- */
+        /* 移动端访问为主，故采用居中悬浮、深色实心背景以保证辨识度，
+           但整体尺寸克制，仅占据屏幕底部一小条区域 */
+        #update-badge {
+            position: fixed;
+            left: 50%;
+            bottom: 14px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+            background: var(--notice-bg);
+            color: var(--notice-text);
+            border-radius: 999px;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            font-size: 0.72rem;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(62, 39, 35, 0.35);
+            z-index: 50;
+            pointer-events: none;
+        }
+        #update-badge .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #8BC34A; /* 绿色圆点，暗示信息为最新/有效 */
+            flex-shrink: 0;
+            box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.25);
+        }
+
     </style>
 </head>
 <body>
@@ -500,6 +533,12 @@
         </div>
 
     </main>
+
+    <!-- 手动维护：更新豆单/菜单后请同步修改下面的日期 -->
+    <div id="update-badge">
+        <span class="dot"></span>
+        <span>Last Updated: 2026-08-17</span>
+    </div>
 
     <div id="sidebar-overlay"></div>
     <div id="sidebar">

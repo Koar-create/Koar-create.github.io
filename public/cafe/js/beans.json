@@ -22,6 +22,27 @@
     "available": true
   },
   {
+    "countryEn": "INDONESIA",
+    "countryCn": "印度尼西亚",
+    "regionEn": "Sumatra",
+    "regionCn": "苏门答腊",
+    "farmEn": "Various Smallholders (Mandheling SOE)",
+    "farmCn": "多小农集合 (曼特宁 SOE)",
+    "roasterEn": "YCW / Ye Ciwei",
+    "roasterCn": "YCW / 野刺猬",
+    "processEn": "Wet-Hulled (Giling Basah)",
+    "processCn": "湿刨处理",
+    "roastEn": "Medium-Dark",
+    "roastCn": "中深烘焙",
+    "flavorEn": "Herbal, Cedar, Spice, Dark Chocolate",
+    "flavorCn": "草本、杉木、香料、黑巧克力",
+    "varietalEn": "N/A",
+    "varietalCn": "-",
+    "recommendEn": "Pour over coffee (14.9 ¥)",
+    "recommendCn": "手冲咖啡 (14.9 ¥)",
+    "available": true
+  },
+  {
     "countryEn": "RWANDA",
     "countryCn": "卢旺达",
     "regionEn": "Karongi",
@@ -132,7 +153,7 @@
     "varietalEn": "F1 Hybrid",
     "varietalCn": "F1种",
     "recommendEn": "Pour over coffee (14.9 ¥)",
-    "recommendCn": "手冲咖啡 (149 ¥)",
+    "recommendCn": "手冲咖啡 (14.9 ¥)",
     "available": false
   },
   {
