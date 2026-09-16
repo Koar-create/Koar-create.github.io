@@ -17,6 +17,6 @@ AUTO-CHECKPOINT.md
 
 # excluded files/directories
 archive/
-assets/images/*-*.jpg
-assets/images/*_.jpg
+public/assets/images/*-*.jpg
+public/assets/images/*_.jpg
 public/cafe/menu_*.html
