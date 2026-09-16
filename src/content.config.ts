@@ -14,7 +14,6 @@ const research = defineCollection({
     lang: z.enum(['en', 'zh']),
     draft: z.boolean().default(false),
     translationKey: z.string(),
-    bibtex: z.string().optional(),
     pdf: z.string().optional(),
   }),
 });
