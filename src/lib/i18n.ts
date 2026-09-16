@@ -39,8 +39,8 @@ export const ui = {
     home: {
       title: 'Bio',
       contact: 'Please feel free to contact me if you are interested in my research.',
-      role: 'MPhil · Atmospheric Modeling · CFD',
-      tagline: 'Urban wind field downscaling',
+      role: 'MPhil · Urban wind · Low-altitude economy',
+      tagline: 'Building-resolving wind downscaling for UAV corridors',
       bioLabel: 'About',
       featuredLabel: 'Featured Research',
       featuredLink: 'View all',
@@ -56,9 +56,7 @@ export const ui = {
     research: {
       title: 'Research',
       intro:
-        "My current work focuses on the numerical model WRF's reproducibility and performance during a record-breaking precipitation event happened during September 7 to 8 in 2023 at the Greater Bay Area (GBA). Over 270 experiments have been conducted, and most experiments underestimate the peak precipitation. Evaluation are based on station records offered by the China's Meteorological Administration during the event.",
-      copyBibtex: 'Copy BibTeX',
-      copied: 'Copied!',
+        'My current work is an offline WRF–OpenFOAM pipeline for building-resolving urban winds over downtown Guangzhou, evaluated against urban Doppler LiDAR in September 2025. A related study tests WRF on the record-breaking Greater Bay Area rainfall of 7–8 September 2023: most of 270-odd parameterization experiments still underestimated the peak, using CMA station records.',
     },
     ideas: {
       title: 'Research Ideas',
@@ -137,9 +135,7 @@ export const ui = {
     research: {
       title: '研究',
       intro:
-        '今仆所攻者，乃WRF数值模型重演癸卯(2023)岁仲秋粤港澳破纪暴雨之能。凡行二百七十余试，泰半未逮雨峰之极。考评之据，皆本天官监当日所录仪象。',
-      copyBibtex: '复制 BibTeX',
-      copied: '已复制！',
+        '今所治者，广州城区低空风场：以公里级嵌套WRF单向驱动OpenFOAM，于乙巳(2025)年九月对照城区Doppler LiDAR。另考WRF重演癸卯(2023)岁仲秋粤港澳破纪暴雨之能，二百七十余试泰半未逮雨峰，据天官监当日仪象。',
     },
     ideas: {
       title: '研究设想',

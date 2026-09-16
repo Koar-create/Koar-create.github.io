@@ -1,34 +1,23 @@
 ---
 title: "WRF-OpenFOAM 城市风场降尺度耦合"
-summary: "单向耦合 WRF 与 OpenFOAM，以 LiDAR 垂直风廓线验证广州 CBD 城市风场降尺度。"
-date: 2026-01-10
+summary: "离线单向 WRF–OpenFOAM 降尺度广州城区低空风场，以乙巳(2025)年九月城区 Doppler LiDAR 检验。"
+date: 2026-09-01
 status: active
-tags: [WRF, OpenFOAM, 城市CFD, LiDAR, 降尺度]
+tags: [WRF, OpenFOAM, 城市CFD, LiDAR, 降尺度, UAV]
 order: 2
 lang: zh
 draft: false
 translationKey: phase2-coupling
-bibtex: |
-  @article{yang2026phase2,
-    title={WRF-OpenFOAM Coupling for Urban Wind Field Downscaling},
-    author={Yang, Zhixian and Liu, Zhen},
-    journal={Working Paper},
-    year={2026}
-  }
 ---
 
-自乙巳(2025)年冬月起，本研究以建筑分辨尺度的城市风场重建为目标。单向耦合 **WRF 中尺度模式** 与 **OpenFOAM CFD 求解器**，成降尺度管线，可分辨楼宇尾流、街谷等复杂城市 aerodynamics。
+公里级天气模式以粗糙度参数化城市，而不分辨单栋建筑。低空无人机走廊所需者，乃同一时次中尺度天气下的街谷切变与楼宇尾流，一格之风不足为据。
 
-## 验证结果
+本研究于**广州城区**建立 **离线、单向 WRF–OpenFOAM** 管线：公里级嵌套 WRF 提供逐时入流，建筑分辨 RANS（稳态 **k–ε**，一时一次快照）降尺度冠层风。检验窗口为 **乙巳(2025)年九月**，约 **两周**，含 **台风影响前的常规时段** 与 **一次台风影响个例**。以 **多站城区 Doppler LiDAR** 风廓线对照，测站取 **几处形态不同的城区**。
 
-以广州 CBD 多站 **LiDAR 垂直风廓线** 验证框架。0000、0400、0800 UTC 三时次统计示 **Skill Score (SS > 0)**，CFD 较单用 WRF 显著减低下层城市边界层风速偏差。
+## 所见
 
-*注：1200 UTC 案因稳定边界层抑制 TKE，稳态 RANS 不适用，故排除。*
+建筑分辨降尺度之增益 **随高度而变**。约 **300 m** 以下，OpenFOAM 使中尺度风场趋近 LiDAR 廓线；其上 WRF 与降尺度场渐合。改善幅度仍 **随局地形态而异**。沿代表性低空路径，WRF 中看似相近的 **开敞走廊与密建走廊**，在 **典型低空飞行高度** 上风环境并不相同。
 
-![Wind Speed Profiles](/assets/images/fig4_simple_ws_profiles_fixed.png)
+## 局限与下一步
 
-![Taylor Diagram](/assets/images/fig2_taylor_diagram.png)
-
-## 未来方向
-
-拟实施 **split-roughness 边界策略** 以消 ground roughness 重复计数；并由 RANS 过渡至 **LES/WMLES**，以分辨瞬态阵风与非高斯湍流，服务于低空经济（如 UAV 安全）应用。
+单向嵌套之故，微尺度技巧仍受驱动 WRF 场所限。物理模拟档案亦用作训练基础，以探索面向业务的 **更快、数据驱动的代理模型**。
