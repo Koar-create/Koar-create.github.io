@@ -13,7 +13,6 @@ const currentPath = Astro.url.pathname;
 
 const research = await getEntriesForLocale('research', locale);
 const featured = research.slice(0, 2);
-const blogPosts = (await getEntriesForLocale('blog', locale)).slice(0, 2);
 ---
 
 <HomeLayout title={strings.home.title} locale={locale} currentPath={currentPath}>
@@ -29,7 +28,7 @@ const blogPosts = (await getEntriesForLocale('blog', locale)).slice(0, 2);
     <span class="label">{strings.home.bioLabel}</span>
     <div class="home-bio">
       <p>
-        余今游艺广州珠江，栖踪羊浦，为香港科大哲学硕士生。若欲观吾校红鸟硕士之制，可览<a
+        余今游艺广州珠江，栖踪羊浦，为香港科大哲学硕士二年级生。若欲观吾校红鸟硕士之制，可览<a
           href={siteConfig.social.rbmProgram}>此方</a
         >。夙怀振翼之心，志在 PhD 之位，究天人之际于大气模拟，穷机变之巧于流体计算，兼探航天无人机之妙用。
       </p>
@@ -63,32 +62,6 @@ const blogPosts = (await getEntriesForLocale('blog', locale)).slice(0, 2);
       </div>
     </Reveal>
   </section>
-
-  {
-    blogPosts.length > 0 && (
-      <section class="home-section container">
-        <div class="section-head">
-          <h2 class="section-title">{strings.home.recentLabel}</h2>
-          <a href={localePath(locale, '/blog')}>{strings.home.recentLink} →</a>
-        </div>
-        <Reveal variant="stagger">
-          <div class="entry-grid">
-            {blogPosts.map((entry, i) => (
-              <EntryCard
-                index={i + 1}
-                href={entryUrl('blog', locale, entrySlug(entry))}
-                title={entry.data.title}
-                summary={entry.data.summary}
-                date={entry.data.pubDate}
-                tags={entry.data.tags}
-                locale={locale}
-              />
-            ))}
-          </div>
-        </Reveal>
-      </section>
-    )
-  }
 
   <section class="home-section home-section--contact container">
     <span class="label">{strings.home.contactLabel}</span>

@@ -208,9 +208,6 @@ export function t(locale: Locale) {
 export const navItems = [
   { key: 'home' as const, path: '/' },
   { key: 'research' as const, path: '/research' },
-  { key: 'ideas' as const, path: '/ideas' },
-  { key: 'blog' as const, path: '/blog' },
   { key: 'education' as const, path: '/education' },
-  { key: 'rbmRecruit' as const, path: '/rbm-recruit' },
   { key: 'cafe' as const, path: '/cafe/menu.html', fixed: true },
 ];

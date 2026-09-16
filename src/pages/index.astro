@@ -13,7 +13,6 @@ const currentPath = Astro.url.pathname;
 
 const research = await getEntriesForLocale('research', locale);
 const featured = research.slice(0, 2);
-const blogPosts = (await getEntriesForLocale('blog', locale)).slice(0, 2);
 ---
 
 <HomeLayout title={strings.home.title} locale={locale} currentPath={currentPath}>
@@ -29,7 +28,7 @@ const blogPosts = (await getEntriesForLocale('blog', locale)).slice(0, 2);
     <span class="label">{strings.home.bioLabel}</span>
     <div class="home-bio">
       <p>
-        I am a first-year MPhil student at HKUST Guangzhou. Check
+        I am a second-year MPhil student at HKUST Guangzhou. Check
         <a href={siteConfig.social.rbmProgram}>here</a> for the RBM program. My aspiration is a
         PhD focused on atmospheric modeling, CFD, and aerospace/UAS applications.
       </p>
@@ -65,32 +64,6 @@ const blogPosts = (await getEntriesForLocale('blog', locale)).slice(0, 2);
       </div>
     </Reveal>
   </section>
-
-  {
-    blogPosts.length > 0 && (
-      <section class="home-section container">
-        <div class="section-head">
-          <h2 class="section-title">{strings.home.recentLabel}</h2>
-          <a href={localePath(locale, '/blog')}>{strings.home.recentLink} →</a>
-        </div>
-        <Reveal variant="stagger">
-          <div class="entry-grid">
-            {blogPosts.map((entry, i) => (
-              <EntryCard
-                index={i + 1}
-                href={entryUrl('blog', locale, entrySlug(entry))}
-                title={entry.data.title}
-                summary={entry.data.summary}
-                date={entry.data.pubDate}
-                tags={entry.data.tags}
-                locale={locale}
-              />
-            ))}
-          </div>
-        </Reveal>
-      </section>
-    )
-  }
 
   <section class="home-section home-section--contact container">
     <span class="label">{strings.home.contactLabel}</span>
