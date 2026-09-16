@@ -15,8 +15,6 @@
   --color-accent: #ff3b00;
   --color-accent-hover: #e03400;
   --color-on-accent: #ffffff;
-  --color-inverse-bg: #0a0a0a;
-  --color-inverse-text: #f0ede8;
 
   /* Fluid type scale */
   --step-0: clamp(0.8125rem, 0.78rem + 0.15vw, 0.9375rem);
@@ -74,6 +72,4 @@
   --color-accent: #ff3b00;
   --color-accent-hover: #ff5522;
   --color-on-accent: #ffffff;
-  --color-inverse-bg: #f0ede8;
-  --color-inverse-text: #0a0a0a;
 }

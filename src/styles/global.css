@@ -505,46 +505,14 @@ a {
   border-bottom: 1px solid var(--color-border-light);
   text-decoration: none;
   color: inherit;
-  position: relative;
-  transition: background var(--transition-fast), color var(--transition-fast);
 }
 
 .entry-card:last-child {
   border-bottom: none;
 }
 
-.entry-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--color-inverse-bg);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform var(--duration-base) var(--ease-out-expo);
-  z-index: 0;
-}
-
-.entry-card:hover::before {
-  transform: scaleY(1);
-}
-
-.entry-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-.entry-card:hover {
-  color: var(--color-inverse-text);
-}
-
-.entry-card:hover .entry-meta,
-.entry-card:hover .tag {
-  color: color-mix(in srgb, var(--color-inverse-text) 70%, transparent);
-  border-color: color-mix(in srgb, var(--color-inverse-text) 30%, transparent);
-}
-
 .entry-card:hover h2 {
-  color: var(--color-inverse-text);
+  color: var(--color-accent);
 }
 
 .entry-card-index {
@@ -570,7 +538,6 @@ a {
   font-weight: 400;
   color: var(--color-text-muted);
   line-height: 1.6;
-  transition: color var(--transition-fast);
 }
 
 .entry-meta {
@@ -610,7 +577,6 @@ a {
   padding: 0.25em 0.5em;
   border: 1px solid var(--color-border-light);
   color: var(--color-text-subtle);
-  transition: color var(--transition-fast), border-color var(--transition-fast);
 }
 
 /* ── Entry detail ────────────────────────────────────────────── */
@@ -1009,8 +975,7 @@ a {
   html { scroll-behavior: auto; }
 
   .reveal-item,
-  .reveal-mask,
-  .entry-card::before {
+  .reveal-mask {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
