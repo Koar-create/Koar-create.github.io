@@ -921,7 +921,11 @@ a {
   transform: translateY(0);
 }
 
-/* View transitions */
+/* View transitions — same fade as in-app tabs, including full loads such as Cafe */
+@view-transition {
+  navigation: auto;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.3s;

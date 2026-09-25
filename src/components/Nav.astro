@@ -29,7 +29,7 @@ const strings = t(locale);
             href={href}
             class="nav-link"
             aria-current={isActive ? 'page' : undefined}
-            {...(item.fixed ? { target: '_self' } : {})}
+            {...(item.fixed ? { 'data-astro-reload': true } : {})}
           >
             <span class="nav-index">{index}</span>
             {strings.nav[item.key]}

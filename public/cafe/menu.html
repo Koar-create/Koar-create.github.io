@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>One Shot Coffee Club Menu</title>
     <style>
+        /* 与主站 tab 切换相同的整页淡入淡出 */
+        @view-transition {
+            navigation: auto;
+        }
+
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.3s;
+        }
+
         /* --- 基础视觉样式 --- */
         :root {
             --bg-color: #F9F5F0; /* 米色纸质背景 */
