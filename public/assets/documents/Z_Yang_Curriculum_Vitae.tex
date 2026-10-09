@@ -1,0 +1,189 @@
+% !TEX program = xelatex
+% Recreates the published Word CV layout in Z_Yang_Curriculum_Vitae.pdf.
+% Compile with: xelatex Z_Yang_Curriculum_Vitae.tex
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{fontspec}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+% Word points are big points (1/72 in). TeX pt is 1/72.27 in.
+\geometry{
+  a4paper,
+  top=1in,
+  bottom=1in,
+  left=0.8125in,
+  right=0.768055555in,
+  noheadfoot
+}
+
+\setmainfont{Times New Roman}[
+  ItalicFont=Times New Roman Italic,
+  BoldFont=Times New Roman Bold,
+  BoldItalicFont=Times New Roman Bold Italic
+]
+\newfontfamily\georgia{Georgia}[
+  BoldFont=Georgia Bold
+]
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\topskip}{12bp}
+\frenchspacing
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\tolerance=2000
+\emergencystretch=2em
+\raggedbottom
+\clubpenalty=150
+\widowpenalty=150
+\displaywidowpenalty=50
+
+\renewcommand{\normalsize}{\fontsize{10.08bp}{11.52bp}\selectfont}
+\normalsize
+
+\definecolor{WordHyperlink}{HTML}{0563C1}
+
+\newlength{\cvindent}
+\setlength{\cvindent}{1.5in}
+\newlength{\cvheadwidth}
+\setlength{\cvheadwidth}{91.4pt}
+
+\newcommand{\drop}[2]{%
+  {\fontsize{12bp}{11.52bp}\selectfont #1}{\fontsize{10.08bp}{11.52bp}\selectfont #2}%
+}
+
+\newcommand{\email}[1]{%
+  \href{mailto:#1}{\textcolor{WordHyperlink}{\underline{#1}}}%
+}
+
+\newcommand{\sectiongap}{\par\vspace{23.04bp}}
+\newcommand{\entrygap}{\par\vspace{11.52bp}}
+
+\newcommand{\cvpar}[1][]{%
+  \par\hangindent=\cvindent\hangafter=0\relax
+  \noindent
+  \if\relax\detokenize{#1}\relax
+  \else
+    \makebox[0pt][l]{\hspace*{-\cvindent}\parbox[t]{\cvheadwidth}{\raggedright #1}}%
+  \fi
+}
+
+\newcommand{\cventry}[2]{#1\hfill #2}
+
+% Overlay a two-line heading onto the following list (Word text box).
+\newcommand{\cvlisthead}[1]{%
+  \par\noindent
+  \smash{\makebox[0pt][l]{\parbox[t]{\cvheadwidth}{\raggedright #1}}}%
+  \par\vspace{-\baselineskip}%
+}
+
+\setlist[itemize]{
+  nosep,
+  topsep=0pt,
+  partopsep=0pt,
+  parsep=0pt,
+  itemsep=0pt,
+  leftmargin=\dimexpr\cvindent+18pt\relax,
+  itemindent=0pt,
+  labelwidth=8pt,
+  labelsep=10pt,
+  align=left,
+  label={\hbox{\vrule height 9.8bp depth 2.4bp width 0pt\relax\raisebox{0.35pt}{\fontsize{11.04bp}{13.2bp}\selectfont\textbullet}}}
+}
+
+\begin{document}
+\raggedbottom\normalsize
+{\georgia\bfseries
+  {\fontsize{12bp}{13.6bp}\selectfont Z}%
+  {\fontsize{10.08bp}{13.6bp}\selectfont hixian}%
+  {\fontsize{11.04bp}{13.6bp}\selectfont\ }%
+  {\fontsize{12bp}{13.6bp}\selectfont Y}%
+  {\fontsize{10.08bp}{13.6bp}\selectfont ang}%
+  {\fontsize{11.04bp}{13.6bp}\selectfont, Curriculum Vitae}%
+\par}
+\vspace{12.22bp}
+\hrule height 0.72pt
+\vspace{11.52bp}
+\noindent
+\makebox[\cvindent][l]{\drop{C}{ONTACT}}%
+\textit{E-mail}: \email{zyang248@connect.hkust-gz.edu.cn} (primary), \email{yimu01439@gmail.com} (secondary)
+
+\noindent
+\makebox[\cvindent][l]{\drop{I}{NFORMATION}}%
+\textit{Tel.}: +86 188-1346-1717
+
+\cvpar\textit{Mailing Address}: No. 1 Duxue Road, Nansha District, Guangzhou City, Guangdong Province, P. R. China (P.C.: 511453)
+
+\sectiongap
+\cvpar[\drop{R}{ESEARCH}\\\drop{I}{NTEREST}]%
+Extreme Precipitation, Regional Weather Modeling, Climate Dynamics, El Niño-Southern Oscillation, Artificial Intelligence
+
+\sectiongap
+\cvpar[\drop{E}{DUCATION}]%
+\textbf{The Hong Kong University of Science and Technology (Guangzhou),} Guangzhou, China\\
+\hspace*{\fill}\textbf{August 2025 – Present}
+\begin{itemize}
+  \item Program: Master of Philosophy
+  \item Instructor: Prof. Henry Zhen Liu
+\end{itemize}
+
+\entrygap
+\cvpar\cventry{\textbf{Sun Yat-sen University}, Guangzhou, China}{\textbf{September 2020 – June 2024}}
+\begin{itemize}
+  \item B.S. in Atmospheric Science
+  \item Thesis title: Prediction of El Niño-Southern Oscillation Events based on Artificial Neural Network Modeling
+  \item Advisor: Prof. Maoqiu Jian
+  \item Description: An Neural Network model is developed to predict ENSO phases with high accuracy, correctly forecasting 8 out of 10 years in a test set. The model's performance is optimal when using data from April and May but less accurate with data from January and March. Prediction uncertainties vary by month, being highest from November to February and lowest from April to May, with moderate success in predicting ENSO intensity.
+  \item Overall GPA: \textbf{3.8 / 4}
+\end{itemize}
+
+\sectiongap
+\cvpar[\drop{A}{WARDS AND}\\\drop{S}{CHOLARSHIPS}]%
+\cventry{\textbf{Sun Yat-sen University Outstanding Student Scholarship (Third-Class)}}{\textbf{2020-2021}}
+\begin{itemize}
+  \item The scholarship aims to reward students who excel in their studies, maintain a healthy lifestyle, and demonstrate good character.
+\end{itemize}
+
+\sectiongap
+\cvpar[\drop{P}{ROFESSIONAL}\\\drop{E}{XPERIENCES}]%
+\cventry{\textbf{Research Assistant}}{\textbf{August 2024 – August 2025}}
+\begin{itemize}
+  \item Earth, Ocean and Atmospheric Sciences Thrust, The Hong Kong University of Science and Technology (Guangzhou), Guangzhou, China
+  \item Project title: A Case Study on the Record-Breaking Rainfall in Southern China during September 7-8, 2023
+  \item Description: On 7-8 September 2023, southern China witnessed a historic rainfall event. Using the Weather Research and Forecasting (WRF) model, the underlying physics of this extreme precipitation were investigated. More than 270 parameterization experiments revealed that most schemes failed to reproduce the observed rainfall intensity (>400 mm day⁻¹), highlighting the challenge in forecasting such rare events. Sensitivity analyses identified the cumulus parameterization scheme as the dominant controlling factor. Crucially, the initial divergence between successful and unsuccessful simulations originated in the upper-level dynamics, driven by the choice of cumulus scheme in the model's outer domains. This suggests that altered vertical transport of momentum and moisture aloft is a key precursor. However, the precise mechanism linking these early upper-level changes to the subsequent development of intense surface precipitation remains to be elucidated.
+\end{itemize}
+
+\entrygap
+\cvpar\cventry{\textbf{Summer School Student}}{\textbf{July 2025}}
+\begin{itemize}
+  \item Host: School of Atmospheric Sciences, Nanjing University, Nanjing, China
+  \item Description: This workshop focuses on atmospheric convection, featuring a series of lectures and tutorials by leading international experts. The program covers a broad spectrum, from the fundamental theories of deep, shallow, and organized convection to the latest advances in weather and climate research. Key topics include the critical role of convection and clouds in extreme weather events and the broader climate system.
+\end{itemize}
+
+\entrygap
+\cvpar\cventry{\textbf{Impact Scholar Program - Climatematch Academy}}{\textbf{July 2023 – March 2024}}
+\begin{itemize}
+  \item Collaborators: Selyn Acuña, Tejawini M. Pawase
+  \item Project title: Impact of ENSO and IOD on the Onset of Summer Monsoon over the Indonesia-Northern Australia Region
+\end{itemize}
+
+\sectiongap
+\cvlisthead{\drop{P}{ROFESSIONAL}\\\drop{S}{KILLS}}
+\begin{itemize}
+  \item Numerical Models: WRF (proficiency), CESM (limited)
+  \item Languages: Python (proficiency)
+  \item OS Environment: Linux (proficiency)
+\end{itemize}
+
+\sectiongap
+\cvlisthead{\drop{L}{ANGUAGES}\\\drop{A}{ND TESTS}}
+\begin{itemize}
+  \item English (proficiency), Chinese-Mandarin (native), Chinese-Cantonese (native), Japanese (proficiency, JLPT N1 117/180)
+  \item TOEFL (98, R30/L24/S22/W22), GRE (324, Verbal 153, Quantitative 168, AW 3), JLPT N1 (117/180, Certificate No.: N1A580085A)
+\end{itemize}
+
+\end{document}
