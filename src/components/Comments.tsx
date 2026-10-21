@@ -1,24 +1,25 @@
-import { useCallback, useEffect, useMemo, useState } from 'preact/hooks';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import {
   getSupabase,
   isSupabaseConfigured,
   type CommentRow,
-  type ProfileRow,
 } from '../lib/supabase';
+
+const MIN_SUBMIT_DELAY_MS = 3000;
+const MAX_AUTHOR_LENGTH = 80;
+const MAX_BODY_LENGTH = 4000;
 
 type CommentStrings = {
   title: string;
-  signIn: string;
-  emailPlaceholder: string;
-  sendMagicLink: string;
-  signInGoogle: string;
-  signOut: string;
+  notConfigured: string;
   placeholder: string;
   submit: string;
   empty: string;
   loading: string;
   error: string;
   displayName: string;
+  anonymous: string;
+  waitToSubmit: string;
 };
 
 type Props = {
@@ -30,31 +31,20 @@ type Props = {
 export default function Comments({ slug, lang, strings }: Props) {
   const supabase = useMemo(() => getSupabase(), []);
   const configured = isSupabaseConfigured();
+  const mountedAt = useRef(Date.now());
 
   const [comments, setComments] = useState<CommentRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [userId, setUserId] = useState<string | null>(null);
-  const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [profileName, setProfileName] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [authMessage, setAuthMessage] = useState<string | null>(null);
 
-  const loadProfile = useCallback(
-    async (uid: string) => {
-      if (!supabase) return;
-      const { data } = await supabase
-        .from('profiles')
-        .select('display_name')
-        .eq('id', uid)
-        .maybeSingle<Pick<ProfileRow, 'display_name'>>();
-      setProfileName(data?.display_name ?? null);
-    },
-    [supabase],
-  );
+  const canSubmit =
+    configured &&
+    body.trim().length > 0 &&
+    Date.now() - mountedAt.current >= MIN_SUBMIT_DELAY_MS;
 
   const loadComments = useCallback(async () => {
     if (!supabase) {
@@ -87,29 +77,6 @@ export default function Comments({ slug, lang, strings }: Props) {
 
     void loadComments();
 
-    supabase.auth.getSession().then(({ data }) => {
-      const session = data.session;
-      if (session?.user) {
-        setUserId(session.user.id);
-        setUserEmail(session.user.email ?? null);
-        void loadProfile(session.user.id);
-      }
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUserId(session.user.id);
-        setUserEmail(session.user.email ?? null);
-        void loadProfile(session.user.id);
-      } else {
-        setUserId(null);
-        setUserEmail(null);
-        setProfileName(null);
-      }
-    });
-
     const channel = supabase
       .channel(`comments:${slug}:${lang}`)
       .on(
@@ -127,141 +94,83 @@ export default function Comments({ slug, lang, strings }: Props) {
       .subscribe();
 
     return () => {
-      subscription.unsubscribe();
       void supabase.removeChannel(channel);
     };
-  }, [supabase, slug, lang, loadComments, loadProfile]);
-
-  const handleMagicLink = async (event: Event) => {
-    event.preventDefault();
-    if (!supabase || !email.trim()) return;
-    setAuthMessage(null);
-    setError(null);
-    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(window.location.pathname)}`;
-    const { error: authError } = await supabase.auth.signInWithOtp({
-      email: email.trim(),
-      options: { emailRedirectTo: redirectTo },
-    });
-    if (authError) {
-      setError(authError.message);
-    } else {
-      setAuthMessage('Check your email for the magic link.');
-    }
-  };
-
-  const handleGoogle = async () => {
-    if (!supabase) return;
-    setError(null);
-    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(window.location.pathname)}`;
-    const { error: authError } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo },
-    });
-    if (authError) setError(authError.message);
-  };
-
-  const handleSignOut = async () => {
-    if (!supabase) return;
-    await supabase.auth.signOut();
-    setBody('');
-  };
+  }, [supabase, slug, lang, loadComments]);
 
   const handleSubmit = async (event: Event) => {
     event.preventDefault();
-    if (!supabase || !userId || !body.trim()) return;
+    if (!supabase || !canSubmit || submitting) return;
+    if (honeypot.trim()) return;
+
+    const trimmedBody = body.trim();
+    const trimmedName = displayName.trim();
+    if (!trimmedBody || trimmedBody.length > MAX_BODY_LENGTH) return;
+    if (trimmedName.length > MAX_AUTHOR_LENGTH) return;
+
     setSubmitting(true);
     setError(null);
 
-    const author =
-      displayName.trim() ||
-      profileName ||
-      userEmail?.split('@')[0] ||
-      'Anonymous';
-
-    if (displayName.trim() && displayName.trim() !== profileName) {
-      await supabase.from('profiles').upsert({
-        id: userId,
-        display_name: displayName.trim(),
-        updated_at: new Date().toISOString(),
-      });
-      setProfileName(displayName.trim());
-    }
+    const author = trimmedName || strings.anonymous;
 
     const { error: insertError } = await supabase.from('comments').insert({
       slug,
       lang,
-      user_id: userId,
       author_name: author,
-      body: body.trim(),
-      is_approved: true,
+      body: trimmedBody,
     });
 
     if (insertError) {
-      setError(insertError.message);
+      setError(insertError.message || strings.error);
     } else {
       setBody('');
+      setDisplayName('');
       await loadComments();
     }
     setSubmitting(false);
   };
 
   if (!configured) {
-    return (
-      <p class="comment-notice">
-        Comments are not configured yet. Set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY.
-      </p>
-    );
+    return <p class="comment-notice">{strings.notConfigured}</p>;
   }
 
   return (
     <div class="comments-root">
       {error && <p class="comment-notice">{error}</p>}
-      {authMessage && <p class="comment-notice">{authMessage}</p>}
 
-      {!userId ? (
-        <div class="comment-auth">
-          <p>{strings.signIn}</p>
-          <form onSubmit={handleMagicLink}>
-            <input
-              type="email"
-              required
-              placeholder={strings.emailPlaceholder}
-              value={email}
-              onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
-            />
-            <button type="submit" class="btn-primary">
-              {strings.sendMagicLink}
-            </button>
-          </form>
-          <button type="button" class="btn-secondary" onClick={handleGoogle}>
-            {strings.signInGoogle}
-          </button>
-        </div>
-      ) : (
-        <form class="comment-form" onSubmit={handleSubmit}>
-          <p class="comment-meta">
-            {userEmail}
-            <button type="button" class="btn-secondary" onClick={handleSignOut} style={{ marginLeft: '0.75rem' }}>
-              {strings.signOut}
-            </button>
-          </p>
+      <form class="comment-form" onSubmit={handleSubmit}>
+        <label class="comment-honeypot" aria-hidden="true">
+          <span>Leave blank</span>
           <input
             type="text"
-            placeholder={strings.displayName}
-            value={displayName}
-            onInput={(e) => setDisplayName((e.target as HTMLInputElement).value)}
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onInput={(e) => setHoneypot((e.target as HTMLInputElement).value)}
           />
-          <textarea
-            required
-            placeholder={strings.placeholder}
-            value={body}
-            onInput={(e) => setBody((e.target as HTMLTextAreaElement).value)}
-          />
-          <button type="submit" class="btn-primary" disabled={submitting}>
-            {strings.submit}
-          </button>
-        </form>
-      )}
+        </label>
+        <input
+          type="text"
+          maxLength={MAX_AUTHOR_LENGTH}
+          placeholder={strings.displayName}
+          value={displayName}
+          onInput={(e) => setDisplayName((e.target as HTMLInputElement).value)}
+        />
+        <textarea
+          required
+          maxLength={MAX_BODY_LENGTH}
+          placeholder={strings.placeholder}
+          value={body}
+          onInput={(e) => setBody((e.target as HTMLTextAreaElement).value)}
+        />
+        <button type="submit" class="btn-primary" disabled={submitting || !canSubmit}>
+          {strings.submit}
+        </button>
+        {!canSubmit && body.trim() && (
+          <p class="comment-notice comment-wait">{strings.waitToSubmit}</p>
+        )}
+      </form>
 
       {loading ? (
         <p class="comment-notice">{strings.loading}</p>
@@ -272,7 +181,7 @@ export default function Comments({ slug, lang, strings }: Props) {
           {comments.map((comment) => (
             <li class="comment-item" key={comment.id}>
               <div class="comment-meta">
-                {comment.author_name ?? 'Anonymous'} ·{' '}
+                {comment.author_name ?? strings.anonymous} ·{' '}
                 {new Date(comment.created_at).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US')}
               </div>
               <p class="comment-body">{comment.body}</p>

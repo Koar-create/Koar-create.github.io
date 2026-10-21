@@ -8,14 +8,7 @@ let client: SupabaseClient | null = null;
 export function getSupabase(): SupabaseClient | null {
   if (!supabaseUrl || !supabaseAnonKey) return null;
   if (!client) {
-    client = createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        flowType: 'pkce',
-        detectSessionInUrl: true,
-        persistSession: true,
-        autoRefreshToken: true,
-      },
-    });
+    client = createClient(supabaseUrl, supabaseAnonKey);
   }
   return client;
 }
@@ -28,16 +21,10 @@ export type CommentRow = {
   id: string;
   slug: string;
   lang: string;
-  user_id: string;
+  user_id: string | null;
   author_name: string | null;
   body: string;
   parent_id: string | null;
   created_at: string;
   is_approved: boolean;
-};
-
-export type ProfileRow = {
-  id: string;
-  display_name: string | null;
-  updated_at: string;
 };
