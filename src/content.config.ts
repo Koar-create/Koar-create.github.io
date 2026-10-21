@@ -7,7 +7,7 @@ const research = defineCollection({
     title: z.string(),
     summary: z.string(),
     date: z.coerce.date(),
-    status: z.enum(['preparing', 'active', 'published']),
+    status: z.enum(['preparing', 'active', 'published', 'handed']),
     tags: z.array(z.string()).default([]),
     cover: z.string().optional(),
     order: z.number().default(0),
