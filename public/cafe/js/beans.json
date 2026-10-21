@@ -1,5 +1,24 @@
 [
   {
+    "countryEn": "RWANDA",
+    "countryCn": "卢旺达",
+    "regionEn": "Bugoyi",
+    "regionCn": "布果尼",
+    "farmEn": "Bugoyi Washing Station",
+    "farmCn": "布果尼处理站",
+    "processEn": "Washed",
+    "processCn": "水洗",
+    "roastEn": "Light",
+    "roastCn": "浅烘焙",
+    "flavorEn": "Candied Apple, Pear, Brown Sugar",
+    "flavorCn": "糖心苹果、雪梨、红糖",
+    "varietalEn": "Red Bourbon",
+    "varietalCn": "红波旁",
+    "recommendEn": "Pour over coffee (14.9 ¥)",
+    "recommendCn": "手冲咖啡 (14.9 ¥)",
+    "available": true
+  },
+  {
     "countryEn": "Kenya & Colombia",
     "countryCn": "肯尼亚 & 哥伦比亚",
     "regionEn": "Multi-region blend",
@@ -19,7 +38,7 @@
     "varietalCn": "SL-28、SL-34、卡杜拉、卡斯蒂略",
     "recommendEn": "Pour over coffee (17.9 ¥)",
     "recommendCn": "手冲咖啡 (17.9 ￥)",
-    "available": true
+    "available": false
   },
   {
     "countryEn": "INDONESIA",
@@ -40,7 +59,7 @@
     "varietalCn": "-",
     "recommendEn": "Pour over coffee (14.9 ¥)",
     "recommendCn": "手冲咖啡 (14.9 ¥)",
-    "available": true
+    "available": false
   },
   {
     "countryEn": "RWANDA",
